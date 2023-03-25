@@ -55,6 +55,7 @@ The app is organized into the following main folders:
 
 ## Technologies Used
 
+- TypeScript
 - React Native
 - Redux Toolkit
 - styled-components
