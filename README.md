@@ -51,7 +51,7 @@ The app is organized into the following main folders:
   - `utils`: Contains utility functions for fetching data from the API
   - `styles`: Contains common styles for app
   - `entites`: Contains types for Typescript
-- `assets`: Contains images and other static assets used in the app
+- `assets`: Contains images and other static assets used in the app and fonts
 
 ## Technologies Used
 
