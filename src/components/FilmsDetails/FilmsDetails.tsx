@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
-import {useAppSelector} from '../../redux/hooks/hooks';
-import FetchFilms from '../../utlis/FetchData/FetchFilms';
+import {Modal} from 'react-native';
+
 import {
   FilmsDetailsContainer,
   FilmsDetailsText,
@@ -11,10 +11,14 @@ import {
   FilmsDetailsButton,
   FilmsDetailsButtonText,
   FilmsHeaderBody,
+  ModalStyled,
+  FilmsDescriptionBlock,
 } from './FilmsDetails.styles';
 
 type FilmsMenuProps = {
   setSelectedFilm: (value: null) => void;
+  setModalVisible: (value: boolean) => void;
+  modalVisible: boolean;
 };
 
 function FilmsDetails({
@@ -25,23 +29,35 @@ function FilmsDetails({
   producer,
   release_date,
   setSelectedFilm,
+  setModalVisible,
+  modalVisible,
 }: FilmsTypes & FilmsMenuProps): JSX.Element {
   return (
-    <FilmsDetailsContainer>
-      <FilmsHeaderBody>
-        <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
-        <FilmsHeaderText>{episode_id}</FilmsHeaderText>
-        <FilmsHeaderText>{director}</FilmsHeaderText>
-        <FilmsHeaderText>{producer}</FilmsHeaderText>
-        <FilmsHeaderText>{release_date}</FilmsHeaderText>
-      </FilmsHeaderBody>
-      <FilmsDetailsText>{opening_crawl}</FilmsDetailsText>
-      <FilmsDetailsBody>
-        <FilmsDetailsButton onPress={() => setSelectedFilm(null)}>
-          <FilmsDetailsButtonText>Back</FilmsDetailsButtonText>
-        </FilmsDetailsButton>
-      </FilmsDetailsBody>
-    </FilmsDetailsContainer>
+    <ModalStyled
+      presentationStyle="fullScreen"
+      animationType="slide"
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible);
+      }}>
+      <FilmsDetailsContainer>
+        <FilmsHeaderBody>
+          <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
+          <FilmsHeaderText>{episode_id}</FilmsHeaderText>
+          <FilmsHeaderText>{director}</FilmsHeaderText>
+          <FilmsHeaderText>{producer}</FilmsHeaderText>
+          <FilmsHeaderText>{release_date}</FilmsHeaderText>
+        </FilmsHeaderBody>
+        <FilmsDescriptionBlock>
+          <FilmsDetailsText>{opening_crawl}</FilmsDetailsText>
+        </FilmsDescriptionBlock>
+        <FilmsDetailsBody>
+          <FilmsDetailsButton onPress={() => setSelectedFilm(null)}>
+            <FilmsDetailsButtonText>Back</FilmsDetailsButtonText>
+          </FilmsDetailsButton>
+        </FilmsDetailsBody>
+      </FilmsDetailsContainer>
+    </ModalStyled>
   );
 }
 

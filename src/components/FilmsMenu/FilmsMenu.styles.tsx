@@ -17,7 +17,7 @@ export const ViewStyled = styled.View`
 export const TouchableOpacityStyled = styled.TouchableOpacity`
   background-color: ${colors.primary};
   width: 140px;
-  height: 30px;
+  height: 35px;
   border-radius: 8px;
   padding: 5px;
   margin: 5px;

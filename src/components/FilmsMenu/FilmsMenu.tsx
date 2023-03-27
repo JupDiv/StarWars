@@ -24,6 +24,7 @@ const AnimatedFilmsMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(true);
   const [animationValue] = useState(new Animated.Value(0));
   const [selecetedFilm, setSelectedFilm] = useState<FilmsTypes | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const [films] = charaster.filter(item => item.name === name);
   const listSelectedFilms = filmsData.filter(({url}) =>
@@ -70,9 +71,11 @@ const AnimatedFilmsMenu = ({name}: FilmsMenuProps): JSX.Element => {
       },
     ],
   };
-  console.log(isOpen);
+
   function handleSelectedFilm(film: FilmsTypes) {
+    setIsOpen(false);
     setSelectedFilm(film);
+    setModalVisible(true);
   }
 
   return (
@@ -94,6 +97,8 @@ const AnimatedFilmsMenu = ({name}: FilmsMenuProps): JSX.Element => {
                 key={film.episode_id}
                 {...selecetedFilm}
                 setSelectedFilm={setSelectedFilm}
+                setModalVisible={setModalVisible}
+                modalVisible={modalVisible}
               />
             );
           }
@@ -105,19 +110,3 @@ const AnimatedFilmsMenu = ({name}: FilmsMenuProps): JSX.Element => {
 };
 
 export default AnimatedFilmsMenu;
-
-/**
- * 
- * 
- *   {listSelectedFilms.map(film =>
-          isOpen ? (
-            <TouchableOpacityStyled
-              key={film.episode_id}
-              onPress={() => handleSelectedFilm({...film})}>
-              <TextStyled numberOfLines={1}>{film.title}</TextStyled>
-            </TouchableOpacityStyled>
-          ) : (
-           
-          ),
-        )}
- */
