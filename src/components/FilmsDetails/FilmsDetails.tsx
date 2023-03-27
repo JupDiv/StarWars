@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
+import {useAppSelector} from '../../redux/hooks/hooks';
 import FetchFilms from '../../utlis/FetchData/FetchFilms';
 import {
   FilmsDetailsContainer,
@@ -12,6 +13,10 @@ import {
   FilmsHeaderBody,
 } from './FilmsDetails.styles';
 
+type FilmsMenuProps = {
+  setSelectedFilm: (value: null) => void;
+};
+
 function FilmsDetails({
   title,
   episode_id,
@@ -19,7 +24,8 @@ function FilmsDetails({
   director,
   producer,
   release_date,
-}: FilmsTypes): JSX.Element {
+  setSelectedFilm,
+}: FilmsTypes & FilmsMenuProps): JSX.Element {
   return (
     <FilmsDetailsContainer>
       <FilmsHeaderBody>
@@ -31,8 +37,9 @@ function FilmsDetails({
       </FilmsHeaderBody>
       <FilmsDetailsText>{opening_crawl}</FilmsDetailsText>
       <FilmsDetailsBody>
-        <FilmsDetailsButton />
-        <FilmsDetailsButtonText>Back</FilmsDetailsButtonText>
+        <FilmsDetailsButton onPress={() => setSelectedFilm(null)}>
+          <FilmsDetailsButtonText>Back</FilmsDetailsButtonText>
+        </FilmsDetailsButton>
       </FilmsDetailsBody>
     </FilmsDetailsContainer>
   );

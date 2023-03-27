@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import FetchFilms from '../../utlis/FetchData/FetchFilms';
 import {setFilms} from '../../redux/slices/filmsCharactersSlice';
-import {Animated, Modal} from 'react-native';
+import {Animated} from 'react-native';
+import FilmsDetails from '../FilmsDetails/FilmsDetails';
 
 import {
   TextStyled,
@@ -10,13 +11,24 @@ import {
   AnimatedScrollViewStyled,
 } from './FilmsMenu.styles';
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
+import {FilmsTypes} from '../../entites/types/FilmsTypes';
 
-const AnimatedFilmsMenu = (): JSX.Element => {
+type FilmsMenuProps = {
+  name: string;
+};
+
+const AnimatedFilmsMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const dispatch = useAppDispatch();
-  const films = useAppSelector(state => state.filmsData.films);
+  const filmsData = useAppSelector(state => state.filmsData.films);
+  const charaster = useAppSelector(state => state.fetchData.charaster);
   const [isOpen, setIsOpen] = useState(true);
   const [animationValue] = useState(new Animated.Value(0));
-  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [selecetedFilm, setSelectedFilm] = useState<FilmsTypes | null>(null);
+
+  const [films] = charaster.filter(item => item.name === name);
+  const listSelectedFilms = filmsData.filter(({url}) =>
+    films.films.includes(url),
+  );
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -58,20 +70,54 @@ const AnimatedFilmsMenu = (): JSX.Element => {
       },
     ],
   };
+  console.log(isOpen);
+  function handleSelectedFilm(film: FilmsTypes) {
+    setSelectedFilm(film);
+  }
 
   return (
     <AnimatedScrollViewStyled style={[{height: 130}, animatedStyle]}>
       <ViewStyled>
-        {films.map(film => (
-          <TouchableOpacityStyled
-            key={film.episode_id}
-            onPress={() => setIsOpen(false)}>
-            <TextStyled numberOfLines={1}>{film.title}</TextStyled>
-          </TouchableOpacityStyled>
-        ))}
+        {listSelectedFilms.map(film => {
+          if (!selecetedFilm) {
+            return (
+              <TouchableOpacityStyled
+                key={film.episode_id}
+                onPress={() => handleSelectedFilm({...film})}>
+                <TextStyled numberOfLines={1}>{film.title}</TextStyled>
+              </TouchableOpacityStyled>
+            );
+          }
+          if (selecetedFilm.episode_id === film.episode_id) {
+            return (
+              <FilmsDetails
+                key={film.episode_id}
+                {...selecetedFilm}
+                setSelectedFilm={setSelectedFilm}
+              />
+            );
+          }
+          return null;
+        })}
       </ViewStyled>
     </AnimatedScrollViewStyled>
   );
 };
 
 export default AnimatedFilmsMenu;
+
+/**
+ * 
+ * 
+ *   {listSelectedFilms.map(film =>
+          isOpen ? (
+            <TouchableOpacityStyled
+              key={film.episode_id}
+              onPress={() => handleSelectedFilm({...film})}>
+              <TextStyled numberOfLines={1}>{film.title}</TextStyled>
+            </TouchableOpacityStyled>
+          ) : (
+           
+          ),
+        )}
+ */

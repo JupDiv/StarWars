@@ -112,7 +112,7 @@ function CharacterDetails({
           </CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      {isOpenInfo ? null : <AnimatedFilmsMenu />}
+      {isOpenInfo ? null : <AnimatedFilmsMenu name={name} />}
     </CharasterContainer>
   );
 }
