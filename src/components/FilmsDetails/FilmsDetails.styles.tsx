@@ -31,7 +31,7 @@ export const FilmsHeaderTitle = styled.Text`
 
 export const FilmsDescriptionBlock = styled.View`
   align-items: center;
-  margin-top: 50px;
+  margin-top: 10px;
 `;
 
 export const FilmsDetailsText = styled.Text`
