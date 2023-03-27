@@ -3,7 +3,7 @@ import FetchFilms from '../../utlis/FetchData/FetchFilms';
 import {setFilms} from '../../redux/slices/filmsCharactersSlice';
 import {Animated} from 'react-native';
 import FilmsDetails from '../FilmsDetails/FilmsDetails';
-
+// will do later refactoring ****************************************************
 import {
   TextStyled,
   ViewStyled,

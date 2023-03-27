@@ -1,6 +1,6 @@
-import { TouchableOpacity } from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
-import { colors, typography } from '../../styles/theme';
+import {colors, typography} from '../../styles/theme';
 
 export const CardContainer = styled.View`
   background-color: ${colors.secondary};

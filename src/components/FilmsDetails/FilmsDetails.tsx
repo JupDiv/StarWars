@@ -1,6 +1,4 @@
-import {useEffect, useState} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
-import {Modal} from 'react-native';
 
 import {
   FilmsDetailsContainer,
@@ -54,7 +52,7 @@ function FilmsDetails({
           <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
           {Object.entries(groupDataFilm).map(([key, value]) => {
             return (
-              <FilmsTableBody>
+              <FilmsTableBody key={key}>
                 <FilmsDetailsTableTitile>{key}</FilmsDetailsTableTitile>
                 <FilmsDetailsTableText numberOfLines={1}>
                   {value}
