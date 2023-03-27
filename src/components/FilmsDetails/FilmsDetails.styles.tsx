@@ -15,6 +15,27 @@ export const FilmsDetailsContainer = styled.View`
   height: ${Dimensions.get('window').height}px;
 `;
 
+export const FilmsHeaderBody = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.primary};
+  padding-top: 35px;
+`;
+
+export const FilmsHeaderTitle = styled.Text`
+  font-size: ${typography.title.fontSize}px;
+  font-weight: ${typography.title.fontWeight};
+  font-family: ${typography.title.fontFamily};
+`;
+
+export const FilmsHeaderText = styled.Text`
+  color: ${colors.dark};
+  fonst-size: ${typography.subtitle.fontSize}px;
+  font-weight: ${typography.subtitle.fontWeight};
+  font-family: ${typography.subtitle.fontFamily};
+`;
+
 export const FilmsDescriptionBlock = styled.View`
   align-items: center;
   margin-top: 50px;
@@ -26,7 +47,11 @@ export const FilmsDetailsText = styled.Text`
   background-color: ${colors.primary};
   color: ${colors.dark};
 `;
-export const FilmsDetailsTextTitle = styled.Text``;
+
+export const FilmsDetailsBody = styled.View`
+  background-color: ${colors.primary};
+`;
+
 export const FilmsDetailsButton = styled.TouchableOpacity`
   background-color: ${colors.dark};
   width: 140px;
@@ -41,24 +66,5 @@ export const FilmsDetailsButtonText = styled.Text`
   font-weight: ${typography.subtitle.fontWeight};
   font-family: ${typography.subtitle.fontFamily};
 `;
-export const FilmsDetailsBody = styled.View`
-  background-color: ${colors.primary};
-`;
-export const FilmsHeaderBody = styled.View`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.primary};
-  padding-top: 35px;
-`;
-export const FilmsHeaderText = styled.Text`
-  color: ${colors.dark};
-  fonst-size: ${typography.subtitle.fontSize}px;
-  font-weight: ${typography.subtitle.fontWeight};
-  font-family: ${typography.subtitle.fontFamily};
-`;
-export const FilmsHeaderTitle = styled.Text`
-  font-size: ${typography.title.fontSize}px;
-  font-weight: ${typography.title.fontWeight};
-  font-family: ${typography.title.fontFamily};
-`;
+
+export const FilmsDetailsTextTitle = styled.Text``;
