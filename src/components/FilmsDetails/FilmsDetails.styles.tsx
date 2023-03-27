@@ -52,6 +52,8 @@ export const FilmsDetailsBody = styled.View`
   background-color: ${colors.primary};
 `;
 
+export const FilmsDetailsTextTitle = styled.Text``;
+
 export const FilmsDetailsButton = styled.TouchableOpacity`
   background-color: ${colors.dark};
   width: 140px;
@@ -66,5 +68,3 @@ export const FilmsDetailsButtonText = styled.Text`
   font-weight: ${typography.subtitle.fontWeight};
   font-family: ${typography.subtitle.fontFamily};
 `;
-
-export const FilmsDetailsTextTitle = styled.Text``;
