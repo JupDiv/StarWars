@@ -20,7 +20,7 @@ export const FilmsHeaderBody = styled.View`
   justify-content: center;
   align-items: center;
   background-color: ${colors.primary};
-  padding-top: 35px;
+  padding-top: 5px;
 `;
 
 export const FilmsHeaderTitle = styled.Text`
@@ -50,7 +50,7 @@ export const FilmsDetailsButton = styled.TouchableOpacity`
   width: 140px;
   height: 30px;
   border-radius: 8px;
-  margin-top: 50px;
+  margin-top: 30px;
 `;
 export const FilmsDetailsButtonText = styled.Text`
   color: ${colors.light};
@@ -60,30 +60,23 @@ export const FilmsDetailsButtonText = styled.Text`
   font-family: ${typography.subtitle.fontFamily};
 `;
 
-export const FilmsDetailsTable = styled.View`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border: 1px solid ${colors.dark};
-  width: 300px;
-`;
 export const FilmsDetailsTableTitile = styled.Text`
-  fonst-size: ${typography.subtitle.fontSize}px;
+  font-size: ${typography.subtitle.fontSize}px;
   font-weight: ${typography.subtitle.fontWeight};
   font-family: ${typography.subtitle.fontFamily};
 `;
 
 export const FilmsDetailsTableText = styled.Text`
-  fonst-size: ${typography.subtitle.fontSize}px;
-  font-weight: ${typography.subtitle.fontWeight};
-  font-family: ${typography.subtitle.fontFamily};
+  font-size: ${typography.body.fontSize}px;
+  font-family: ${typography.body.fontFamily};
+  width: 180px;
 `;
 export const FilmsTableBody = styled.View`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   color: ${colors.dark};
   width: 300px;
-  margin-top: 7px;
+  height: 40px;
 `;

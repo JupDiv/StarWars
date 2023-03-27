@@ -13,7 +13,6 @@ import {
   FilmsHeaderBody,
   ModalStyled,
   FilmsDescriptionBlock,
-  FilmsDetailsTable,
   FilmsDetailsTableText,
   FilmsDetailsTableTitile,
 } from './FilmsDetails.styles';
@@ -53,12 +52,13 @@ function FilmsDetails({
       <FilmsDetailsContainer>
         <FilmsHeaderBody>
           <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
-
           {Object.entries(groupDataFilm).map(([key, value]) => {
             return (
               <FilmsTableBody>
                 <FilmsDetailsTableTitile>{key}</FilmsDetailsTableTitile>
-                <FilmsDetailsTableText>{value}</FilmsDetailsTableText>
+                <FilmsDetailsTableText numberOfLines={1}>
+                  {value}
+                </FilmsDetailsTableText>
               </FilmsTableBody>
             );
           })}
