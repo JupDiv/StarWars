@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import {colors, typography} from '../../styles/theme';
 
 export const CharasterButton = styled.TouchableOpacity`
-  height: 40px;
+  height: 27px;
   border-radius: 10px;
   background-color: ${colors.primary};
   margin-top: 10px;
@@ -14,32 +14,33 @@ export const CharasterButtonText = styled.Text`
   font-size: ${typography.subtitle.fontSize}px;
   font-weight: ${typography.subtitle.fontWeight};
   color: ${colors.dark};
+  text-align: center;
 `;
 
 export const CharasterContainer = styled.View`
-  pisition: relative;
+  display: flex;
+  justify-content: center;
   background-color: ${colors.secondary};
   border-radius: 8px;
-  margin: 10px;
   padding: 10px;
 `;
 
 export const CharasterBody = styled.View`
-  padding: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   font-family: ${typography.body.fontFamily};
   font-size: ${typography.body.fontSize}px;
   color: ${colors.light};
   border: 1px solid ${colors.primary};
+  padding: 10px;
 `;
 
 export const CharasterBodyButton = styled.View`
   display: flex;
   flex: 1;
   flex-direction: row;
-  width: 100%;
   justify-content: space-between;
 `;
 
@@ -55,3 +56,5 @@ export const CharasterText = styled.Text`
   font-size: ${typography.body.fontSize}px;
   color: ${colors.light};
 `;
+
+export const BlockButtonWithMenu = styled.View``;

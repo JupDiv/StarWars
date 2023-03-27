@@ -6,7 +6,6 @@ import {Animated, Modal} from 'react-native';
 import {
   TextStyled,
   ViewStyled,
-  ScrollViewStyled,
   TouchableOpacityStyled,
   AnimatedScrollViewStyled,
 } from './FilmsMenu.styles';

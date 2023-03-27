@@ -6,7 +6,6 @@ import {useState, useEffect} from 'react';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import FetchPlanetData from '../../utlis/FetchData/FetchPlanetData';
 import FetchSpeciesData from '../../utlis/FetchData/FetchSpeciesData';
-import {Modal, View, Text} from 'react-native';
 import {
   CharasterButton,
   CharasterBody,
@@ -15,6 +14,7 @@ import {
   CharasterText,
   CharasterTextTitle,
   CharasterBodyButton,
+  BlockButtonWithMenu,
 } from './CharacterDetails.styles';
 import {
   addFavouriteCharaster,
@@ -52,7 +52,7 @@ function CharacterDetails({
   const characterDataArray = {
     Name: name,
     Gender: gender,
-    BY: birth_year,
+    Birthday: birth_year,
     Height: height,
     Mass: mass,
     'Hair color': hair_color,
@@ -93,7 +93,7 @@ function CharacterDetails({
         </CharasterBody>
       ))}
       <CharasterBody>
-        <CharasterTextTitle>HW</CharasterTextTitle>
+        <CharasterTextTitle>HomeWorld</CharasterTextTitle>
         <CharasterText>{homeWorld}</CharasterText>
       </CharasterBody>
       <CharasterBody>
@@ -106,14 +106,13 @@ function CharacterDetails({
             {isFavToggled ? `Delete` : 'Add'}
           </CharasterButtonText>
         </CharasterButton>
-        {isOpenInfo ? (
-          <CharasterButton onPress={() => setIsOpenInfo(false)}>
-            <CharasterButtonText>Show films</CharasterButtonText>
-          </CharasterButton>
-        ) : (
-          <AnimatedFilmsMenu />
-        )}
+        <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
+          <CharasterButtonText>
+            {isOpenInfo ? 'Show films' : 'Close films'}
+          </CharasterButtonText>
+        </CharasterButton>
       </CharasterBodyButton>
+      {isOpenInfo ? null : <AnimatedFilmsMenu />}
     </CharasterContainer>
   );
 }
