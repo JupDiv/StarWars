@@ -29,13 +29,6 @@ export const FilmsHeaderTitle = styled.Text`
   font-family: ${typography.title.fontFamily};
 `;
 
-export const FilmsHeaderText = styled.Text`
-  color: ${colors.dark};
-  fonst-size: ${typography.subtitle.fontSize}px;
-  font-weight: ${typography.subtitle.fontWeight};
-  font-family: ${typography.subtitle.fontFamily};
-`;
-
 export const FilmsDescriptionBlock = styled.View`
   align-items: center;
   margin-top: 50px;
@@ -52,8 +45,6 @@ export const FilmsDetailsBody = styled.View`
   background-color: ${colors.primary};
 `;
 
-export const FilmsDetailsTextTitle = styled.Text``;
-
 export const FilmsDetailsButton = styled.TouchableOpacity`
   background-color: ${colors.dark};
   width: 140px;
@@ -67,4 +58,32 @@ export const FilmsDetailsButtonText = styled.Text`
   font-size: ${typography.subtitle.fontSize}px;
   font-weight: ${typography.subtitle.fontWeight};
   font-family: ${typography.subtitle.fontFamily};
+`;
+
+export const FilmsDetailsTable = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid ${colors.dark};
+  width: 300px;
+`;
+export const FilmsDetailsTableTitile = styled.Text`
+  fonst-size: ${typography.subtitle.fontSize}px;
+  font-weight: ${typography.subtitle.fontWeight};
+  font-family: ${typography.subtitle.fontFamily};
+`;
+
+export const FilmsDetailsTableText = styled.Text`
+  fonst-size: ${typography.subtitle.fontSize}px;
+  font-weight: ${typography.subtitle.fontWeight};
+  font-family: ${typography.subtitle.fontFamily};
+`;
+export const FilmsTableBody = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  color: ${colors.dark};
+  width: 300px;
+  margin-top: 7px;
 `;

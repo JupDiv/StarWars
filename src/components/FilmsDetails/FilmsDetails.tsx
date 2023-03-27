@@ -6,13 +6,16 @@ import {
   FilmsDetailsContainer,
   FilmsDetailsText,
   FilmsHeaderTitle,
-  FilmsHeaderText,
+  FilmsTableBody,
   FilmsDetailsBody,
   FilmsDetailsButton,
   FilmsDetailsButtonText,
   FilmsHeaderBody,
   ModalStyled,
   FilmsDescriptionBlock,
+  FilmsDetailsTable,
+  FilmsDetailsTableText,
+  FilmsDetailsTableTitile,
 } from './FilmsDetails.styles';
 
 type FilmsMenuProps = {
@@ -32,6 +35,13 @@ function FilmsDetails({
   setModalVisible,
   modalVisible,
 }: FilmsTypes & FilmsMenuProps): JSX.Element {
+  const groupDataFilm = {
+    Episode: episode_id,
+    Director: director,
+    Producer: producer,
+    Release: release_date,
+  };
+
   return (
     <ModalStyled
       presentationStyle="fullScreen"
@@ -43,10 +53,15 @@ function FilmsDetails({
       <FilmsDetailsContainer>
         <FilmsHeaderBody>
           <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
-          <FilmsHeaderText>{episode_id}</FilmsHeaderText>
-          <FilmsHeaderText>{director}</FilmsHeaderText>
-          <FilmsHeaderText>{producer}</FilmsHeaderText>
-          <FilmsHeaderText>{release_date}</FilmsHeaderText>
+
+          {Object.entries(groupDataFilm).map(([key, value]) => {
+            return (
+              <FilmsTableBody>
+                <FilmsDetailsTableTitile>{key}</FilmsDetailsTableTitile>
+                <FilmsDetailsTableText>{value}</FilmsDetailsTableText>
+              </FilmsTableBody>
+            );
+          })}
         </FilmsHeaderBody>
         <FilmsDescriptionBlock>
           <FilmsDetailsText>{opening_crawl}</FilmsDetailsText>
