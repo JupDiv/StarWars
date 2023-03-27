@@ -1,6 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import type { RootState } from '../store/store';
+import {createSlice} from '@reduxjs/toolkit';
+import type {PayloadAction} from '@reduxjs/toolkit';
+import type {RootState} from '../store/store';
 
 type initialStataType = {
   male: string[];
@@ -25,7 +25,7 @@ const favoriteCharactersSlice = createSlice({
   reducers: {
     addFavouriteCharaster: (
       state,
-      action: PayloadAction<favouritePersonTypeProp>
+      action: PayloadAction<favouritePersonTypeProp>,
     ) => {
       if (action.payload.gender === 'male') {
         if (state.male.includes(action.payload.name)) return;
@@ -45,23 +45,21 @@ const favoriteCharactersSlice = createSlice({
     },
     removeFavouriteCharaster: (
       state,
-      action: PayloadAction<favouritePersonTypeProp>
+      action: PayloadAction<favouritePersonTypeProp>,
     ) => {
       if (action.payload.gender === 'male') {
-        state.male = state.male.filter((item) => item !== action.payload.name);
+        state.male = state.male.filter(item => item !== action.payload.name);
       }
       if (action.payload.gender === 'female') {
         state.female = state.female.filter(
-          (item) => item !== action.payload.name
+          item => item !== action.payload.name,
         );
       }
       if (
         action.payload.gender !== 'male' &&
         action.payload.gender !== 'female'
       ) {
-        state.other = state.other.filter(
-          (item) => item !== action.payload.name
-        );
+        state.other = state.other.filter(item => item !== action.payload.name);
       }
     },
     resetValueButton: (state, action: PayloadAction<[]>) => {

@@ -19,7 +19,7 @@ const getPagination = async (
 
     return {next, previous};
   } catch (error) {
-    console.log(error);
+    throw new Error('An error occurred while fetching pagination.');
   }
 };
 
