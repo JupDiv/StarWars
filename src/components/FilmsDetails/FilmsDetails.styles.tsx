@@ -6,24 +6,12 @@ export const ModalStyled = styled(Modal)`
   bakcground-color: ${colors.primary};
 `;
 
-export const FilmsDetailsContainer = styled.View`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.primary};
-  width: ${Dimensions.get('window').width}px;
-  height: ${Dimensions.get('window').height}px;
-`;
+export const FilmsDetailsContainer = styled.ScrollView``;
 
-export const FilmsHeaderBody = styled.View`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: ${colors.primary};
-  padding-top: 5px;
-`;
+export const FilmsHeaderBody = styled.View``;
 
 export const FilmsHeaderTitle = styled.Text`
+  color: ${colors.dark};
   font-size: ${typography.title.fontSize}px;
   font-weight: ${typography.title.fontWeight};
   font-family: ${typography.title.fontFamily};
@@ -34,12 +22,7 @@ export const FilmsDescriptionBlock = styled.View`
   margin-top: 10px;
 `;
 
-export const FilmsDetailsText = styled.Text`
-  font-size: ${typography.body.fontSize}px;
-  font-family: ${typography.subtitle.fontFamily};
-  background-color: ${colors.primary};
-  color: ${colors.dark};
-`;
+export const FilmsDetailsText = styled.Text``;
 
 export const FilmsDetailsBody = styled.View`
   background-color: ${colors.primary};

@@ -10,7 +10,7 @@ import {Provider} from 'react-redux';
 import store from './src/redux/store/store';
 import CharacterList from './src/components/CharacterList/CharacterList';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import ScreenFilms from './src/screens/ScreenFilms';
+import ScreenFilms from './src/screens/ScreenFilms/ScreenFilms';
 import ScreenStarShips from './src/screens/ScreenStarShips';
 import ScreenVehicles from './src/screens/ScreenVehicles';
 

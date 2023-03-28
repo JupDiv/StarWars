@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text} from 'react-native';
 import {useAppSelector} from '../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
@@ -13,6 +13,7 @@ type ScreenStarShipsProps = {
 const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   const {name} = route.params;
   const starShips = useAppSelector(state => state.starshipsData.starships);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <View>
