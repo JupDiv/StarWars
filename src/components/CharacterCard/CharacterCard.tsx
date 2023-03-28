@@ -1,13 +1,13 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   CardContainer,
   CardNameButton,
   CardButtonText,
 } from './CharacterCard.styles';
 import CharacterDetails from '../CharacterDetails/CharacterDetails';
-import { CharasterTypes } from '../../entites/types/CharasterTypes';
+import {CharasterTypes} from '../../entites/types/CharasterTypes';
 
 type AdditionalProps = {
   isToggle: boolean;

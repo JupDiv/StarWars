@@ -21,8 +21,10 @@ import {
   removeFavouriteCharaster,
 } from '../../redux/slices/favoriteCharactersSlice';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
-
 import AnimatedFilmsMenu from '../FilmsMenu/FilmsMenu';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
+const Stack = createNativeStackNavigator();
 
 type PersonDataProps = {
   isToggle: boolean;
@@ -112,6 +114,11 @@ function CharacterDetails({
           </CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
+      <Stack.Navigator>
+        <Stack.Screen name={name}>
+          {props => <AnimatedFilmsMenu name={name} />}
+        </Stack.Screen>
+      </Stack.Navigator>
       {isOpenInfo ? null : <AnimatedFilmsMenu name={name} />}
     </CharasterContainer>
   );
