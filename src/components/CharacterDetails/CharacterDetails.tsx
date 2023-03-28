@@ -21,7 +21,7 @@ import {
   removeFavouriteCharaster,
 } from '../../redux/slices/favoriteCharactersSlice';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
-import AnimatedFilmsMenu from '../FilmsMenu/FilmsMenu';
+import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
@@ -110,16 +110,11 @@ function CharacterDetails({
         </CharasterButton>
         <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
           <CharasterButtonText>
-            {isOpenInfo ? 'Show films' : 'Close films'}
+            {isOpenInfo ? 'Show info' : 'Close info'}
           </CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      <Stack.Navigator>
-        <Stack.Screen name={name}>
-          {props => <AnimatedFilmsMenu name={name} />}
-        </Stack.Screen>
-      </Stack.Navigator>
-      {isOpenInfo ? null : <AnimatedFilmsMenu name={name} />}
+      {isOpenInfo ? null : <AdditionalMenu name={name} />}
     </CharasterContainer>
   );
 }

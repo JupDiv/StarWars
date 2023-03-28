@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {FilmsTypes} from '../../entites/types/FilmsTypes';
+import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {CommonTypes} from '../../entites/types/CommonTypes';
 
-const FetchFilms = async (): Promise<FilmsTypes[]> => {
-  const url: string = 'https://swapi.dev/api/films/';
+const FetchVehicles = async (): Promise<VehiclesTypes[]> => {
+  const url: string = 'https://swapi.dev/api/vehicles/';
   try {
     const {
       data: {results},
@@ -16,4 +16,4 @@ const FetchFilms = async (): Promise<FilmsTypes[]> => {
   }
 };
 
-export default FetchFilms;
+export default FetchVehicles;
