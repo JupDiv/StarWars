@@ -3,13 +3,6 @@ import {View, Text} from 'react-native';
 import {useAppSelector} from '../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
 
-// type RootStackParamList = {
-//   ScreenFilms: {nameCharastr: string};
-// };
-// type ScreenFilmsProps = {
-//   route: RouteProp<Record<string, RootStackParamList>, string>;
-// };
-
 type RootStackParamList = {
   ScreenFilms: {name: string};
 };

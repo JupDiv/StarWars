@@ -1,10 +1,12 @@
 import {useEffect, useState} from 'react';
 import FetchFilms from '../../utlis/FetchData/FetchFilms';
 import {setFilms} from '../../redux/slices/filmsCharactersSlice';
+import {setStarships} from '../../redux/slices/starshipsCharastersSlice';
+import {setVehicles} from '../../redux/slices/vehiclesCharastersSlice';
+import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
+import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import FilmsDetails from '../FilmsDetails/FilmsDetails';
-// will do later refactoring ****************************************************
 import {
   TextStyled,
   ViewStyled,
@@ -28,6 +30,16 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
       const films = await FetchFilms();
       dispatch(setFilms(films));
     };
+    const fetchStarShips = async () => {
+      const starships = await FetchStarShips();
+      dispatch(setStarships(starships));
+    };
+    const fetchVehicles = async () => {
+      const vehicles = await FetchVehicles();
+      dispatch(setVehicles(vehicles));
+    };
+    fetchStarShips();
+    fetchVehicles();
     fetchFilms();
     if (isOpen) {
       openAnimation();
@@ -42,6 +54,7 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
       duration: 1000,
       useNativeDriver: false,
     }).start();
+    setIsOpen(false);
   };
 
   const closeAnimation = () => {
@@ -73,11 +86,11 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
         </TouchableOpacityStyled>
         <TouchableOpacityStyled
           onPress={() => navigation.navigate('ScreenStarShips', {name})}>
-          <TextStyled>starships</TextStyled>
+          <TextStyled>Starships</TextStyled>
         </TouchableOpacityStyled>
         <TouchableOpacityStyled
           onPress={() => navigation.navigate('ScreenVehicles', {name})}>
-          <TextStyled>vehicles</TextStyled>
+          <TextStyled>Vehicles</TextStyled>
         </TouchableOpacityStyled>
       </ViewStyled>
     </AnimatedScrollViewStyled>

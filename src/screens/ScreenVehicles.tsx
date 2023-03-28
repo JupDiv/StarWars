@@ -1,16 +1,25 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import {useAppSelector} from '../redux/hooks/hooks';
+import {RouteProp} from '@react-navigation/native';
 
-const ScreenVehicles = () => {
-  const filmsData = useAppSelector(state => state.filmsData.films);
+type RootStackParamList = {
+  ScreenVehicles: {name: string};
+};
+type ScreenStarShipsProps = {
+  route: RouteProp<RootStackParamList, 'ScreenVehicles'>;
+};
+
+const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
+  const {name} = route.params;
+  const vehicles = useAppSelector(state => state.vehiclesData.vehicles);
 
   return (
     <View>
-      {filmsData.map(item => {
-        return <Text key={item.title}>{item.title}</Text>;
+      {vehicles.map(item => {
+        return <Text key={item.name}>{item.name}</Text>;
       })}
-      <Text>InfoAboutFilms</Text>
+      <Text>{name}</Text>
     </View>
   );
 };

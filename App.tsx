@@ -13,7 +13,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ScreenFilms from './src/screens/ScreenFilms';
 import ScreenStarShips from './src/screens/ScreenStarShips';
 import ScreenVehicles from './src/screens/ScreenVehicles';
-import {RouteProp} from '@react-navigation/native';
 
 type AppNavigatorParamList = {
   Home: undefined;
