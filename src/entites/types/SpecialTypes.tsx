@@ -1,4 +1,4 @@
-export default interface SpecialTypes {
+export interface SpecialTypes {
   name: string;
   classification: string;
   designation: string;

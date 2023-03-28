@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import getPagination from '../../utlis/FetchData/FetchPaginatedData';
-import Data from '../../entites/types/CommonTypes';
+import {CommonTypes} from '../../entites/types/CommonTypes';
 import {
   BlockButton,
   PaginationButtonStyle,
   PaginationButtonText,
 } from './PaginationControls.styles';
 
-type paginationResponse = Pick<Data, 'next' | 'previous'>;
+type paginationResponse = Pick<CommonTypes, 'next' | 'previous'>;
 
 interface DirectionProps {
   currentPage: number;
@@ -15,8 +15,8 @@ interface DirectionProps {
 }
 
 const initialState = {
-  next: null,
-  previous: null,
+  next: '',
+  previous: '',
 };
 
 export default function PaginationControls({
@@ -27,11 +27,11 @@ export default function PaginationControls({
     useState<paginationResponse>(initialState);
 
   useEffect(() => {
-    getPagination(currentPage).then((response) => setPagination(response));
+    getPagination(currentPage).then(response => setPagination(response));
   }, [currentPage]);
 
   const disabledButton = (
-    <PaginationButtonStyle disabled style={{ opacity: 0 }}>
+    <PaginationButtonStyle disabled style={{opacity: 0}}>
       <PaginationButtonText>Back</PaginationButtonText>
     </PaginationButtonStyle>
   );

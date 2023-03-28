@@ -25,10 +25,6 @@ function CharacterList(): JSX.Element {
     });
   }, [currentPage, dispatch]);
 
-  // if (!Array.isArray(data)) {
-  //   return null;
-  // }
-
   return (
     <SafeAreaView
       style={{
