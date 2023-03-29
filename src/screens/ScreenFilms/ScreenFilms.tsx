@@ -10,6 +10,7 @@ import {
 import FilmsDetails from '../../components/FilmsDetails/FilmsDetails';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 import {FlatList} from 'react-native';
+import useGetCharasterURL from '../../redux/hooks/customHooks';
 
 type RootStackParamList = {
   ScreenFilms: {name: string};
@@ -17,16 +18,23 @@ type RootStackParamList = {
 type ScreenFilmsProps = {
   route: RouteProp<RootStackParamList, 'ScreenFilms'>;
 };
+
 const ScreenFilms = ({route}: ScreenFilmsProps) => {
   const {name} = route.params;
   const filmsData = useAppSelector(state => state.filmsData.films);
-  const [isOpen, setIsOpen] = useState(false);
+  const urlCharaster = useGetCharasterURL(name);
+
+  const result = filmsData.filter((item: FilmsTypes) => {
+    return item.characters.some((url: string) => url === urlCharaster);
+  });
 
   return (
     <Container>
       <FlatList
         data={filmsData}
-        renderItem={({item}) => <FilmsDetails {...item} />}
+        renderItem={({item}) => (
+          <FilmsDetails isHighlighted={result.includes(item)} {...item} />
+        )}
         keyExtractor={(item: FilmsTypes) => item.episode_id.toString()}
       />
     </Container>

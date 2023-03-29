@@ -19,7 +19,9 @@ type FilmDetailsProps = Pick<
   | 'opening_crawl'
   | 'producer'
   | 'director'
->;
+> & {
+  isHighlighted: boolean;
+};
 
 function FilmsDetails({
   title,
@@ -28,6 +30,7 @@ function FilmsDetails({
   opening_crawl,
   producer,
   director,
+  isHighlighted,
 }: FilmDetailsProps): JSX.Element {
   const groupDataFilm = {
     Episode: episode_id,
@@ -39,7 +42,9 @@ function FilmsDetails({
   return (
     <FilmDetailsContainer>
       <FilmDetailBlockInfo>
-        <FilmDetailBlockMainTitle>{title}</FilmDetailBlockMainTitle>
+        <FilmDetailBlockMainTitle isHighlighted={isHighlighted}>
+          {title}
+        </FilmDetailBlockMainTitle>
         {Object.entries(groupDataFilm).map(([key, value]) => (
           <FilmDetailBlockInfoGroup key={key}>
             <FilmDetailBlockInfoTitle>{key}</FilmDetailBlockInfoTitle>

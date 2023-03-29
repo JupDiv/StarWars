@@ -1,6 +1,10 @@
 import styled from 'styled-components/native';
 import {colors, typography} from '../../styles/theme';
 
+interface ListItemProps {
+  isHighlighted: boolean;
+}
+
 export const FilmDetailsContainer = styled.ScrollView`
   flex: 1;
   border: 1px solid ${colors.dark};
@@ -15,6 +19,8 @@ export const FilmDetailBlockMainTitle = styled.Text`
   font-family: ${typography.title.fontFamily};
   text-align: center;
   margin-top: 10px;
+  border: ${({isHighlighted}: ListItemProps) =>
+    isHighlighted ? 'solid 5px green' : 'none'};
 `;
 
 export const FilmDetailBlockInfoGroup = styled.View`
@@ -52,4 +58,5 @@ export const FilmDetailBlockDescription = styled.View`
 export const FilmDetailBlockDescriptionText = styled.Text`
   font-size: ${typography.body.fontSize}px;
   font-family: ${typography.body.fontFamily};
+  font-weight: ${typography.subtitle.fontWeight};
 `;
