@@ -29,7 +29,6 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
         renderItem={({item}) => <FilmsDetails {...item} />}
         keyExtractor={(item: FilmsTypes) => item.episode_id.toString()}
       />
-      <TextStyled>{name}</TextStyled>
     </Container>
   );
 };

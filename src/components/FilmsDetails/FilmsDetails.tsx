@@ -1,38 +1,48 @@
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 
 import {
-  FilmsDetailsContainer,
-  FilmsDetailsText,
-  FilmsHeaderTitle,
-  FilmsTableBody,
-  FilmsDetailsBody,
-  FilmsDetailsButton,
-  FilmsDetailsButtonText,
-  FilmsHeaderBody,
-  ModalStyled,
-  FilmsDescriptionBlock,
-  FilmsDetailsTableText,
-  FilmsDetailsTableTitile,
+  FilmDetailsContainer,
+  FilmDetailBlockInfo,
+  FilmDetailBlockMainTitle,
+  FilmDetailBlockInfoTitle,
+  FilmDetailBlockInfoGroup,
+  FilmDetailBlockInfoText,
+  FilmDetailBlockDescription,
+  FilmDetailBlockDescriptionText,
 } from './FilmsDetails.styles';
 
 function FilmsDetails({
   title,
   episode_id,
   release_date,
+  opening_crawl,
+  producer,
+  director,
 }: FilmsTypes): JSX.Element {
-  // const groupDataFilm = {
-  //   Episode: episode_id,
-  //   Director: director,
-  //   Producer: producer,
-  //   Release: release_date,
-  // };
+  const groupDataFilm = {
+    Episode: episode_id,
+    Director: director,
+    Producer: producer,
+    Release: release_date,
+  };
 
   return (
-    <FilmsDetailsContainer>
-      <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
-      <FilmsDetailsText>{episode_id}</FilmsDetailsText>
-      <FilmsDetailsText>{release_date}</FilmsDetailsText>
-    </FilmsDetailsContainer>
+    <FilmDetailsContainer>
+      <FilmDetailBlockInfo>
+        <FilmDetailBlockMainTitle>{title}</FilmDetailBlockMainTitle>
+        {Object.entries(groupDataFilm).map(([key, value]) => (
+          <FilmDetailBlockInfoGroup key={key}>
+            <FilmDetailBlockInfoTitle>{key}</FilmDetailBlockInfoTitle>
+            <FilmDetailBlockInfoText>{value}</FilmDetailBlockInfoText>
+          </FilmDetailBlockInfoGroup>
+        ))}
+      </FilmDetailBlockInfo>
+      <FilmDetailBlockDescription>
+        <FilmDetailBlockDescriptionText>
+          {opening_crawl}
+        </FilmDetailBlockDescriptionText>
+      </FilmDetailBlockDescription>
+    </FilmDetailsContainer>
   );
 }
 
