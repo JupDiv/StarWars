@@ -20,7 +20,7 @@ export const FilmDetailBlockMainTitle = styled.Text`
   text-align: center;
   margin-top: 10px;
   border: ${({isHighlighted}: ListItemProps) =>
-    isHighlighted ? 'solid 5px green' : 'none'};
+    isHighlighted ? 'solid 5px green' : 'solid 5px red'};
 `;
 
 export const FilmDetailBlockInfoGroup = styled.View`
