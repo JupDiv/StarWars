@@ -11,6 +11,16 @@ import {
   FilmDetailBlockDescriptionText,
 } from './FilmsDetails.styles';
 
+type FilmDetailsProps = Pick<
+  FilmsTypes,
+  | 'title'
+  | 'episode_id'
+  | 'release_date'
+  | 'opening_crawl'
+  | 'producer'
+  | 'director'
+>;
+
 function FilmsDetails({
   title,
   episode_id,
@@ -18,7 +28,7 @@ function FilmsDetails({
   opening_crawl,
   producer,
   director,
-}: FilmsTypes): JSX.Element {
+}: FilmDetailsProps): JSX.Element {
   const groupDataFilm = {
     Episode: episode_id,
     Director: director,

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View, Text} from 'react-native';
-import {useAppSelector} from '../redux/hooks/hooks';
+import {useAppSelector} from '../../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
 
 type RootStackParamList = {
@@ -18,7 +18,11 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   return (
     <View>
       {starShips.map(item => {
-        return <Text key={item.name}>{item.name}</Text>;
+        return (
+          <Text style={{color: 'white'}} key={item.name}>
+            {item.name}
+          </Text>
+        );
       })}
       <Text>{name}</Text>
     </View>
