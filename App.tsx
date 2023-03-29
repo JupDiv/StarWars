@@ -13,6 +13,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ScreenFilms from './src/screens/ScreenFilms/ScreenFilms';
 import ScreenStarShips from './src/screens/ScreenStarShips';
 import ScreenVehicles from './src/screens/ScreenVehicles';
+import {colors} from './src/styles/theme';
 
 type AppNavigatorParamList = {
   Home: undefined;
@@ -26,9 +27,29 @@ export default function App() {
   return (
     <NavigationContainer>
       <Provider store={store}>
-        <Stack.Navigator initialRouteName="Home">
+        <Stack.Navigator
+          initialRouteName="Home"
+          screenOptions={{
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: `${colors.primary}`,
+            },
+            headerTintColor: `${colors.dark}`,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+            contentStyle: {
+              backgroundColor: `${colors.dark}`,
+            },
+          }}>
           <Stack.Screen name="Home" component={CharacterList} />
-          <Stack.Screen name="ScreenFilms" component={ScreenFilms} />
+          <Stack.Screen
+            options={{
+              title: 'Films',
+            }}
+            name="ScreenFilms"
+            component={ScreenFilms}
+          />
           <Stack.Screen name="ScreenStarShips" component={ScreenStarShips} />
           <Stack.Screen name="ScreenVehicles" component={ScreenVehicles} />
         </Stack.Navigator>

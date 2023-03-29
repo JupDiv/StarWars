@@ -1,9 +1,10 @@
 import styled from 'styled-components/native';
+import {Dimensions} from 'react-native';
 import {colors, typography} from '../../styles/theme';
 
 export const FilmDetailsContainer = styled.ScrollView`
   background-color: ${colors.primary};
-  padding: 10px;
+  border: 1px solid ${colors.dark};
 `;
 
 export const FilmDetailBlockInfo = styled.View``;
@@ -36,7 +37,7 @@ export const FilmDetailBlockInfoText = styled.Text`
   font-size: ${typography.body.fontSize}px;
   font-family: ${typography.body.fontFamily};
   margin-right: 20px;
-  width: 200px;
+  width: 200px
   text-align: right;
 `;
 
