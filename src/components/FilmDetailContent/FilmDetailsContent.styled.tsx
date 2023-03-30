@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import {colors, typography} from '../../styles/theme';
-import {Dimensions} from 'react-native';
 
 export const FilmDetailBlockInfo = styled.ScrollView``;
 
@@ -39,5 +38,22 @@ export const FilmDetailBlockDescription = styled.View`
 export const FilmDetailBlockDescriptionText = styled.Text`
   font-size: ${typography.body.fontSize}px;
   font-family: ${typography.body.fontFamily};
+  font-weight: ${typography.subtitle.fontWeight};
+`;
+
+export const FilmDetailButtonClose = styled.TouchableOpacity`
+  width: 200px;
+  height: 40px;
+  border: 1px solid ${colors.dark};
+  border-radius: 10px;
+  margin: auto;
+  margin-bottom: 20px;
+`;
+
+export const FilmDetailButtonCloseText = styled.Text`
+  color: ${colors.dark};
+  margin: auto;
+  font-size: ${typography.subtitle.fontSize}px;
+  font-family: ${typography.subtitle.fontFamily};
   font-weight: ${typography.subtitle.fontWeight};
 `;

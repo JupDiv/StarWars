@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
+import {Animated} from 'react-native';
 import {
   FilmDetailBlockInfo,
   FilmDetailBlockInfoGroup,
@@ -6,6 +7,8 @@ import {
   FilmDetailBlockInfoText,
   FilmDetailBlockDescription,
   FilmDetailBlockDescriptionText,
+  FilmDetailButtonClose,
+  FilmDetailButtonCloseText,
 } from './FilmDetailsContent.styled';
 
 type FilmDetailsProps = {
@@ -16,9 +19,10 @@ type FilmDetailsProps = {
     Release: string;
   };
   description: string;
+  setIsOpen: (value: boolean) => void;
 };
 
-const FilmsDetails = ({content, description}: FilmDetailsProps) => {
+const FilmsDetails = ({content, description, setIsOpen}: FilmDetailsProps) => {
   return (
     <>
       <FilmDetailBlockInfo>
@@ -34,6 +38,9 @@ const FilmsDetails = ({content, description}: FilmDetailsProps) => {
           </FilmDetailBlockDescriptionText>
         </FilmDetailBlockDescription>
       </FilmDetailBlockInfo>
+      <FilmDetailButtonClose onPress={() => setIsOpen(false)}>
+        <FilmDetailButtonCloseText>Close</FilmDetailButtonCloseText>
+      </FilmDetailButtonClose>
     </>
   );
 };
