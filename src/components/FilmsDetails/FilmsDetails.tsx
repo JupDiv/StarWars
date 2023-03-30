@@ -1,15 +1,9 @@
+import React, {useState} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
+import FilmsDetailContent from '../FilmDetailContent/FilmDetailContent';
+import FilmDetailsButton from '../FilmDetailsButton/FilmDetailsButton';
 
-import {
-  FilmDetailsContainer,
-  FilmDetailBlockInfo,
-  FilmDetailBlockMainTitle,
-  FilmDetailBlockInfoTitle,
-  FilmDetailBlockInfoGroup,
-  FilmDetailBlockInfoText,
-  FilmDetailBlockDescription,
-  FilmDetailBlockDescriptionText,
-} from './FilmsDetails.styles';
+import {FilmDetailsContainer} from './FilmsDetails.styles';
 
 type FilmDetailsProps = Pick<
   FilmsTypes,
@@ -32,6 +26,7 @@ function FilmsDetails({
   director,
   isHighlighted,
 }: FilmDetailsProps): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false);
   const groupDataFilm = {
     Episode: episode_id,
     Director: director,
@@ -41,22 +36,18 @@ function FilmsDetails({
 
   return (
     <FilmDetailsContainer>
-      <FilmDetailBlockInfo>
-        <FilmDetailBlockMainTitle isHighlighted={isHighlighted}>
-          {title}
-        </FilmDetailBlockMainTitle>
-        {Object.entries(groupDataFilm).map(([key, value]) => (
-          <FilmDetailBlockInfoGroup key={key}>
-            <FilmDetailBlockInfoTitle>{key}</FilmDetailBlockInfoTitle>
-            <FilmDetailBlockInfoText>{value}</FilmDetailBlockInfoText>
-          </FilmDetailBlockInfoGroup>
-        ))}
-      </FilmDetailBlockInfo>
-      <FilmDetailBlockDescription>
-        <FilmDetailBlockDescriptionText>
-          {opening_crawl}
-        </FilmDetailBlockDescriptionText>
-      </FilmDetailBlockDescription>
+      {isOpen ? (
+        <FilmsDetailContent
+          description={opening_crawl}
+          content={groupDataFilm}
+        />
+      ) : (
+        <FilmDetailsButton
+          onHandler={setIsOpen}
+          title={title}
+          isHighlighted={isHighlighted}
+        />
+      )}
     </FilmDetailsContainer>
   );
 }

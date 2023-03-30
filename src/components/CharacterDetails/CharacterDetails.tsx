@@ -14,7 +14,6 @@ import {
   CharasterText,
   CharasterTextTitle,
   CharasterBodyButton,
-  BlockButtonWithMenu,
 } from './CharacterDetails.styles';
 import {
   addFavouriteCharaster,
@@ -22,9 +21,6 @@ import {
 } from '../../redux/slices/favoriteCharactersSlice';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-const Stack = createNativeStackNavigator();
 
 type PersonDataProps = {
   isToggle: boolean;
