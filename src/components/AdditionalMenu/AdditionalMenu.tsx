@@ -1,10 +1,4 @@
 import {useEffect, useState} from 'react';
-import FetchFilms from '../../utlis/FetchData/FetchFilms';
-import {setFilms} from '../../redux/slices/filmsCharactersSlice';
-import {setStarships} from '../../redux/slices/starshipsCharastersSlice';
-import {setVehicles} from '../../redux/slices/vehiclesCharastersSlice';
-import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
-import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {
@@ -27,23 +21,7 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const [animationValue] = useState(new Animated.Value(0));
   const navigation =
     useNavigation<NativeStackNavigationProp<AppRootStackParams>>();
-  //rebuild redux
   useEffect(() => {
-    const fetchFilms = async () => {
-      const films = await FetchFilms();
-      dispatch(setFilms(films));
-    };
-    const fetchStarShips = async () => {
-      const starships = await FetchStarShips();
-      dispatch(setStarships(starships));
-    };
-    const fetchVehicles = async () => {
-      const vehicles = await FetchVehicles();
-      dispatch(setVehicles(vehicles));
-    };
-    fetchStarShips();
-    fetchVehicles();
-    fetchFilms();
     if (isOpen) {
       openAnimation();
     } else {
