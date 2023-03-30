@@ -27,7 +27,7 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const [animationValue] = useState(new Animated.Value(0));
   const navigation =
     useNavigation<NativeStackNavigationProp<AppRootStackParams>>();
-
+  //rebuild redux
   useEffect(() => {
     const fetchFilms = async () => {
       const films = await FetchFilms();
