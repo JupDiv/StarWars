@@ -15,14 +15,14 @@ import ScreenStarShips from './src/screens/ScreeStarShips/ScreenStarShips';
 import ScreenVehicles from './src/screens/ScreenVehicles/ScreenVehicles';
 import {colors} from './src/styles/theme';
 
-type AppNavigatorParamList = {
+export type AppRootStackParams = {
   Home: undefined;
   ScreenFilms: {name: string};
   ScreenStarShips: {name: string};
   ScreenVehicles: {name: string};
 };
 
-const Stack = createNativeStackNavigator<AppNavigatorParamList>();
+const Stack = createNativeStackNavigator<AppRootStackParams>();
 export default function App() {
   return (
     <NavigationContainer>

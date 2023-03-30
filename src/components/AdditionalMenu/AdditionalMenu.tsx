@@ -14,6 +14,8 @@ import {
   AnimatedScrollViewStyled,
 } from './AdditionalMenu.styles';
 import {useAppDispatch} from '../../redux/hooks/hooks';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {AppRootStackParams} from '../../../App';
 
 type FilmsMenuProps = {
   name: string;
@@ -23,7 +25,8 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [animationValue] = useState(new Animated.Value(0));
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<AppRootStackParams>>();
 
   useEffect(() => {
     const fetchFilms = async () => {
