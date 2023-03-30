@@ -19,10 +19,9 @@ type FilmDetailsProps = {
     Release: string;
   };
   description: string;
-  setIsOpen: (value: boolean) => void;
 };
 
-const FilmsDetails = ({content, description, setIsOpen}: FilmDetailsProps) => {
+const FilmsDetails = ({content, description}: FilmDetailsProps) => {
   return (
     <>
       <FilmDetailBlockInfo>
@@ -38,9 +37,6 @@ const FilmsDetails = ({content, description, setIsOpen}: FilmDetailsProps) => {
           </FilmDetailBlockDescriptionText>
         </FilmDetailBlockDescription>
       </FilmDetailBlockInfo>
-      <FilmDetailButtonClose onPress={() => setIsOpen(false)}>
-        <FilmDetailButtonCloseText>Close</FilmDetailButtonCloseText>
-      </FilmDetailButtonClose>
     </>
   );
 };

@@ -135,7 +135,6 @@ function FilmsDetails({
             <FilmsDetailContent
               description={opening_crawl}
               content={groupDataFilm}
-              setIsOpen={setIsOpen}
             />
           ) : null}
         </FilmDetailsContainer>
