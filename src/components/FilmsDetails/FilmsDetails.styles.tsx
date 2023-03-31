@@ -4,4 +4,5 @@ import {colors, typography} from '../../styles/theme';
 export const FilmDetailsContainer = styled.ScrollView`
   background-color: ${colors.primary};
   border-radius: 20px;
+  z-index: -1;
 `;

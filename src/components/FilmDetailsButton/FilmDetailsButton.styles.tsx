@@ -11,6 +11,7 @@ interface ButtonItemProps {
 export const FilmsDetailBlockButton = styled.TouchableOpacity`
   display: flex;
   flex-direction: column;
+  z-index: 1;
 `;
 
 export const FilmDetailBlockMainTitle = styled.Text`
