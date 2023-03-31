@@ -1,0 +1,49 @@
+import {useState} from 'react';
+import {ScrollView} from 'react-native';
+import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
+import StarshipsDetails from '../StarshipDetails/StarshipDetails';
+import StarshipIsButton from '../StarshipIsButton/StarshipIsButton';
+import {StarshipsMenuContainer} from './StarshipsTitleMenu.styles';
+
+export type StarshipsProps = Pick<
+  StarshipsTypes,
+  | 'name'
+  | 'model'
+  | 'manufacturer'
+  | 'cargo_capacity'
+  | 'cost_in_credits'
+  | 'length'
+  | 'max_atmosphering_speed'
+  | 'crew'
+  | 'hyperdrive_rating'
+  | 'passengers'
+  | 'pilots'
+  | 'starship_class'
+  | 'consumables'
+  | 'MGLT'
+>;
+
+type StarshipsTitleMenuProps = {
+  starship: StarshipsProps;
+};
+/* 
+I need will do area click with padding in button
+
+*/
+const StarshipsTitleMenu = ({starship}: StarshipsTitleMenuProps) => {
+  const [isDetails, setIsDetails] = useState(false);
+  const {name} = starship;
+  return (
+    <StarshipsMenuContainer>
+      <StarshipIsButton
+        name={name}
+        isDetails={isDetails}
+        setIsDetails={setIsDetails}
+      />
+
+      {isDetails ? <StarshipsDetails starship={starship} /> : null}
+    </StarshipsMenuContainer>
+  );
+};
+
+export default StarshipsTitleMenu;

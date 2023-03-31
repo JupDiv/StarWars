@@ -1,20 +1,13 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
-import {RouteProp} from '@react-navigation/native';
 import {setStarships} from '../../redux/slices/starshipsCharastersSlice';
 import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
 import {useAppDispatch} from '../../redux/hooks/hooks';
+import {ScreenContainer} from './ScreenStarShips.styles';
+import StarshipsTitleMenu from '../../components/StarshipsTitleMenu/StarshipsTitleMenu';
 
-type RootStackParamList = {
-  ScreenStarShips: {name: string};
-};
-type ScreenStarShipsProps = {
-  route: RouteProp<RootStackParamList, 'ScreenStarShips'>;
-};
-
-const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
-  const {name} = route.params;
+const ScreenStarShips = () => {
   const dispatch = useAppDispatch();
   const starShips = useAppSelector(state => state.starshipsData.starships);
 
@@ -27,16 +20,13 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   }, [dispatch]);
 
   return (
-    <View>
-      {starShips.map(item => {
-        return (
-          <Text style={{color: 'white'}} key={item.name}>
-            {item.name}
-          </Text>
-        );
-      })}
-      <Text>{name}</Text>
-    </View>
+    <ScreenContainer>
+      <FlatList
+        data={starShips}
+        renderItem={({item}) => <StarshipsTitleMenu starship={item} />}
+        keyExtractor={item => item.name}
+      />
+    </ScreenContainer>
   );
 };
 
