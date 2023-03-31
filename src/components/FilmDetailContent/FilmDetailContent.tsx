@@ -7,8 +7,6 @@ import {
   FilmDetailBlockInfoText,
   FilmDetailBlockDescription,
   FilmDetailBlockDescriptionText,
-  FilmDetailButtonClose,
-  FilmDetailButtonCloseText,
 } from './FilmDetailsContent.styled';
 
 type FilmDetailsProps = {
