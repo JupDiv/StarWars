@@ -19,6 +19,9 @@ const ScreenStarShips = () => {
     fetchStarShips();
   }, [dispatch]);
 
+  // I need will do function which return url and name of starship and then I will use it in FlatList
+  // as conditionally for component and
+
   return (
     <ScreenContainer>
       <FlatList
