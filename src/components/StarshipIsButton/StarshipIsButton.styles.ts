@@ -2,6 +2,10 @@ import styled from 'styled-components/native';
 import {Dimensions} from 'react-native';
 import {colors, typography} from '../../styles/theme';
 
+type StarShipIsButtonContainerType = {
+  isHighlighted: boolean;
+};
+
 export const StarshipIsButtonContainer = styled.ScrollView`
   border: 1px solid white;
   border-radius: 10px;
@@ -10,6 +14,8 @@ export const StarshipIsButtonContainer = styled.ScrollView`
   width: ${Dimensions.get('window').width - 20}px;
   overflow: hidden;
   background-color: ${colors.primary};
+  border: ${({isHighlighted}: StarShipIsButtonContainerType) =>
+    isHighlighted ? '5px solid green' : '5px solid red'};
 `;
 export const StarshipIsButtonTouchable = styled.TouchableOpacity``;
 export const StarshipIsButtonText = styled.Text`

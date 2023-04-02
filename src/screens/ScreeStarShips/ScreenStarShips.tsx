@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {setStarships} from '../../redux/slices/starshipsCharastersSlice';
@@ -6,29 +6,57 @@ import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import {ScreenContainer} from './ScreenStarShips.styles';
 import StarshipsTitleMenu from '../../components/StarshipsTitleMenu/StarshipsTitleMenu';
+import {RouteProp} from '@react-navigation/native';
+import {useGetCharasterURL} from '../../redux/hooks/customHooks';
+import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
+import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
+import Pagination from '../../components/Pagination/Pagination';
 
-const ScreenStarShips = () => {
+type RootStackParamList = {
+  ScreenStarShips: {name: string};
+};
+type ScreenStarShipsProps = {
+  route: RouteProp<RootStackParamList, 'ScreenStarShips'>;
+};
+
+const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
+  const {name} = route.params;
   const dispatch = useAppDispatch();
-  const starShips = useAppSelector(state => state.starshipsData.starships);
+  const starShipsData = useAppSelector(state => state.starshipsData.starships);
+  const urlCharaster = useGetCharasterURL(name);
+  const [currentPage, setCurrentPage] = useState(1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStarShips = async () => {
-      const starShips = await FetchStarShips();
-      dispatch(setStarships(starShips));
+      const {results} = await FetchStarShips(currentPage);
+      setIsLoading(false);
+      dispatch(setStarships(results));
     };
     fetchStarShips();
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
 
-  // I need will do function which return url and name of starship and then I will use it in FlatList
-  // as conditionally for component and
+  const filteredStarShips = starShipsData.filter((item: StarshipsTypes) => {
+    return item.pilots.some((url: string) => url === urlCharaster);
+  });
 
   return (
     <ScreenContainer>
-      <FlatList
-        data={starShips}
-        renderItem={({item}) => <StarshipsTitleMenu starship={item} />}
-        keyExtractor={item => item.name}
-      />
+      {isLoading ? (
+        <StarWarsLoader />
+      ) : (
+        <FlatList
+          data={starShipsData}
+          renderItem={({item}) => (
+            <StarshipsTitleMenu
+              isHighlighted={filteredStarShips.includes(item)}
+              starship={item}
+            />
+          )}
+          keyExtractor={item => item.name}
+        />
+      )}
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
     </ScreenContainer>
   );
 };

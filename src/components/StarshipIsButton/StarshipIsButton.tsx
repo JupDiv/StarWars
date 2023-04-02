@@ -1,5 +1,3 @@
-import {Text, View, TouchableOpacity} from 'react-native';
-
 import {
   StarshipIsButtonContainer,
   StarshipIsButtonTouchable,
@@ -10,20 +8,20 @@ type StarshipIsButtonProps = {
   setIsDetails: (value: boolean) => void;
   name: string;
   isDetails: boolean;
+  isHighlighted: boolean;
 };
 
-const StarshipIsButton = ({
+export default function StarshipIsButton({
   name,
   setIsDetails,
   isDetails,
-}: StarshipIsButtonProps) => {
+  isHighlighted,
+}: StarshipIsButtonProps) {
   return (
-    <StarshipIsButtonContainer>
+    <StarshipIsButtonContainer isHighlighted={isHighlighted}>
       <StarshipIsButtonTouchable onPress={() => setIsDetails(!isDetails)}>
         <StarshipIsButtonText>{name}</StarshipIsButtonText>
       </StarshipIsButtonTouchable>
     </StarshipIsButtonContainer>
   );
-};
-
-export default StarshipIsButton;
+}

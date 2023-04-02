@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {ScrollView} from 'react-native';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarshipsDetails from '../StarshipDetails/StarshipDetails';
 import StarshipIsButton from '../StarshipIsButton/StarshipIsButton';
@@ -24,21 +23,27 @@ export type StarshipsProps = Pick<
 >;
 
 type StarshipsTitleMenuProps = {
-  starship: StarshipsProps;
+  starship: StarshipsTypes;
+  isHighlighted: boolean;
 };
 /* 
 I need will do area click with padding in button
 
 */
-const StarshipsTitleMenu = ({starship}: StarshipsTitleMenuProps) => {
+const StarshipsTitleMenu = ({
+  starship,
+  isHighlighted,
+}: StarshipsTitleMenuProps) => {
   const [isDetails, setIsDetails] = useState(false);
   const {name} = starship;
+
   return (
     <StarshipsMenuContainer>
       <StarshipIsButton
         name={name}
         isDetails={isDetails}
         setIsDetails={setIsDetails}
+        isHighlighted={isHighlighted}
       />
 
       {isDetails ? <StarshipsDetails starship={starship} /> : null}

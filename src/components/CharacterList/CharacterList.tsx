@@ -12,17 +12,22 @@ import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import PaginationControls from '../PaginationControls/PaginationControls';
 import FavoriteStats from '../FavoriteStats/FavoriteStats';
+import StarWarsLoader from '../StarWarsLoader/StarWarsLoader';
 
 function CharacterList(): JSX.Element {
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.fetchData.charaster);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isToggle, setIsToggle] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    FetchCharacters(currentPage).then(response => {
+    async function fetchData() {
+      const response = await FetchCharacters(currentPage);
       dispatch(addCharasters(response));
-    });
+      setIsLoading(false);
+    }
+    fetchData();
   }, [currentPage, dispatch]);
 
   return (
@@ -32,11 +37,17 @@ function CharacterList(): JSX.Element {
         backgroundColor: colors.dark,
       }}>
       <FavoriteStats isToggle={isToggle} setIsToggle={setIsToggle} />
-      <FlatList
-        data={data}
-        renderItem={({item}) => <CharacterCard isToggle={isToggle} {...item} />}
-        keyExtractor={(item: CharasterTypes) => (item.id ? item.id : '0')}
-      />
+      {isLoading ? (
+        <StarWarsLoader />
+      ) : (
+        <FlatList
+          data={data}
+          renderItem={({item}) => (
+            <CharacterCard isToggle={isToggle} {...item} />
+          )}
+          keyExtractor={(item: CharasterTypes) => (item.id ? item.id : '0')}
+        />
+      )}
 
       <PaginationControls
         currentPage={currentPage}

@@ -1,10 +1,16 @@
-import React, {useEffect} from 'react';
-import {View, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
 import {setVehicles} from '../../redux/slices/vehiclesCharastersSlice';
 import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
 import {useAppDispatch} from '../../redux/hooks/hooks';
+import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
+import Pagination from '../../components/Pagination/Pagination';
+import {VehieclesContainer} from './ScreenVehicles.styles';
+import VehiclesTitleMenu from '../../components/VehiclesTitleMenu/VehiclesTitleMenu';
+import {useGetCharasterURL} from '../../redux/hooks/customHooks';
+import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 
 type RootStackParamList = {
   ScreenVehicles: {name: string};
@@ -16,27 +22,42 @@ type ScreenStarShipsProps = {
 const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
   const {name} = route.params;
   const dispatch = useAppDispatch();
-  const vehicles = useAppSelector(state => state.vehiclesData.vehicles);
+  const vehiclesData = useAppSelector(state => state.vehiclesData.vehicles);
+  const urlCharaster = useGetCharasterURL(name);
+  const [currentPage, setCurrentPage] = useState(1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchVehicles = async () => {
-      const vehicles = await FetchVehicles();
-      dispatch(setVehicles(vehicles));
+      const {results} = await FetchVehicles(currentPage);
+      setIsLoading(false);
+      dispatch(setVehicles(results));
     };
     fetchVehicles();
-  }, [dispatch]);
+  }, [dispatch, currentPage]);
+
+  const filteredVehicles = vehiclesData.filter((item: VehiclesTypes) => {
+    return item.pilots.some((url: string) => url === urlCharaster);
+  });
 
   return (
-    <View>
-      {vehicles.map(item => {
-        return (
-          <Text style={{color: 'white'}} key={item.name}>
-            {item.name}
-          </Text>
-        );
-      })}
-      <Text>{name}</Text>
-    </View>
+    <VehieclesContainer>
+      {isLoading ? (
+        <StarWarsLoader />
+      ) : (
+        <FlatList
+          data={vehiclesData}
+          renderItem={({item}) => (
+            <VehiclesTitleMenu
+              isHighlighted={filteredVehicles.includes(item)}
+              vehicle={item}
+            />
+          )}
+          keyExtractor={item => item.model}
+        />
+      )}
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} />
+    </VehieclesContainer>
   );
 };
 

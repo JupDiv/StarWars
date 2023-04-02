@@ -1,15 +1,15 @@
 import {ScrollView, Text} from 'react-native';
-import {StarshipsProps} from '../StarshipsTitleMenu/StarshipsTitleMenu';
+import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {useDetailInfoForDisplay} from '../../redux/hooks/customHooks';
 
-type StarshipDetailsProp = {
-  starship: StarshipsProps;
+type VehiclesDetailsProp = {
+  vehicle: VehiclesTypes;
 };
 
-const StarshipsDetails = ({starship}: StarshipDetailsProp) => {
-  const arrayStarships = Object.entries(starship);
+export default function VehiclesDetails({vehicle}: VehiclesDetailsProp) {
+  const arrayVehicles = Object.entries(vehicle);
 
-  const filteredArray = useDetailInfoForDisplay(arrayStarships);
+  const filteredArray = useDetailInfoForDisplay(arrayVehicles);
 
   //after test remove index from key
   return (
@@ -21,6 +21,4 @@ const StarshipsDetails = ({starship}: StarshipDetailsProp) => {
       ))}
     </ScrollView>
   );
-};
-
-export default StarshipsDetails;
+}

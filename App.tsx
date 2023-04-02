@@ -50,7 +50,13 @@ export default function App() {
             name="ScreenFilms"
             component={ScreenFilms}
           />
-          <Stack.Screen name="ScreenStarShips" component={ScreenStarShips} />
+          <Stack.Screen
+            options={{
+              title: 'Starships',
+            }}
+            name="ScreenStarShips"
+            component={ScreenStarShips}
+          />
           <Stack.Screen name="ScreenVehicles" component={ScreenVehicles} />
         </Stack.Navigator>
       </Provider>
