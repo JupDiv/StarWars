@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {colors} from '../../styles/theme';
+import {colors, typography} from '../../styles/theme';
 import {Dimensions} from 'react-native';
 
 type VehiclesIsButtonContainerType = {
@@ -18,4 +18,10 @@ export const VehieclesButtonContainer = styled.ScrollView`
     isHighlighted ? '5px solid green' : '5px solid red'};
 `;
 export const VehieclesIsButtonTouchable = styled.TouchableOpacity``;
-export const VehieclesButtonText = styled.Text``;
+export const VehieclesButtonText = styled.Text`
+  color: ${colors.dark};
+  font-size: ${typography.subtitle.fontSize}px;
+  font-weight: ${typography.subtitle.fontWeight};
+  font-family: ${typography.subtitle.fontFamily};
+  text-align: center;
+`;

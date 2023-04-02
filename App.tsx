@@ -57,7 +57,11 @@ export default function App() {
             name="ScreenStarShips"
             component={ScreenStarShips}
           />
-          <Stack.Screen name="ScreenVehicles" component={ScreenVehicles} />
+          <Stack.Screen
+            options={{title: 'Vehicles'}}
+            name="ScreenVehicles"
+            component={ScreenVehicles}
+          />
         </Stack.Navigator>
       </Provider>
     </NavigationContainer>
