@@ -10,9 +10,10 @@ import {addCharasters} from '../../redux/slices/charactersDataSlice';
 import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import CharacterCard from '../CharacterCard/CharacterCard';
-import PaginationControls from '../PaginationControls/PaginationControls';
+import PaginationMainPage from '../PaginationMainPage/PaginationMainPage';
 import FavoriteStats from '../FavoriteStats/FavoriteStats';
 import StarWarsLoader from '../StarWarsLoader/StarWarsLoader';
+import Pagination from '../PaginationCommonPage/PaginationCommonPage';
 
 function CharacterList(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -49,7 +50,7 @@ function CharacterList(): JSX.Element {
         />
       )}
 
-      <PaginationControls
+      <PaginationMainPage
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
