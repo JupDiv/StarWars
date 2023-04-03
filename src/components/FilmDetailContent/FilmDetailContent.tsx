@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated} from 'react-native';
+import React from 'react';
+
 import {
   FilmDetailBlockInfo,
   FilmDetailBlockInfoGroup,

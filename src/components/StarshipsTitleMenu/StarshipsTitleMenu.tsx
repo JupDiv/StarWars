@@ -46,7 +46,9 @@ const StarshipsTitleMenu = ({
         isHighlighted={isHighlighted}
       />
 
-      {isDetails ? <StarshipsDetails starship={starship} /> : null}
+      {isDetails ? (
+        <StarshipsDetails isHighlighted={isHighlighted} starship={starship} />
+      ) : null}
     </StarshipsMenuContainer>
   );
 };

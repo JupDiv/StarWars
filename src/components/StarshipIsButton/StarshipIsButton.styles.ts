@@ -11,7 +11,7 @@ export const StarshipIsButtonContainer = styled.ScrollView`
   border-radius: 10px;
   margin-top: 10px;
   padding: 8px;
-  width: ${Dimensions.get('window').width - 20}px;
+  width: ${Dimensions.get('window').width}px;
   overflow: hidden;
   background-color: ${colors.primary};
   border: ${({isHighlighted}: StarShipIsButtonContainerType) =>

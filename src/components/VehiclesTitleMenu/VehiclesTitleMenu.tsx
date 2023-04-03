@@ -26,7 +26,9 @@ export default function VehiclesTitleMenu({
         isDetails={isDetails}
         isHighlighted={isHighlighted}
       />
-      {isDetails ? <VehiclesDetails vehicle={vehicle} /> : null}
+      {isDetails ? (
+        <VehiclesDetails vehicle={vehicle} isHighlighted={isHighlighted} />
+      ) : null}
     </VehieclesTitleMenuContainer>
   );
 }
