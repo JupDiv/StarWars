@@ -17,9 +17,13 @@ export const Star = styled(Animated.View)`
   background-color: ${colors.light};
 `;
 
-export const DeathStar = styled(Animated.Image)`
+export const StarsContainer = styled.View`
   position: absolute;
-  width: 80px;
-  height: 80px;
-  resize-mode: contain;
+  width: 800px;
+  height: 800px;
+  top: 50%;
+  left: 50%;
+  margin-top: -400px;
+  margin-left: -400px;
+  z-index: 1;
 `;

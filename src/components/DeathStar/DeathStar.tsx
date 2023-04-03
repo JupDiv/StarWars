@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated} from 'react-native';
+import {DeathStarImg} from './DeathStar.styles';
 
 interface DeathStarProps {
   source: any;
@@ -7,5 +7,5 @@ interface DeathStarProps {
 }
 
 export default function DeathStar({source, style}: DeathStarProps) {
-  return <Animated.Image source={source} style={style} />;
+  return <DeathStarImg source={source} style={style} />;
 }
