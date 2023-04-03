@@ -23,8 +23,8 @@ function CharacterList(): JSX.Element {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await FetchCharacters(currentPage);
-      dispatch(addCharasters(response));
+      const {results} = await FetchCharacters(currentPage);
+      dispatch(addCharasters(results));
       setIsLoading(false);
     }
     fetchData();

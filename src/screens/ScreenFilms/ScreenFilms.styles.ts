@@ -5,7 +5,6 @@ import {Dimensions, SafeAreaView} from 'react-native';
 export const Container = styled.SafeAreaView`
   display: flex;
   flex: 1;
-  background-color: ${colors.light};
 `;
 export const Block = styled.View`
   height: 100%;

@@ -1,11 +1,11 @@
 import {useEffect, useState} from 'react';
-import getPagination from '../../utlis/FetchData/FetchPaginatedData';
 import {CommonTypes} from '../../entites/types/CommonTypes';
 import {
   BlockButton,
   PaginationButtonStyle,
   PaginationButtonText,
 } from './PaginationControls.styles';
+import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
 
 type paginationResponse = Pick<CommonTypes, 'next' | 'previous'>;
 
@@ -27,7 +27,9 @@ export default function PaginationControls({
     useState<paginationResponse>(initialState);
 
   useEffect(() => {
-    getPagination(currentPage).then(response => setPagination(response));
+    FetchCharacters(currentPage).then(({next, previous}: paginationResponse) =>
+      setPagination({next, previous}),
+    );
   }, [currentPage]);
 
   const disabledButton = (

@@ -1,18 +1,20 @@
 import axios from 'axios';
-import {CharasterTypes} from '../../entites/types/CharasterTypes';
+import {CommonTypes} from '../../entites/types/CommonTypes';
+
+type responseCharacters = Pick<CommonTypes, 'next' | 'previous' | 'results'>;
 
 const FetchCharacters = async (
   numberOfPage: number,
-): Promise<CharasterTypes[]> => {
+): Promise<responseCharacters> => {
   try {
     const url = 'https://swapi.dev/api/people/';
     const {
-      data: {results},
-    } = await axios.get<{results: CharasterTypes[]}>(url, {
+      data: {next, previous, results},
+    } = await axios.get<CommonTypes>(url, {
       headers: {'Content-Type': 'application/json'},
       params: {page: numberOfPage},
     });
-    return results;
+    return {next, previous, results};
   } catch (error) {
     throw new Error('An error occurred while fetching characters.');
   }
