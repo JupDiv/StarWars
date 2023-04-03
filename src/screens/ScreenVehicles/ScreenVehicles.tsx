@@ -24,7 +24,7 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
   const dispatch = useAppDispatch();
   const vehiclesData = useAppSelector(state => state.vehiclesData.vehicles);
   const urlCharaster = useGetCharasterURL(name);
-  const [currentPage, setCurrentPage] = useState(1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

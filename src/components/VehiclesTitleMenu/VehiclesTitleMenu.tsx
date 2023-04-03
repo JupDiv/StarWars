@@ -1,9 +1,6 @@
 import React, {useState} from 'react';
 import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
-import {
-  VehieclesTitleMenuContainer,
-  VehieclesTitleMenuTitle,
-} from './VehiclesTitleMenu.styles';
+import {VehieclesTitleMenuContainer} from './VehiclesTitleMenu.styles';
 import VehiclesButton from '../VehiscleIsButton/VehicleIsButton';
 import VehiclesDetails from '../VehicleDetails/VehiclesDetails';
 

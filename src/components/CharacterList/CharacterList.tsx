@@ -32,11 +32,7 @@ function CharacterList(): JSX.Element {
   }, [currentPage, dispatch]);
 
   return (
-    <CharasterListContainer
-      style={{
-        flex: 1,
-        backgroundColor: colors.dark,
-      }}>
+    <CharasterListContainer>
       <FavoriteStats isToggle={isToggle} setIsToggle={setIsToggle} />
       {isLoading ? (
         <StarWarsLoader />
@@ -44,7 +40,7 @@ function CharacterList(): JSX.Element {
         <FlatList
           data={data}
           renderItem={({item}) => (
-            <CharacterCard isToggle={isToggle} {...item} />
+            <CharacterCard isToggle={isToggle} charaster={item} />
           )}
           keyExtractor={(item: CharasterTypes) => (item.id ? item.id : '0')}
         />
