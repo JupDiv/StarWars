@@ -19,7 +19,7 @@ type FilmDetailsProps = {
   description: string;
 };
 
-const FilmsDetails = ({content, description}: FilmDetailsProps) => {
+export default function FilmsDetails({content, description}: FilmDetailsProps) {
   return (
     <>
       <FilmDetailBlockInfo>
@@ -37,6 +37,4 @@ const FilmsDetails = ({content, description}: FilmDetailsProps) => {
       </FilmDetailBlockInfo>
     </>
   );
-};
-
-export default FilmsDetails;
+}

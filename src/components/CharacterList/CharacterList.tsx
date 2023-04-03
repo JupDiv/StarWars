@@ -1,10 +1,6 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable import/no-unresolved */
-/* eslint-disable import/extensions */
 import React from 'react';
 import {useEffect, useState} from 'react';
-import {FlatList, SafeAreaView} from 'react-native';
-import {colors} from '../../styles/theme';
+import {FlatList} from 'react-native';
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
 import {addCharasters} from '../../redux/slices/charactersDataSlice';
 import FetchCharacters from '../../utlis/FetchData/FetchCharacters';

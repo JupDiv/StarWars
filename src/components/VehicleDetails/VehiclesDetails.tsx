@@ -1,4 +1,3 @@
-import {ScrollView, Text} from 'react-native';
 import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {useDetailInfoForDisplay} from '../../redux/hooks/customHooks';
 import {

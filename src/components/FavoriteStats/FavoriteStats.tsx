@@ -1,6 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
 import {resetValueButton} from '../../redux/slices/favoriteCharactersSlice';
 import {
@@ -11,7 +8,6 @@ import {
   HeaderResetButton,
   HeaderButtonText,
 } from './FavoriteStats.styles';
-import {useNavigation} from '@react-navigation/native';
 
 type genderArrayType = {id: number; gender: string; count: number}[];
 type FavouriteWindowsProps = {
@@ -27,7 +23,6 @@ export default function FavoriteStats({
   const female = useAppSelector(state => state.favouriteCharaster.female);
   const male = useAppSelector(state => state.favouriteCharaster.male);
   const other = useAppSelector(state => state.favouriteCharaster.other);
-  const navigation = useNavigation();
 
   const genderArray: genderArrayType = [
     {id: 1, gender: 'male', count: male.length},

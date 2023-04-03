@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Container, Star} from './StarWarsLoader.styles';
 import {Animated} from 'react-native';
 import DeathStar from '../DeathStar/DeathStar';
@@ -17,7 +17,7 @@ const generateStars = (starCount: number) => {
   ));
 };
 
-const StarWarsLoader = () => {
+export default function StarWarsLoader() {
   const stars = useRef(generateStars(100)).current;
   const rotation = useRef(new Animated.Value(0)).current;
   const animationValues = useRef(
@@ -64,6 +64,6 @@ const StarWarsLoader = () => {
       />
     </Container>
   );
-};
+}
 
-export default StarWarsLoader;
+StarWarsLoader;

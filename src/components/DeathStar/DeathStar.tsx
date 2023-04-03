@@ -6,8 +6,6 @@ interface DeathStarProps {
   style: any;
 }
 
-const DeathStar: React.FC<DeathStarProps> = ({source, style}) => {
+export default function DeathStar({source, style}: DeathStarProps) {
   return <Animated.Image source={source} style={style} />;
-};
-
-export default DeathStar;
+}

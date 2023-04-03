@@ -30,10 +30,10 @@ type StarshipsTitleMenuProps = {
 I need will do area click with padding in button
 
 */
-const StarshipsTitleMenu = ({
+export default function StarshipsTitleMenu({
   starship,
   isHighlighted,
-}: StarshipsTitleMenuProps) => {
+}: StarshipsTitleMenuProps) {
   const [isDetails, setIsDetails] = useState(false);
   const {name} = starship;
 
@@ -51,6 +51,4 @@ const StarshipsTitleMenu = ({
       ) : null}
     </StarshipsMenuContainer>
   );
-};
-
-export default StarshipsTitleMenu;
+}

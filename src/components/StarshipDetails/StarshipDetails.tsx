@@ -1,4 +1,3 @@
-import {ScrollView, Text} from 'react-native';
 import {StarshipsProps} from '../StarshipsTitleMenu/StarshipsTitleMenu';
 import {useDetailInfoForDisplay} from '../../redux/hooks/customHooks';
 import {
@@ -13,7 +12,10 @@ type StarshipDetailsProp = {
   isHighlighted: boolean;
 };
 
-const StarshipsDetails = ({starship, isHighlighted}: StarshipDetailsProp) => {
+export default function StarshipsDetails({
+  starship,
+  isHighlighted,
+}: StarshipDetailsProp) {
   const arrayStarships = Object.entries(starship);
 
   const filteredArray = useDetailInfoForDisplay(arrayStarships);
@@ -29,8 +31,4 @@ const StarshipsDetails = ({starship, isHighlighted}: StarshipDetailsProp) => {
       ))}
     </StarshipDetailsContainer>
   );
-};
-
-export default StarshipsDetails;
-
-//style={{backgroundColor: 'white'}}
+}
