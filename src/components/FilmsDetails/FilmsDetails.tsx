@@ -1,37 +1,34 @@
+import React, {useState, useEffect, useRef} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
+import FilmsDetailContent from '../FilmDetailContent/FilmDetailContent';
+import FilmDetailsButton from '../FilmDetailsButton/FilmDetailsButton';
+import {Animated} from 'react-native';
 
-import {
-  FilmsDetailsContainer,
-  FilmsDetailsText,
-  FilmsHeaderTitle,
-  FilmsTableBody,
-  FilmsDetailsBody,
-  FilmsDetailsButton,
-  FilmsDetailsButtonText,
-  FilmsHeaderBody,
-  ModalStyled,
-  FilmsDescriptionBlock,
-  FilmsDetailsTableText,
-  FilmsDetailsTableTitile,
-} from './FilmsDetails.styles';
+import {FilmDetailsContainer} from './FilmsDetails.styles';
 
-type FilmsMenuProps = {
-  setSelectedFilm: (value: null) => void;
-  setModalVisible: (value: boolean) => void;
-  modalVisible: boolean;
+type FilmDetailsProps = Pick<
+  FilmsTypes,
+  | 'title'
+  | 'episode_id'
+  | 'release_date'
+  | 'opening_crawl'
+  | 'producer'
+  | 'director'
+> & {
+  isHighlighted: boolean;
 };
 
 function FilmsDetails({
   title,
   episode_id,
-  opening_crawl,
-  director,
-  producer,
   release_date,
-  setSelectedFilm,
-  setModalVisible,
-  modalVisible,
-}: FilmsTypes & FilmsMenuProps): JSX.Element {
+  opening_crawl,
+  producer,
+  director,
+  isHighlighted,
+}: FilmDetailsProps): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false);
+  const translateYAnimation = useRef(new Animated.Value(-40)).current;
   const groupDataFilm = {
     Episode: episode_id,
     Director: director,
@@ -39,38 +36,46 @@ function FilmsDetails({
     Release: release_date,
   };
 
+  const toggleAnimation = () => {
+    if (isOpen) {
+      Animated.timing(translateYAnimation, {
+        toValue: -40,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start(() => setIsOpen(false));
+    } else {
+      setIsOpen(true);
+      Animated.timing(translateYAnimation, {
+        toValue: 5,
+        duration: 1500,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
+  const animatedContainerStyle = {
+    transform: [{translateY: translateYAnimation}],
+  };
+
   return (
-    <ModalStyled
-      presentationStyle="fullScreen"
-      animationType="slide"
-      visible={modalVisible}
-      onRequestClose={() => {
-        setModalVisible(!modalVisible);
-      }}>
-      <FilmsDetailsContainer>
-        <FilmsHeaderBody>
-          <FilmsHeaderTitle>{title}</FilmsHeaderTitle>
-          {Object.entries(groupDataFilm).map(([key, value]) => {
-            return (
-              <FilmsTableBody key={key}>
-                <FilmsDetailsTableTitile>{key}</FilmsDetailsTableTitile>
-                <FilmsDetailsTableText numberOfLines={1}>
-                  {value}
-                </FilmsDetailsTableText>
-              </FilmsTableBody>
-            );
-          })}
-        </FilmsHeaderBody>
-        <FilmsDescriptionBlock>
-          <FilmsDetailsText>{opening_crawl}</FilmsDetailsText>
-        </FilmsDescriptionBlock>
-        <FilmsDetailsBody>
-          <FilmsDetailsButton onPress={() => setSelectedFilm(null)}>
-            <FilmsDetailsButtonText>Back</FilmsDetailsButtonText>
-          </FilmsDetailsButton>
-        </FilmsDetailsBody>
-      </FilmsDetailsContainer>
-    </ModalStyled>
+    <>
+      <FilmDetailsButton
+        onHandler={toggleAnimation}
+        title={title}
+        isHighlighted={isHighlighted}
+        isOpen={isOpen}
+      />
+      <Animated.View style={animatedContainerStyle}>
+        <FilmDetailsContainer>
+          {isOpen ? (
+            <FilmsDetailContent
+              description={opening_crawl}
+              content={groupDataFilm}
+            />
+          ) : null}
+        </FilmDetailsContainer>
+      </Animated.View>
+    </>
   );
 }
 

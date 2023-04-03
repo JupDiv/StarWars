@@ -1,29 +1,30 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import { useState } from 'react';
+import {useState} from 'react';
 import {
   CardContainer,
   CardNameButton,
   CardButtonText,
 } from './CharacterCard.styles';
 import CharacterDetails from '../CharacterDetails/CharacterDetails';
-import { CharasterTypes } from '../../entites/types/CharasterTypes';
+import {CharasterTypes} from '../../entites/types/CharasterTypes';
 
-type AdditionalProps = {
+type CharacterCardProps = {
   isToggle: boolean;
+  charaster: CharasterTypes;
 };
 
-function CharacterCard({
-  name,
-  ...other
-}: CharasterTypes & AdditionalProps): JSX.Element {
+function CharacterCard({charaster, isToggle}: CharacterCardProps): JSX.Element {
   const [isOpen, setToggle] = useState<boolean>(false);
+  const {name} = charaster;
   return (
     <CardContainer>
       <CardNameButton onPress={() => setToggle(!isOpen)}>
         <CardButtonText>{name}</CardButtonText>
       </CardNameButton>
-      {isOpen ? <CharacterDetails name={name} {...other} /> : null}
+      {isOpen ? (
+        <CharacterDetails isToggle={isToggle} charaster={charaster} />
+      ) : null}
     </CardContainer>
   );
 }

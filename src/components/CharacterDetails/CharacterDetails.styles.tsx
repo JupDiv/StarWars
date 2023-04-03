@@ -49,6 +49,7 @@ export const CharasterTextTitle = styled.Text`
   font-size: ${typography.subtitle.fontSize}px;
   font-weight: ${typography.subtitle.fontWeight};
   color: ${colors.primary};
+  text-transform: capitalize;
 `;
 
 export const CharasterText = styled.Text`

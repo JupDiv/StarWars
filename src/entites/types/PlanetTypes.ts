@@ -13,4 +13,5 @@ export interface PlanetTypes {
   created: string;
   edited: string;
   url: string;
+  id?: string;
 }

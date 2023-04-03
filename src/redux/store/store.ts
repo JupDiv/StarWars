@@ -2,6 +2,8 @@ import {configureStore} from '@reduxjs/toolkit';
 import charactersDataSlice from '../slices/charactersDataSlice';
 import favoriteCharactersSlice from '../slices/favoriteCharactersSlice';
 import filmsCharactersSlice from '../slices/filmsCharactersSlice';
+import vehiclesDataSlice from '../slices/vehiclesCharastersSlice';
+import starshipsDataSlice from '../slices/starshipsCharastersSlice';
 
 const store = configureStore({
   reducer: {
@@ -9,6 +11,8 @@ const store = configureStore({
     fetchData: charactersDataSlice,
     favouriteCharaster: favoriteCharactersSlice,
     filmsData: filmsCharactersSlice,
+    vehiclesData: vehiclesDataSlice,
+    starshipsData: starshipsDataSlice,
   },
 });
 

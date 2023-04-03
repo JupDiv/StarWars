@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {CommonTypes} from '../../entites/types/CommonTypes';
 
-type responseCharacters = Pick<CommonTypes, 'next' | 'previous' | 'results'>;
+type responseStarShips = Pick<CommonTypes, 'next' | 'previous' | 'results'>;
 
-const FetchCharacters = async (
+const FetchStarShips = async (
   numberOfPage: number,
-): Promise<responseCharacters> => {
+): Promise<responseStarShips> => {
+  const url: string = 'https://swapi.dev/api/starships/';
   try {
-    const url = 'https://swapi.dev/api/people/';
     const {
       data: {next, previous, results},
     } = await axios.get<CommonTypes>(url, {
@@ -16,8 +16,8 @@ const FetchCharacters = async (
     });
     return {next, previous, results};
   } catch (error) {
-    throw new Error('An error occurred while fetching characters.');
+    throw new Error('An error occurred while fetching starships.');
   }
 };
 
-export default FetchCharacters;
+export default FetchStarShips;

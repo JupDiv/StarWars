@@ -1,11 +1,14 @@
 import {useEffect, useState} from 'react';
-import getPagination from '../../utlis/FetchData/FetchPaginatedData';
 import {CommonTypes} from '../../entites/types/CommonTypes';
 import {
   BlockButton,
   PaginationButtonStyle,
   PaginationButtonText,
-} from './PaginationControls.styles';
+} from './PaginationControl.styles';
+import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
+import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
+import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
+import {useNavigationState} from '@react-navigation/native';
 
 type paginationResponse = Pick<CommonTypes, 'next' | 'previous'>;
 
@@ -19,15 +22,32 @@ const initialState = {
   previous: '',
 };
 
-export default function PaginationControls({
+export default function PaginationControl({
   currentPage,
   setCurrentPage,
 }: DirectionProps): JSX.Element {
   const [pagination, setPagination] =
     useState<paginationResponse>(initialState);
 
+  const title = useNavigationState(state => state.routes[state.index].name);
+
   useEffect(() => {
-    getPagination(currentPage).then(response => setPagination(response));
+    if (title === 'ScreenStarShips') {
+      FetchStarShips(currentPage).then(({next, previous}: paginationResponse) =>
+        setPagination({next, previous}),
+      );
+    }
+    if (title === 'ScreenVehicles') {
+      FetchVehicles(currentPage).then(({next, previous}: paginationResponse) =>
+        setPagination({next, previous}),
+      );
+    }
+    if (title === 'Home') {
+      FetchCharacters(currentPage).then(
+        ({next, previous}: paginationResponse) =>
+          setPagination({next, previous}),
+      );
+    }
   }, [currentPage]);
 
   const disabledButton = (
