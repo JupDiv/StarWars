@@ -10,7 +10,7 @@ import {RouteProp} from '@react-navigation/native';
 import {useGetCharasterURL} from '../../redux/hooks/customHooks';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
-import PaginationCommonPage from '../../components/PaginationCommonPage/PaginationCommonPage';
+import PaginationControl from '../../components/PaginationControl/PaginationControl';
 
 type RootStackParamList = {
   ScreenStarShips: {name: string};
@@ -24,7 +24,7 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   const dispatch = useAppDispatch();
   const starShipsData = useAppSelector(state => state.starshipsData.starships);
   const urlCharaster = useGetCharasterURL(name);
-  const [currentPage, setCurrentPage] = useState(1); // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  const [currentPage, setCurrentPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
           keyExtractor={item => item.name}
         />
       )}
-      <PaginationCommonPage
+      <PaginationControl
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />

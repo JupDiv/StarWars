@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { colors, typography } from '../../styles/theme';
+import {colors, typography} from '../../styles/theme';
 
 export const BlockButton = styled.View`
   display: flex;
@@ -7,6 +7,8 @@ export const BlockButton = styled.View`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  height: 40px;
+  margin-bottom: 20px;
 `;
 
 export const PaginationButtonStyle = styled.TouchableOpacity`

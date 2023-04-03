@@ -6,7 +6,7 @@ import {setVehicles} from '../../redux/slices/vehiclesCharastersSlice';
 import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
-import PaginationCommonPage from '../../components/PaginationCommonPage/PaginationCommonPage';
+import PaginationControl from '../../components/PaginationControl/PaginationControl';
 import {VehieclesContainer} from './ScreenVehicles.styles';
 import VehiclesTitleMenu from '../../components/VehiclesTitleMenu/VehiclesTitleMenu';
 import {useGetCharasterURL} from '../../redux/hooks/customHooks';
@@ -56,7 +56,7 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
           keyExtractor={item => item.model}
         />
       )}
-      <PaginationCommonPage
+      <PaginationControl
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
       />
