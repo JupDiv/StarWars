@@ -1,9 +1,7 @@
 import React, {useEffect, useRef} from 'react';
-import {Container, Star} from './StarWarsLoader.styles';
+import {Container, Star, StarsContainer} from './StarWarsLoader.styles';
 import {Animated} from 'react-native';
 import DeathStar from '../DeathStar/DeathStar';
-
-//come up with what to do with this star ) will be very nice to have it in the future
 
 const generateStars = (starCount: number) => {
   return Array.from({length: starCount}, (_, i) => (
@@ -32,6 +30,25 @@ export default function StarWarsLoader() {
         useNativeDriver: true,
       }),
     ).start();
+
+    const animateStar = (index: number) => {
+      Animated.sequence([
+        Animated.timing(animationValues[index], {
+          toValue: 1,
+          duration: 1000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValues[index], {
+          toValue: 0,
+          duration: 1000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+      ]).start(() => animateStar(index));
+    };
+
+    animationValues.forEach((_, index) => {
+      animateStar(index);
+    });
   }, []);
 
   const rotationInterpolation = rotation.interpolate({
@@ -41,18 +58,20 @@ export default function StarWarsLoader() {
 
   return (
     <Container>
-      {stars.map((star, index) => (
-        <Animated.View
-          key={index}
-          style={[
-            star.props.style,
-            {
-              opacity: animationValues[index],
-            },
-          ]}>
-          {star}
-        </Animated.View>
-      ))}
+      <StarsContainer>
+        {stars.map((star, index) => (
+          <Animated.View
+            key={index}
+            style={[
+              star.props.style,
+              {
+                opacity: animationValues[index],
+              },
+            ]}>
+            {star}
+          </Animated.View>
+        ))}
+      </StarsContainer>
       <DeathStar
         source={require('../../../assets/images/deathStar.jpg')}
         style={{
