@@ -20,11 +20,10 @@ export default function StarshipsDetails({
 
   const filteredArray = useDetailInfoForDisplay(arrayStarships);
 
-  //after test remove index from key
   return (
     <StarshipDetailsContainer>
-      {filteredArray.map(([key, value], index) => (
-        <StarshipDetailsView key={index} isHighlighted={isHighlighted}>
+      {filteredArray.map(([key, value]) => (
+        <StarshipDetailsView key={key} isHighlighted={isHighlighted}>
           <StarshipDetailsTitle>{key}</StarshipDetailsTitle>
           <StarshipDetailsText>{value}</StarshipDetailsText>
         </StarshipDetailsView>

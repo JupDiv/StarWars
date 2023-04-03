@@ -18,6 +18,9 @@ const vehiclesDataSlice = createSlice({
   reducers: {
     setVehicles: (state, action: PayloadAction<VehiclesTypes[]>) => {
       state.vehicles = action.payload;
+      state.vehicles.map(vehicle => {
+        vehicle.id = (Math.random() * 1000).toFixed(5);
+      });
     },
   },
 });

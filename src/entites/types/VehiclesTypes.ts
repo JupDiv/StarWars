@@ -15,4 +15,5 @@ export interface VehiclesTypes {
   created: string;
   edited: string;
   url: string;
+  id: string;
 }

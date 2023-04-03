@@ -19,7 +19,8 @@ export function useDetailInfoForDisplay(array: [string, string | string[]][]) {
       key === 'pilots' ||
       key === 'created' ||
       key === 'edited' ||
-      key === 'url'
+      key === 'url' ||
+      key === 'id'
     ) {
       return false;
     }

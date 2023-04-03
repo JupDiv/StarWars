@@ -53,7 +53,7 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
               vehicle={item}
             />
           )}
-          keyExtractor={item => item.model}
+          keyExtractor={item => item.id}
         />
       )}
       <PaginationControl

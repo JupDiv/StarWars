@@ -18,6 +18,9 @@ const starshipsDataSlice = createSlice({
   reducers: {
     setStarships: (state, action: PayloadAction<StarshipsTypes[]>) => {
       state.starships = action.payload;
+      state.starships.map(starship => {
+        starship.id = (Math.random() * 1000).toFixed(5);
+      });
     },
   },
 });

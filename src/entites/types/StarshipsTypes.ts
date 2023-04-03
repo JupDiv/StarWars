@@ -17,4 +17,5 @@ export interface StarshipsTypes {
   created: string;
   edited: string;
   url: string;
+  id: string;
 }

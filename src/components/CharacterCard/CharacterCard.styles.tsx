@@ -1,4 +1,3 @@
-import {TouchableOpacity} from 'react-native';
 import styled from 'styled-components/native';
 import {colors, typography} from '../../styles/theme';
 
@@ -22,7 +21,7 @@ export const CardBody = styled.Text`
   color: ${colors.light};
 `;
 
-export const CardNameButton = styled(TouchableOpacity)`
+export const CardNameButton = styled.TouchableOpacity`
   font-family: ${typography.title.fontFamily};
   font-size: ${typography.title.fontSize}px;
   font-weight: ${typography.title.fontWeight};

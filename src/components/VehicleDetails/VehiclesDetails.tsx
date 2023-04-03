@@ -23,8 +23,8 @@ export default function VehiclesDetails({
   //after test remove index from key
   return (
     <VehiclesDetailsContainer>
-      {filteredArray.map(([key, value], index) => (
-        <VehiclesDetailsView key={index} isHighlighted={isHighlighted}>
+      {filteredArray.map(([key, value]) => (
+        <VehiclesDetailsView key={key} isHighlighted={isHighlighted}>
           <VehiclesDetailsTitle>{key}</VehiclesDetailsTitle>
           <VehiclesDetailsText>{value}</VehiclesDetailsText>
         </VehiclesDetailsView>
