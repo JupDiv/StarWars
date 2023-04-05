@@ -22,10 +22,16 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
   const dispatch = useAppDispatch();
   const filmsData = useAppSelector(state => state.filmsData.films);
   const loading = useAppSelector(state => state.filmsData.loading);
+  const status = useAppSelector(state => state.filmsData.status);
   const urlCharaster = useGetCharasterURL(name);
 
   useEffect(() => {
-    dispatch(fetchFilms());
+    if (status === 'idle') {
+      dispatch(fetchFilms());
+    }
+    if (status === 'rejected') {
+      throw new Error('An error occurred while fetching films.');
+    }
   }, [dispatch]);
 
   const filteredFilms = filmsData.filter((item: FilmsTypes) => {

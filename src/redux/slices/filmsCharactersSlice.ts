@@ -13,14 +13,23 @@ export const fetchFilms = createAsyncThunk(
 
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 
+enum Status {
+  IDLE = 'idle',
+  REJECTED = 'rejected',
+  PENDING = 'pending',
+  FULFILLED = 'fulfilled',
+}
+
 type InitialStateType = {
   films: FilmsTypes[];
   loading: boolean;
+  status: Status;
 };
 
 const initialState: InitialStateType = {
   films: [],
   loading: true,
+  status: Status.IDLE,
 };
 
 const filmsCharactersSlice = createSlice({
@@ -34,14 +43,17 @@ const filmsCharactersSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchFilms.pending, state => {
+        state.status = Status.PENDING;
         state.loading = true;
       })
       .addCase(fetchFilms.fulfilled, (state, action) => {
         state.films = action.payload;
         state.loading = false;
+        state.status = Status.FULFILLED;
       })
       .addCase(fetchFilms.rejected, state => {
         state.loading = false;
+        state.status = Status.REJECTED;
       });
   },
 });
