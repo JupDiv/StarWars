@@ -10,6 +10,7 @@ import {useAppDispatch} from '../../redux/hooks/hooks';
 import {FlatList} from 'react-native';
 import {useGetCharasterURL} from '../../redux/hooks/customHooks';
 import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
+import {fetchFilms} from '../../redux/slices/filmsCharactersSlice';
 
 type RootStackParamList = {
   ScreenFilms: {name: string};
@@ -26,12 +27,8 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchFilms = async () => {
-      const films = await FetchFilms();
-      setIsLoading(false);
-      dispatch(setFilms(films));
-    };
-    fetchFilms();
+    dispatch(fetchFilms());
+    setIsLoading(false);
   }, [dispatch]);
 
   const filteredFilms = filmsData.filter((item: FilmsTypes) => {

@@ -1,6 +1,15 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store/store';
+import FetchFilms from '../../utlis/FetchData/FetchFilms';
+
+export const fetchFilms = createAsyncThunk(
+  'filmsCharactersSlice/fetchFilms',
+  async () => {
+    const response = await FetchFilms();
+    return response;
+  },
+);
 
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 
@@ -19,6 +28,11 @@ const filmsCharactersSlice = createSlice({
     setFilms: (state, action: PayloadAction<FilmsTypes[]>) => {
       state.films = action.payload;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(fetchFilms.fulfilled, (state, action) => {
+      state.films = action.payload;
+    });
   },
 });
 
