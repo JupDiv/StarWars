@@ -15,10 +15,12 @@ import {FilmsTypes} from '../../entites/types/FilmsTypes';
 
 type InitialStateType = {
   films: FilmsTypes[];
+  loading: boolean;
 };
 
 const initialState: InitialStateType = {
   films: [],
+  loading: true,
 };
 
 const filmsCharactersSlice = createSlice({
@@ -30,9 +32,17 @@ const filmsCharactersSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchFilms.fulfilled, (state, action) => {
-      state.films = action.payload;
-    });
+    builder
+      .addCase(fetchFilms.pending, state => {
+        state.loading = true;
+      })
+      .addCase(fetchFilms.fulfilled, (state, action) => {
+        state.films = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchFilms.rejected, state => {
+        state.loading = false;
+      });
   },
 });
 

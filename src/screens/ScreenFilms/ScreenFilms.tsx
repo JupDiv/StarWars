@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
 import {Container, Block} from './ScreenFilms.styles';
-import FetchFilms from '../../utlis/FetchData/FetchFilms';
-import {setFilms} from '../../redux/slices/filmsCharactersSlice';
 import FilmsDetails from '../../components/FilmsDetails/FilmsDetails';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 import {useAppDispatch} from '../../redux/hooks/hooks';
@@ -23,12 +21,11 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
   const {name} = route.params;
   const dispatch = useAppDispatch();
   const filmsData = useAppSelector(state => state.filmsData.films);
+  const loading = useAppSelector(state => state.filmsData.loading);
   const urlCharaster = useGetCharasterURL(name);
-  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     dispatch(fetchFilms());
-    setIsLoading(false);
   }, [dispatch]);
 
   const filteredFilms = filmsData.filter((item: FilmsTypes) => {
@@ -38,7 +35,7 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
   return (
     <Container>
       <Block>
-        {isLoading ? (
+        {loading ? (
           <StarWarsLoader />
         ) : (
           <FlatList
