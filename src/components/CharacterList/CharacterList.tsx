@@ -1,9 +1,7 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
-import {addCharasters} from '../../redux/slices/charactersDataSlice';
-import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import CharacterCard from '../CharacterCard/CharacterCard';
 import FavoriteStats from '../FavoriteStats/FavoriteStats';
@@ -27,12 +25,11 @@ function CharacterList(): JSX.Element {
     dispatch(fetchCharacters(currentPage));
   }, [currentPage, dispatch]);
 
-  return (
-    <CharasterListContainer>
-      <FavoriteStats isToggle={isToggle} setIsToggle={setIsToggle} />
-      {isLoading ? (
-        <StarWarsLoader />
-      ) : (
+  const listCharasters = useMemo(() => {
+    if (isLoading) {
+      return <StarWarsLoader />;
+    } else {
+      return (
         <FlatList
           data={data}
           renderItem={({item}) => (
@@ -40,8 +37,14 @@ function CharacterList(): JSX.Element {
           )}
           keyExtractor={(item: CharasterTypes) => item.id}
         />
-      )}
+      );
+    }
+  }, [data, isLoading]);
 
+  return (
+    <CharasterListContainer>
+      <FavoriteStats isToggle={isToggle} setIsToggle={setIsToggle} />
+      {listCharasters}
       <PaginationControl
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

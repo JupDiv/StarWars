@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useMemo} from 'react';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import FetchPlanetData from '../../utlis/FetchData/FetchPlanetData';
 import FetchSpeciesData from '../../utlis/FetchData/FetchSpeciesData';
@@ -75,6 +75,13 @@ function CharacterDetails({
     }
   }
 
+  const characterDetails = useMemo(() => {
+    if (isOpenInfo) {
+      return null;
+    }
+    return <AdditionalMenu name={name} />;
+  }, [isOpenInfo, name]);
+
   return (
     <CharasterContainer>
       {charasterFilteredArray.map(([title, value]) => (
@@ -103,7 +110,7 @@ function CharacterDetails({
           </CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      {isOpenInfo ? null : <AdditionalMenu name={name} />}
+      {characterDetails}
     </CharasterContainer>
   );
 }

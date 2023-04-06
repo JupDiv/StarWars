@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {VehieclesTitleMenuContainer} from './VehiclesTitleMenu.styles';
 import VehiclesButton from '../VehiscleIsButton/VehicleIsButton';
@@ -15,6 +15,17 @@ export default function VehiclesTitleMenu({
 }: VehiclesTitleMenuProps) {
   const {name} = vehicle;
   const [isDetails, setIsDetails] = useState(false);
+
+  const vehiclesDetails = useMemo(() => {
+    if (isDetails) {
+      return (
+        <VehiclesDetails vehicle={vehicle} isHighlighted={isHighlighted} />
+      );
+    } else {
+      return null;
+    }
+  }, [isDetails]);
+
   return (
     <VehieclesTitleMenuContainer>
       <VehiclesButton
@@ -23,9 +34,7 @@ export default function VehiclesTitleMenu({
         isDetails={isDetails}
         isHighlighted={isHighlighted}
       />
-      {isDetails ? (
-        <VehiclesDetails vehicle={vehicle} isHighlighted={isHighlighted} />
-      ) : null}
+      {vehiclesDetails}
     </VehieclesTitleMenuContainer>
   );
 }

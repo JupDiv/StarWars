@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {CommonTypes} from '../../entites/types/CommonTypes';
 import {
   BlockButton,
@@ -50,26 +50,38 @@ export default function PaginationControl({
     }
   }, [currentPage]);
 
-  const disabledButton = (
-    <PaginationButtonStyle disabled style={{opacity: 0}}>
-      <PaginationButtonText>Back</PaginationButtonText>
-    </PaginationButtonStyle>
-  );
-
-  return (
-    <BlockButton>
-      {pagination.previous ? (
+  const previousButton = useMemo(() => {
+    if (pagination.previous) {
+      return (
         <PaginationButtonStyle onPress={() => setCurrentPage(currentPage - 1)}>
           <PaginationButtonText>Back</PaginationButtonText>
         </PaginationButtonStyle>
-      ) : (
-        disabledButton
-      )}
-      {pagination.next ? (
+      );
+    } else {
+      return (
+        <PaginationButtonStyle disabled style={{opacity: 0}}>
+          <PaginationButtonText>Back</PaginationButtonText>
+        </PaginationButtonStyle>
+      );
+    }
+  }, [pagination.previous]);
+
+  const nextButton = useMemo(() => {
+    if (pagination.next) {
+      return (
         <PaginationButtonStyle onPress={() => setCurrentPage(currentPage + 1)}>
           <PaginationButtonText>Next</PaginationButtonText>
         </PaginationButtonStyle>
-      ) : null}
+      );
+    } else {
+      return null;
+    }
+  }, [pagination.next]);
+
+  return (
+    <BlockButton>
+      {previousButton}
+      {nextButton}
     </BlockButton>
   );
 }
