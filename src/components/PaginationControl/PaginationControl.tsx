@@ -8,7 +8,9 @@ import {
 import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
 import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
 import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
-import {useNavigationState} from '@react-navigation/native';
+import {useAppDispatch} from '../../redux/hooks/hooks';
+import {setIsAnimating} from '../../redux/slices/animationSlice';
+import {useRoute} from '@react-navigation/native';
 
 type paginationResponse = Pick<CommonTypes, 'next' | 'previous'>;
 
@@ -28,8 +30,9 @@ export default function PaginationControl({
 }: DirectionProps): JSX.Element {
   const [pagination, setPagination] =
     useState<paginationResponse>(initialState);
-
-  const title = useNavigationState(state => state.routes[state.index].name);
+  const dispatch = useAppDispatch();
+  const route = useRoute();
+  const title = route.name;
 
   useEffect(() => {
     if (title === 'ScreenStarShips') {
@@ -50,10 +53,19 @@ export default function PaginationControl({
     }
   }, [currentPage]);
 
+  const handlePreviousPage = () => {
+    dispatch(setIsAnimating(false));
+    setCurrentPage(currentPage - 1);
+  };
+  function handleNextPage() {
+    dispatch(setIsAnimating(false));
+    setCurrentPage(currentPage + 1);
+  }
+
   const previousButton = useMemo(() => {
     if (pagination.previous) {
       return (
-        <PaginationButtonStyle onPress={() => setCurrentPage(currentPage - 1)}>
+        <PaginationButtonStyle onPress={handlePreviousPage}>
           <PaginationButtonText>Back</PaginationButtonText>
         </PaginationButtonStyle>
       );
@@ -69,7 +81,7 @@ export default function PaginationControl({
   const nextButton = useMemo(() => {
     if (pagination.next) {
       return (
-        <PaginationButtonStyle onPress={() => setCurrentPage(currentPage + 1)}>
+        <PaginationButtonStyle onPress={handleNextPage}>
           <PaginationButtonText>Next</PaginationButtonText>
         </PaginationButtonStyle>
       );

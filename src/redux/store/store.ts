@@ -4,15 +4,16 @@ import favoriteCharactersSlice from '../slices/favoriteCharactersSlice';
 import filmsCharactersSlice from '../slices/filmsCharactersSlice';
 import vehiclesDataSlice from '../slices/vehiclesCharastersSlice';
 import starshipsDataSlice from '../slices/starshipsCharastersSlice';
+import animationSlice from '../slices/animationSlice';
 
 const store = configureStore({
   reducer: {
-    // Add your reducers here
     fetchData: charactersDataSlice,
     favouriteCharaster: favoriteCharactersSlice,
     filmsData: filmsCharactersSlice,
     vehiclesData: vehiclesDataSlice,
     starshipsData: starshipsDataSlice,
+    animation: animationSlice,
   },
 });
 
