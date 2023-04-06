@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useMemo, useEffect} from 'react';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
 import {Container, Block} from './ScreenFilms.styles';
@@ -34,10 +34,11 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
     }
   }, [dispatch]);
 
-  //Потрібно виправити 06.04.2023
-  const filteredFilms = filmsData.filter((item: FilmsTypes) => {
-    return item.characters.some((url: string) => url === urlCharaster);
-  });
+  const filteredFilms = useMemo(() => {
+    return filmsData.filter((item: FilmsTypes) => {
+      return item.characters.some((url: string) => url === urlCharaster);
+    });
+  }, [filmsData, urlCharaster]);
 
   return (
     <Container>

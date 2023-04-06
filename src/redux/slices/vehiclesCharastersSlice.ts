@@ -18,6 +18,7 @@ type InitialStateType = {
   loading: boolean;
   filteredVehicles: VehiclesTypes[];
   status: StatusResponse;
+  test: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -25,15 +26,13 @@ const initialState: InitialStateType = {
   filteredVehicles: [],
   loading: true,
   status: StatusResponse.IDLE,
+  test: false,
 };
 
 const vehiclesDataSlice = createSlice({
   name: 'vehiclesDataSlice',
   initialState,
   reducers: {
-    setVehicles: (state, action: PayloadAction<VehiclesTypes[]>) => {
-      state.vehicles = action.payload;
-    },
     setFilteredVehicles: (state, action: PayloadAction<string>) => {
       state.filteredVehicles = state.vehicles.filter((item: VehiclesTypes) => {
         return item.pilots.some((url: string) => url === action.payload);
@@ -61,7 +60,7 @@ const vehiclesDataSlice = createSlice({
   },
 });
 
-export const {setVehicles, setFilteredVehicles} = vehiclesDataSlice.actions;
+export const {setFilteredVehicles} = vehiclesDataSlice.actions;
 
 export const selectVehicles = (state: RootState) => state.vehiclesData.vehicles;
 

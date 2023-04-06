@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {useAppDispatch} from '../../redux/hooks/hooks';
@@ -35,9 +35,11 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
     dispatch(fetchStarshipsData(currentPage));
   }, [dispatch, currentPage]);
 
-  const filteredStarShips = starShipsData.filter((item: StarshipsTypes) => {
-    return item.pilots.some((url: string) => url === urlCharaster);
-  });
+  const filteredStarShips = useMemo(() => {
+    return starShipsData.filter((item: StarshipsTypes) => {
+      return item.pilots.some((url: string) => url === urlCharaster);
+    });
+  }, [starShipsData, urlCharaster]);
 
   return (
     <ScreenContainer>

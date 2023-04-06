@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useMemo} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
 import {RouteProp} from '@react-navigation/native';
@@ -29,9 +29,15 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const status = useAppSelector(state => state.vehiclesData.status);
   const isLoading = useAppSelector(state => state.vehiclesData.loading);
-  const filteredVehicles = useAppSelector(
+  const testFilteredVehicles = useAppSelector(
     state => state.vehiclesData.filteredVehicles,
   );
+
+  const filteredVehicles = useMemo(() => {
+    return vehiclesData.filter((item: VehiclesTypes) => {
+      return item.pilots.some((url: string) => url === urlCharaster);
+    });
+  }, [vehiclesData, urlCharaster]);
 
   useEffect(() => {
     if (status === 'idle' || status === 'fulfilled') {
