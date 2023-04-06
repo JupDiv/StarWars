@@ -25,6 +25,12 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
   const status = useAppSelector(state => state.filmsData.status);
   const urlCharaster = useGetCharasterURL(name);
 
+  const filteredFilms = useMemo(() => {
+    return filmsData.filter((item: FilmsTypes) => {
+      return item.characters.some((url: string) => url === urlCharaster);
+    });
+  }, [filmsData, urlCharaster]);
+
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchFilms());
@@ -51,12 +57,6 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
       />
     );
   }, [loading]);
-
-  const filteredFilms = useMemo(() => {
-    return filmsData.filter((item: FilmsTypes) => {
-      return item.characters.some((url: string) => url === urlCharaster);
-    });
-  }, [filmsData, urlCharaster]);
 
   return (
     <Container>
