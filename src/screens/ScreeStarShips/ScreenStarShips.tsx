@@ -41,11 +41,11 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
     });
   }, [starShipsData, urlCharaster]);
 
-  return (
-    <ScreenContainer>
-      {isLoading ? (
-        <StarWarsLoader />
-      ) : (
+  const initialPage = useMemo(() => {
+    if (isLoading) {
+      return <StarWarsLoader />;
+    } else {
+      return (
         <FlatList
           data={starShipsData}
           renderItem={({item}) => (
@@ -56,7 +56,13 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
           )}
           keyExtractor={item => item.name}
         />
-      )}
+      );
+    }
+  }, [isLoading]);
+
+  return (
+    <ScreenContainer>
+      {initialPage}
       <PaginationControl
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}

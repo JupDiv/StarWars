@@ -92,9 +92,9 @@ function CharacterDetails({
 
   const showCloseButton = useMemo(() => {
     if (isOpenInfo) {
-      return 'Close';
-    } else {
       return 'Show';
+    } else {
+      return 'Close';
     }
   }, [isOpenInfo]);
 

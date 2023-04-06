@@ -34,6 +34,24 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
     }
   }, [dispatch]);
 
+  const initialPage = useMemo(() => {
+    if (loading) {
+      return <StarWarsLoader />;
+    }
+    return (
+      <FlatList
+        data={filmsData}
+        renderItem={({item}) => (
+          <FilmsDetails
+            isHighlighted={filteredFilms.includes(item)}
+            {...item}
+          />
+        )}
+        keyExtractor={(item: FilmsTypes) => item.episode_id.toString()}
+      />
+    );
+  }, [loading]);
+
   const filteredFilms = useMemo(() => {
     return filmsData.filter((item: FilmsTypes) => {
       return item.characters.some((url: string) => url === urlCharaster);
@@ -42,22 +60,7 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
 
   return (
     <Container>
-      <Block>
-        {loading ? (
-          <StarWarsLoader />
-        ) : (
-          <FlatList
-            data={filmsData}
-            renderItem={({item}) => (
-              <FilmsDetails
-                isHighlighted={filteredFilms.includes(item)}
-                {...item}
-              />
-            )}
-            keyExtractor={(item: FilmsTypes) => item.episode_id.toString()}
-          />
-        )}
-      </Block>
+      <Block>{initialPage}</Block>
     </Container>
   );
 };

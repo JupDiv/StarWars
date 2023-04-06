@@ -39,6 +39,24 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
     });
   }, [vehiclesData, urlCharaster]);
 
+  const initialPage = useMemo(() => {
+    if (isLoading) {
+      return <StarWarsLoader />;
+    }
+    return (
+      <FlatList
+        data={vehiclesData}
+        renderItem={({item}) => (
+          <VehiclesTitleMenu
+            isHighlighted={filteredVehicles.includes(item)}
+            vehicle={item}
+          />
+        )}
+        keyExtractor={item => item.id}
+      />
+    );
+  }, [isLoading]);
+
   useEffect(() => {
     if (status === 'idle' || status === 'fulfilled') {
       dispatch(fetchVehiclesData(currentPage));
@@ -54,20 +72,7 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
 
   return (
     <VehieclesContainer>
-      {isLoading ? (
-        <StarWarsLoader />
-      ) : (
-        <FlatList
-          data={vehiclesData}
-          renderItem={({item}) => (
-            <VehiclesTitleMenu
-              isHighlighted={filteredVehicles.includes(item)}
-              vehicle={item}
-            />
-          )}
-          keyExtractor={item => item.id}
-        />
-      )}
+      {initialPage}
       <PaginationControl
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
