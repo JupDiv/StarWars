@@ -1,8 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector} from '../../redux/hooks/hooks';
-import {setStarships} from '../../redux/slices/starshipsCharastersSlice';
-import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import {ScreenContainer} from './ScreenStarShips.styles';
 import StarshipsTitleMenu from '../../components/StarshipsTitleMenu/StarshipsTitleMenu';
@@ -11,6 +9,7 @@ import {useGetCharasterURL} from '../../redux/hooks/customHooks';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarWarsLoader from '../../components/StarWarsLoader/StarWarsLoader';
 import PaginationControl from '../../components/PaginationControl/PaginationControl';
+import {fetchStarshipsData} from '../../redux/slices/starshipsCharastersSlice';
 
 type RootStackParamList = {
   ScreenStarShips: {name: string};
@@ -25,15 +24,15 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   const starShipsData = useAppSelector(state => state.starshipsData.starships);
   const urlCharaster = useGetCharasterURL(name);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const isLoading = useAppSelector(state => state.starshipsData.loading);
+  const status = useAppSelector(state => state.starshipsData.status);
+  console.log(isLoading);
 
   useEffect(() => {
-    const fetchStarShips = async () => {
-      const {results} = await FetchStarShips(currentPage);
-      setIsLoading(false);
-      dispatch(setStarships(results));
-    };
-    fetchStarShips();
+    if (status === 'rejected') {
+      throw new Error('An error occurred while fetching starships data.');
+    }
+    dispatch(fetchStarshipsData(currentPage));
   }, [dispatch, currentPage]);
 
   const filteredStarShips = starShipsData.filter((item: StarshipsTypes) => {

@@ -10,21 +10,21 @@ import FavoriteStats from '../FavoriteStats/FavoriteStats';
 import StarWarsLoader from '../StarWarsLoader/StarWarsLoader';
 import PaginationControl from '../PaginationControl/PaginationControl';
 import {CharasterListContainer} from './CharacterList.styles';
+import {fetchCharacters} from '../../redux/slices/charactersDataSlice';
 
 function CharacterList(): JSX.Element {
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.fetchData.charaster);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isToggle, setIsToggle] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const isLoading = useAppSelector(state => state.fetchData.loading);
+  const status = useAppSelector(state => state.fetchData.status);
 
   useEffect(() => {
-    async function fetchData() {
-      const {results} = await FetchCharacters(currentPage);
-      dispatch(addCharasters(results));
-      setIsLoading(false);
+    if (status === 'rejected') {
+      throw new Error('An error occurred while fetching charasters.');
     }
-    fetchData();
+    dispatch(fetchCharacters(currentPage));
   }, [currentPage, dispatch]);
 
   return (
@@ -38,7 +38,7 @@ function CharacterList(): JSX.Element {
           renderItem={({item}) => (
             <CharacterCard isToggle={isToggle} charaster={item} />
           )}
-          keyExtractor={(item: CharasterTypes) => (item.id ? item.id : '0')}
+          keyExtractor={(item: CharasterTypes) => item.id}
         />
       )}
 

@@ -1,15 +1,25 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store/store';
+import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
+import {
+  VehiclesTypes,
+  InitialStateType,
+} from '../../entites/types/VehiclesTypes';
+import {StatusResponse} from '../../entites/types/CommonTypes';
 
-import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
-
-type InitialStateType = {
-  vehicles: VehiclesTypes[];
-};
+export const fetchVehiclesData = createAsyncThunk(
+  'vehiclesDataSlice/fetchVehiclesData',
+  async (numberOfPage: number) => {
+    const {results} = await FetchVehicles(numberOfPage);
+    return results;
+  },
+);
 
 const initialState: InitialStateType = {
   vehicles: [],
+  loading: true,
+  status: StatusResponse.IDLE,
 };
 
 const vehiclesDataSlice = createSlice({
@@ -18,10 +28,26 @@ const vehiclesDataSlice = createSlice({
   reducers: {
     setVehicles: (state, action: PayloadAction<VehiclesTypes[]>) => {
       state.vehicles = action.payload;
-      state.vehicles.map(vehicle => {
-        vehicle.id = (Math.random() * 1000).toFixed(5);
-      });
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchVehiclesData.pending, state => {
+        state.loading = true;
+        state.status = StatusResponse.PENDING;
+      })
+      .addCase(fetchVehiclesData.fulfilled, (state, action) => {
+        state.vehicles = action.payload;
+        state.vehicles.map(vehicle => {
+          vehicle.id = (Math.random() * 1000).toFixed(5);
+        });
+        state.loading = false;
+        state.status = StatusResponse.FULFILLED;
+      })
+      .addCase(fetchVehiclesData.rejected, state => {
+        state.loading = false;
+        state.status = StatusResponse.REJECTED;
+      });
   },
 });
 

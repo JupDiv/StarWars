@@ -1,3 +1,4 @@
+import {StatusResponse} from './CommonTypes';
 export interface VehiclesTypes {
   name: string;
   model: string;
@@ -17,3 +18,9 @@ export interface VehiclesTypes {
   url: string;
   id: string;
 }
+
+export type InitialStateType = {
+  vehicles: VehiclesTypes[];
+  loading: boolean;
+  status: StatusResponse;
+};

@@ -34,6 +34,7 @@ const ScreenFilms = ({route}: ScreenFilmsProps) => {
     }
   }, [dispatch]);
 
+  //Потрібно виправити 06.04.2023
   const filteredFilms = filmsData.filter((item: FilmsTypes) => {
     return item.characters.some((url: string) => url === urlCharaster);
   });

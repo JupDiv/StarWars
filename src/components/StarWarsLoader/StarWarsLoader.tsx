@@ -23,6 +23,8 @@ export default function StarWarsLoader() {
   ).current;
 
   useEffect(() => {
+    let isMounted = true;
+
     Animated.loop(
       Animated.timing(rotation, {
         toValue: 360,
@@ -32,6 +34,8 @@ export default function StarWarsLoader() {
     ).start();
 
     const animateStar = (index: number) => {
+      if (!isMounted) return;
+
       Animated.sequence([
         Animated.timing(animationValues[index], {
           toValue: 1,
@@ -49,6 +53,13 @@ export default function StarWarsLoader() {
     animationValues.forEach((_, index) => {
       animateStar(index);
     });
+
+    return () => {
+      isMounted = false;
+      animationValues.forEach(animationValue => {
+        animationValue.stopAnimation();
+      });
+    };
   }, []);
 
   const rotationInterpolation = rotation.interpolate({

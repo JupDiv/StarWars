@@ -1,3 +1,4 @@
+import {StatusResponse} from './StatusResponse';
 export interface StarshipsTypes {
   name: string;
   model: string;
@@ -19,3 +20,9 @@ export interface StarshipsTypes {
   url: string;
   id: string;
 }
+
+export type InitialStateType = {
+  starships: StarshipsTypes[];
+  loading: boolean;
+  status: StatusResponse;
+};
