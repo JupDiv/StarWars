@@ -82,6 +82,22 @@ function CharacterDetails({
     return <AdditionalMenu name={name} />;
   }, [isOpenInfo, name]);
 
+  const buttonAddDelete = useMemo(() => {
+    if (isFavToggled) {
+      return `Delete`;
+    } else {
+      return 'Add';
+    }
+  }, [isFavToggled]);
+
+  const showCloseButton = useMemo(() => {
+    if (isOpenInfo) {
+      return 'Close';
+    } else {
+      return 'Show';
+    }
+  }, [isOpenInfo]);
+
   return (
     <CharasterContainer>
       {charasterFilteredArray.map(([title, value]) => (
@@ -100,14 +116,10 @@ function CharacterDetails({
       </CharasterBody>
       <CharasterBodyButton>
         <CharasterButton onPress={() => isToggleFavourite()}>
-          <CharasterButtonText>
-            {isFavToggled ? `Delete` : 'Add'}
-          </CharasterButtonText>
+          <CharasterButtonText>{buttonAddDelete}</CharasterButtonText>
         </CharasterButton>
         <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
-          <CharasterButtonText>
-            {isOpenInfo ? 'Show info' : 'Close info'}
-          </CharasterButtonText>
+          <CharasterButtonText>{showCloseButton}</CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
       {characterDetails}

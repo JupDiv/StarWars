@@ -22,6 +22,7 @@ function CharacterCard({charaster, isToggle}: CharacterCardProps): JSX.Element {
     }
     return null;
   }, [isOpen, charaster]);
+
   return (
     <CardContainer>
       <CardNameButton onPress={() => setToggle(!isOpen)}>
