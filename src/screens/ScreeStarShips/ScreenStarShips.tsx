@@ -26,7 +26,6 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const isLoading = useAppSelector(state => state.starshipsData.loading);
   const status = useAppSelector(state => state.starshipsData.status);
-  console.log(isLoading);
 
   useEffect(() => {
     if (status === 'rejected') {

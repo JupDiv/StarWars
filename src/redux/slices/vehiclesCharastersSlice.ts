@@ -7,9 +7,9 @@ import {StatusResponse} from '../../entites/types/CommonTypes';
 
 export const fetchVehiclesData = createAsyncThunk(
   'vehiclesDataSlice/fetchVehiclesData',
-  async (numberOfPage: number) => {
-    const {results} = await FetchVehicles(numberOfPage);
-    return results;
+  async (payload: {numberOfPage: number; urlCharaster: string}) => {
+    const {results} = await FetchVehicles(payload.numberOfPage);
+    return {results, urlCharaster: payload.urlCharaster};
   },
 );
 
@@ -46,12 +46,20 @@ const vehiclesDataSlice = createSlice({
         state.status = StatusResponse.PENDING;
       })
       .addCase(fetchVehiclesData.fulfilled, (state, action) => {
-        state.vehicles = action.payload;
+        state.vehicles = action.payload.results;
         state.vehicles.map(vehicle => {
           vehicle.id = (Math.random() * 1000).toFixed(5);
         });
         state.loading = false;
         state.status = StatusResponse.FULFILLED;
+
+        state.filteredVehicles = state.vehicles.filter(
+          (item: VehiclesTypes) => {
+            return item.pilots.some(
+              (url: string) => url === action.payload.urlCharaster,
+            );
+          },
+        );
       })
       .addCase(fetchVehiclesData.rejected, state => {
         state.loading = false;
