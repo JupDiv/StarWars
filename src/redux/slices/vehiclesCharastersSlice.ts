@@ -18,7 +18,6 @@ type InitialStateType = {
   loading: boolean;
   filteredVehicles: VehiclesTypes[];
   status: StatusResponse;
-  test: boolean;
 };
 
 const initialState: InitialStateType = {
@@ -26,7 +25,6 @@ const initialState: InitialStateType = {
   filteredVehicles: [],
   loading: true,
   status: StatusResponse.IDLE,
-  test: false,
 };
 
 const vehiclesDataSlice = createSlice({

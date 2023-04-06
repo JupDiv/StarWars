@@ -20,9 +20,3 @@ export interface StarshipsTypes {
   url: string;
   id: string;
 }
-
-export type InitialStateType = {
-  starships: StarshipsTypes[];
-  loading: boolean;
-  status: StatusResponse;
-};

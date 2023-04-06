@@ -26,19 +26,23 @@ const ScreenStarShips = ({route}: ScreenStarShipsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const isLoading = useAppSelector(state => state.starshipsData.loading);
   const status = useAppSelector(state => state.starshipsData.status);
+  const filteredStarShips = useAppSelector(
+    state => state.starshipsData.filteredStarships,
+  );
 
   useEffect(() => {
     if (status === 'rejected') {
       throw new Error('An error occurred while fetching starships data.');
     }
-    dispatch(fetchStarshipsData(currentPage));
+    dispatch(fetchStarshipsData({numberOfPage: currentPage, urlCharaster}));
   }, [dispatch, currentPage]);
 
-  const filteredStarShips = useMemo(() => {
-    return starShipsData.filter((item: StarshipsTypes) => {
-      return item.pilots.some((url: string) => url === urlCharaster);
-    });
-  }, [starShipsData, urlCharaster]);
+  // Also I did it with useMemo, it work, but i wont to use redux because it is better practise
+  // const filteredStarShips = useMemo(() => {
+  //   return starShipsData.filter((item: StarshipsTypes) => {
+  //     return item.pilots.some((url: string) => url === urlCharaster);
+  //   });
+  // }, [starShipsData, urlCharaster]);
 
   const initialPage = useMemo(() => {
     if (isLoading) {
