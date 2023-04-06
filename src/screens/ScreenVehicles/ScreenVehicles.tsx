@@ -9,7 +9,10 @@ import {VehieclesContainer} from './ScreenVehicles.styles';
 import VehiclesTitleMenu from '../../components/VehiclesTitleMenu/VehiclesTitleMenu';
 import {useGetCharasterURL} from '../../redux/hooks/customHooks';
 import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
-import {fetchVehiclesData} from '../../redux/slices/vehiclesCharastersSlice';
+import {
+  fetchVehiclesData,
+  setFilteredVehicles,
+} from '../../redux/slices/vehiclesCharastersSlice';
 
 type RootStackParamList = {
   ScreenVehicles: {name: string};
@@ -26,10 +29,14 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const status = useAppSelector(state => state.vehiclesData.status);
   const isLoading = useAppSelector(state => state.vehiclesData.loading);
+  const filteredVehicles = useAppSelector(
+    state => state.vehiclesData.filteredVehicles,
+  );
 
   useEffect(() => {
     if (status === 'idle' || status === 'fulfilled') {
       dispatch(fetchVehiclesData(currentPage));
+      dispatch(setFilteredVehicles(urlCharaster));
     }
 
     if (status === 'rejected') {
@@ -38,10 +45,6 @@ const ScreenVehicles = ({route}: ScreenStarShipsProps) => {
 
     dispatch(fetchVehiclesData(currentPage));
   }, [currentPage]);
-
-  const filteredVehicles = vehiclesData.filter((item: VehiclesTypes) => {
-    return item.pilots.some((url: string) => url === urlCharaster);
-  });
 
   return (
     <VehieclesContainer>

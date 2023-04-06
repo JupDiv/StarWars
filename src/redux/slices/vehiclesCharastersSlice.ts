@@ -2,10 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store/store';
 import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
-import {
-  VehiclesTypes,
-  InitialStateType,
-} from '../../entites/types/VehiclesTypes';
+import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {StatusResponse} from '../../entites/types/CommonTypes';
 
 export const fetchVehiclesData = createAsyncThunk(
@@ -16,8 +13,16 @@ export const fetchVehiclesData = createAsyncThunk(
   },
 );
 
+type InitialStateType = {
+  vehicles: VehiclesTypes[];
+  loading: boolean;
+  filteredVehicles: VehiclesTypes[];
+  status: StatusResponse;
+};
+
 const initialState: InitialStateType = {
   vehicles: [],
+  filteredVehicles: [],
   loading: true,
   status: StatusResponse.IDLE,
 };
@@ -28,6 +33,11 @@ const vehiclesDataSlice = createSlice({
   reducers: {
     setVehicles: (state, action: PayloadAction<VehiclesTypes[]>) => {
       state.vehicles = action.payload;
+    },
+    setFilteredVehicles: (state, action: PayloadAction<string>) => {
+      state.filteredVehicles = state.vehicles.filter((item: VehiclesTypes) => {
+        return item.pilots.some((url: string) => url === action.payload);
+      });
     },
   },
   extraReducers: builder => {
@@ -51,7 +61,7 @@ const vehiclesDataSlice = createSlice({
   },
 });
 
-export const {setVehicles} = vehiclesDataSlice.actions;
+export const {setVehicles, setFilteredVehicles} = vehiclesDataSlice.actions;
 
 export const selectVehicles = (state: RootState) => state.vehiclesData.vehicles;
 
