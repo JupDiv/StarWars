@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-type PlanetResponse = string | undefined;
+type PlanetResponse = string;
 
 const FetchPlanetData = async (url: string): Promise<PlanetResponse> => {
   try {
@@ -11,7 +11,7 @@ const FetchPlanetData = async (url: string): Promise<PlanetResponse> => {
     });
     return name;
   } catch (error) {
-    console.log(error);
+    throw new Error('An error occurred while fetching planet.');
   }
 };
 

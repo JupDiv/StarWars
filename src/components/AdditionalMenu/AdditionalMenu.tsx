@@ -21,12 +21,16 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const [animationValue] = useState(new Animated.Value(0));
   const navigation =
     useNavigation<NativeStackNavigationProp<AppRootStackParams>>();
+
   useEffect(() => {
     if (isOpen) {
       openAnimation();
     } else {
       closeAnimation();
     }
+    () => {
+      animationValue.stopAnimation();
+    };
   }, [dispatch]);
 
   const openAnimation = () => {

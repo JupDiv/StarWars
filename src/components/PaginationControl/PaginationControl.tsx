@@ -61,11 +61,11 @@ export default function PaginationControl({
   };
 
   const handlePreviousPage = () => {
-    dispatch(setIsAnimating(false));
+    dispatch(setIsAnimating(true));
     setCurrentPage(currentPage - 1);
   };
   function handleNextPage() {
-    dispatch(setIsAnimating(false));
+    dispatch(setIsAnimating(true));
     setCurrentPage(currentPage + 1);
   }
 

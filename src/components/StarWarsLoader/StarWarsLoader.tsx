@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {Container, Star, StarsContainer} from './StarWarsLoader.styles';
 import {Animated} from 'react-native';
 import DeathStar from '../DeathStar/DeathStar';
@@ -17,12 +17,30 @@ const generateStars = (starCount: number) => {
 };
 
 export default function StarWarsLoader() {
-  const stars = useRef(generateStars(100)).current;
+  const [stars, setStars] = useState(() => generateStars(100));
   const rotation = useRef(new Animated.Value(0)).current;
   const animationValues = useRef(
     stars.map(() => new Animated.Value(0)),
   ).current;
   const isAnimating = useAppSelector(state => state.animation.isAnimating);
+
+  const animateStar = useCallback(
+    (index: number) => {
+      Animated.sequence([
+        Animated.timing(animationValues[index], {
+          toValue: 1,
+          duration: 1000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animationValues[index], {
+          toValue: 0,
+          duration: 1000 + Math.random() * 2000,
+          useNativeDriver: true,
+        }),
+      ]).start(() => animateStar(index));
+    },
+    [animationValues],
+  );
 
   useEffect(() => {
     if (isAnimating) {
@@ -34,32 +52,18 @@ export default function StarWarsLoader() {
         }),
       ).start();
 
-      const animateStar = (index: number) => {
-        Animated.sequence([
-          Animated.timing(animationValues[index], {
-            toValue: 1,
-            duration: 1000 + Math.random() * 2000,
-            useNativeDriver: true,
-          }),
-          Animated.timing(animationValues[index], {
-            toValue: 0,
-            duration: 1000 + Math.random() * 2000,
-            useNativeDriver: true,
-          }),
-        ]).start(() => animateStar(index));
-      };
-
-      animationValues.forEach((_, index) => {
+      for (let index = 0; index < 10; index++) {
         animateStar(index);
-      });
+      }
     }
 
     return () => {
       animationValues.forEach(animationValue => {
         animationValue.stopAnimation();
       });
+      rotation.stopAnimation();
     };
-  }, [isAnimating]);
+  }, [isAnimating, rotation, animationValues, animateStar]);
 
   const rotationInterpolation = rotation.interpolate({
     inputRange: [0, 360],
