@@ -1,3 +1,4 @@
+import {StatusResponse} from './StatusResponse';
 export interface StarshipsTypes {
   name: string;
   model: string;

@@ -1,3 +1,4 @@
+import {StatusResponse} from './StatusResponse';
 export interface CharasterTypes {
   name: string;
   height: string;
@@ -15,5 +16,11 @@ export interface CharasterTypes {
   created: string;
   edited: string;
   url: string;
-  id?: string;
+  id: string;
 }
+
+export type initialStataType = {
+  charaster: CharasterTypes[];
+  loading: boolean;
+  status: StatusResponse;
+};

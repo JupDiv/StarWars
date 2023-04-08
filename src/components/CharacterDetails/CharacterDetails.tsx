@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import {useAppDispatch} from '../../redux/hooks/hooks';
+import {useState, useEffect, useMemo} from 'react';
+import {useAppDispatch, useAppSelector} from '../../redux/hooks/hooks';
 import FetchPlanetData from '../../utlis/FetchData/FetchPlanetData';
 import FetchSpeciesData from '../../utlis/FetchData/FetchSpeciesData';
 import {
@@ -17,6 +17,7 @@ import {
 } from '../../redux/slices/favoriteCharactersSlice';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
+import {setIsAnimating} from '../../redux/slices/animationSlice';
 
 type CharacterDetailsProps = {
   isToggle: boolean;
@@ -33,6 +34,15 @@ function CharacterDetails({
   const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
   const [isOpenInfo, setIsOpenInfo] = useState<boolean>(true);
   const {homeworld, name, species, gender} = charaster;
+  const isFavouriteMale = useAppSelector(
+    state => state.favouriteCharaster.male,
+  );
+  const isFavouriteFemale = useAppSelector(
+    state => state.favouriteCharaster.female,
+  );
+  const isFavouriteOther = useAppSelector(
+    state => state.favouriteCharaster.other,
+  );
 
   const charasterFilteredArray = Object.entries(charaster).filter(([key]) => {
     if (
@@ -75,6 +85,29 @@ function CharacterDetails({
     }
   }
 
+  const characterDetails = useMemo(() => {
+    if (isOpenInfo) {
+      return null;
+    }
+    return <AdditionalMenu name={name} />;
+  }, [isOpenInfo, name]);
+
+  const buttonAddDelete = useMemo(() => {
+    if (isFavToggled) {
+      return `Delete`;
+    } else {
+      return 'Add';
+    }
+  }, [isFavToggled]);
+
+  const showCloseButton = useMemo(() => {
+    if (isOpenInfo) {
+      return 'Show';
+    } else {
+      return 'Close';
+    }
+  }, [isOpenInfo]);
+
   return (
     <CharasterContainer>
       {charasterFilteredArray.map(([title, value]) => (
@@ -93,17 +126,13 @@ function CharacterDetails({
       </CharasterBody>
       <CharasterBodyButton>
         <CharasterButton onPress={() => isToggleFavourite()}>
-          <CharasterButtonText>
-            {isFavToggled ? `Delete` : 'Add'}
-          </CharasterButtonText>
+          <CharasterButtonText>{buttonAddDelete}</CharasterButtonText>
         </CharasterButton>
         <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
-          <CharasterButtonText>
-            {isOpenInfo ? 'Show info' : 'Close info'}
-          </CharasterButtonText>
+          <CharasterButtonText>{showCloseButton}</CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      {isOpenInfo ? null : <AdditionalMenu name={name} />}
+      {characterDetails}
     </CharasterContainer>
   );
 }

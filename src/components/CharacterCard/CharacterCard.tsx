@@ -1,6 +1,4 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {
   CardContainer,
   CardNameButton,
@@ -17,14 +15,20 @@ type CharacterCardProps = {
 function CharacterCard({charaster, isToggle}: CharacterCardProps): JSX.Element {
   const [isOpen, setToggle] = useState<boolean>(false);
   const {name} = charaster;
+
+  const characterDetails = useMemo(() => {
+    if (isOpen) {
+      return <CharacterDetails isToggle={isToggle} charaster={charaster} />;
+    }
+    return null;
+  }, [isOpen, charaster]);
+
   return (
     <CardContainer>
       <CardNameButton onPress={() => setToggle(!isOpen)}>
         <CardButtonText>{name}</CardButtonText>
       </CardNameButton>
-      {isOpen ? (
-        <CharacterDetails isToggle={isToggle} charaster={charaster} />
-      ) : null}
+      {characterDetails}
     </CardContainer>
   );
 }

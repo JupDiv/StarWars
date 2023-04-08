@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarshipsDetails from '../StarshipDetails/StarshipDetails';
 import StarshipIsButton from '../StarshipIsButton/StarshipIsButton';
@@ -26,16 +26,23 @@ type StarshipsTitleMenuProps = {
   starship: StarshipsTypes;
   isHighlighted: boolean;
 };
-/* 
-I need will do area click with padding in button
 
-*/
 export default function StarshipsTitleMenu({
   starship,
   isHighlighted,
 }: StarshipsTitleMenuProps) {
   const [isDetails, setIsDetails] = useState(false);
   const {name} = starship;
+
+  const starshipsDetails = useMemo(() => {
+    if (isDetails) {
+      return (
+        <StarshipsDetails isHighlighted={isHighlighted} starship={starship} />
+      );
+    } else {
+      return null;
+    }
+  }, [isDetails]);
 
   return (
     <StarshipsMenuContainer>
@@ -46,9 +53,7 @@ export default function StarshipsTitleMenu({
         isHighlighted={isHighlighted}
       />
 
-      {isDetails ? (
-        <StarshipsDetails isHighlighted={isHighlighted} starship={starship} />
-      ) : null}
+      {starshipsDetails}
     </StarshipsMenuContainer>
   );
 }

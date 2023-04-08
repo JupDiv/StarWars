@@ -1,14 +1,25 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import type {PayloadAction} from '@reduxjs/toolkit';
 import type {RootState} from '../store/store';
-import {CharasterTypes} from '../../entites/types/CharasterTypes';
+import {
+  CharasterTypes,
+  initialStataType,
+} from '../../entites/types/CharasterTypes';
+import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
+import {StatusResponse} from '../../entites/types/CommonTypes';
 
-type initialStataType = {
-  charaster: CharasterTypes[];
-};
+export const fetchCharacters = createAsyncThunk(
+  'charactersDataSlice/fetchCharacters',
+  async (numberOfPage: number) => {
+    const {results} = await FetchCharacters(numberOfPage);
+    return results;
+  },
+);
 
 const initialState: initialStataType = {
   charaster: [],
+  loading: true,
+  status: StatusResponse.IDLE,
 };
 
 export const charactersDataSlice = createSlice({
@@ -17,10 +28,26 @@ export const charactersDataSlice = createSlice({
   reducers: {
     addCharasters: (state, action: PayloadAction<CharasterTypes[]>) => {
       state.charaster = action.payload;
-      state.charaster.map(person => {
-        person.id = (Math.random() * 1000).toFixed(5);
-      });
     },
+  },
+  extraReducers: builder => {
+    builder
+      .addCase(fetchCharacters.pending, state => {
+        state.loading = true;
+        state.status = StatusResponse.PENDING;
+      })
+      .addCase(fetchCharacters.fulfilled, (state, action) => {
+        state.charaster = action.payload;
+        state.charaster.map(person => {
+          person.id = (Math.random() * 1000).toFixed(5);
+        });
+        state.loading = false;
+        state.status = StatusResponse.FULFILLED;
+      })
+      .addCase(fetchCharacters.rejected, state => {
+        state.loading = false;
+        state.status = StatusResponse.REJECTED;
+      });
   },
 });
 
