@@ -54,10 +54,13 @@ The app is organized into the following main folders:
 - `assets`: Contains images and other static assets used in the app and fonts
 
 ## Technologies Used
-
-- TypeScript
+- HTML
+- CSS
+- JS/TypeScript
 - React Native
+- React-navigation
 - Redux Toolkit
+- Axios
 - styled-components
 - Star Wars API (SWAPI)
 
