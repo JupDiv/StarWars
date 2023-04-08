@@ -87,7 +87,7 @@ export default function StarWarsLoader() {
         ))}
       </StarsContainer>
       <DeathStar
-        source={require('../../../assets/images/deathStar.jpg')}
+        source={require('../../assets/images/deathStar.jpg')}
         style={{
           width: 400,
           height: 400,
