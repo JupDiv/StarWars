@@ -9,6 +9,7 @@ import paginationCharasterSlice from '../slices/paginationCharastersSlice';
 import paginationVehiclesSlice from '../slices/paginationVehiclesSlice';
 import paginationStarshipsSlice from '../slices/paginationStarshipsSlice';
 import fetchAllPlanetsSlice from '../slices/planetsSlice';
+import fetchAllSpeciesSlice from '../slices/speciesSlice';
 
 const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ const store = configureStore({
     paginationVehicles: paginationVehiclesSlice,
     paginationStarships: paginationStarshipsSlice,
     fetchPlanets: fetchAllPlanetsSlice,
+    fetchSpecies: fetchAllSpeciesSlice,
   },
 });
 
