@@ -17,7 +17,7 @@ import {
 } from '../../redux/slices/favoriteCharactersSlice';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
-import {setIsAnimating} from '../../redux/slices/animationSlice';
+import {fetchAllPlanets} from '../../redux/slices/planetsSlice';
 
 type CharacterDetailsProps = {
   isToggle: boolean;
@@ -29,11 +29,11 @@ function CharacterDetails({
   charaster,
 }: CharacterDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [homeWorld, setPlanet] = useState<string>();
   const [isSpecies, setSpec] = useState<string>();
   const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
   const [isOpenInfo, setIsOpenInfo] = useState<boolean>(true);
   const {homeworld, name, species, gender} = charaster;
+  const planets = useAppSelector(state => state.fetchPlanets.planets);
   const isFavouriteMale = useAppSelector(
     state => state.favouriteCharaster.male,
   );
@@ -62,9 +62,7 @@ function CharacterDetails({
   });
 
   useEffect(() => {
-    FetchPlanetData(homeworld).then(data => {
-      setPlanet(data);
-    });
+    dispatch(fetchAllPlanets());
 
     species.forEach((personSpec): void => {
       FetchSpeciesData(personSpec).then(response => {
@@ -107,6 +105,15 @@ function CharacterDetails({
       return 'Close';
     }
   }, [isOpenInfo]);
+
+  const homeWorld = useMemo(() => {
+    const planet = planets.find(planet => planet.url === homeworld);
+
+    if (planet) {
+      return planet.name;
+    }
+    return 'Unknown';
+  }, [homeworld, planets]);
 
   return (
     <CharasterContainer>
