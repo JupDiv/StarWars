@@ -1,7 +1,5 @@
 import {useState, useEffect, useMemo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks/hooks';
-import FetchPlanetData from '../../utlis/FetchData/FetchPlanetData';
-import FetchSpeciesData from '../../utlis/FetchData/FetchSpeciesData';
 import {
   CharasterButton,
   CharasterBody,
@@ -18,6 +16,7 @@ import {
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
 import {fetchAllPlanets} from '../../redux/slices/planetsSlice';
+import {fetchAllSpecies} from '../../redux/slices/speciesSlice';
 
 type CharacterDetailsProps = {
   isToggle: boolean;
@@ -29,11 +28,12 @@ function CharacterDetails({
   charaster,
 }: CharacterDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [isSpecies, setSpec] = useState<string>();
   const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
   const [isOpenInfo, setIsOpenInfo] = useState<boolean>(true);
-  const {homeworld, name, species, gender} = charaster;
+  const {homeworld, name, gender, url} = charaster;
   const planets = useAppSelector(state => state.fetchPlanets.planets);
+  const species = useAppSelector(state => state.fetchSpecies.species);
+
   const isFavouriteMale = useAppSelector(
     state => state.favouriteCharaster.male,
   );
@@ -63,15 +63,10 @@ function CharacterDetails({
 
   useEffect(() => {
     dispatch(fetchAllPlanets());
-
-    species.forEach((personSpec): void => {
-      FetchSpeciesData(personSpec).then(response => {
-        setSpec(response);
-      });
-    });
+    dispatch(fetchAllSpecies());
 
     setIsFavToggled(false);
-  }, [homeworld, species, isToggle]);
+  }, [isToggle]);
 
   function isToggleFavourite() {
     if (!isFavToggled) {
@@ -115,6 +110,15 @@ function CharacterDetails({
     return '';
   }, [homeworld, planets]);
 
+  const speciesTest = useMemo(() => {
+    const spec = species.find(spec => spec.people.includes(url));
+
+    if (spec) {
+      return spec.name;
+    }
+    return '';
+  }, [species, url]);
+
   return (
     <CharasterContainer>
       {charasterFilteredArray.map(([title, value]) => (
@@ -129,7 +133,7 @@ function CharacterDetails({
       </CharasterBody>
       <CharasterBody>
         <CharasterTextTitle>Species</CharasterTextTitle>
-        <CharasterText>{isSpecies}</CharasterText>
+        <CharasterText>{speciesTest}</CharasterText>
       </CharasterBody>
       <CharasterBodyButton>
         <CharasterButton onPress={() => isToggleFavourite()}>
