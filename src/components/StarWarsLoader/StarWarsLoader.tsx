@@ -52,9 +52,9 @@ export default function StarWarsLoader() {
         }),
       ).start();
 
-      for (let index = 0; index < 10; index++) {
+      Array.from({length: 10}).forEach((_, index) => {
         animateStar(index);
-      }
+      });
     }
 
     return () => {
