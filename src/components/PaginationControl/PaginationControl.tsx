@@ -1,57 +1,64 @@
 import {useEffect, useState, useMemo} from 'react';
-import {CommonTypes} from '../../entites/types/CommonTypes';
 import {
   BlockButton,
   PaginationButtonStyle,
   PaginationButtonText,
 } from './PaginationControl.styles';
-import FetchStarShips from '../../utlis/FetchData/FetchStarShips';
-import FetchVehicles from '../../utlis/FetchData/FetchVehicles';
-import FetchCharacters from '../../utlis/FetchData/FetchCharacters';
-import {useAppDispatch} from '../../redux/hooks/hooks';
+import {useAppDispatch, useAppSelector} from '../../redux/hooks/hooks';
 import {setIsAnimating} from '../../redux/slices/animationSlice';
 import {useRoute} from '@react-navigation/native';
+import {fetchCharastersPagination} from '../../redux/slices/paginationCharastersSlice';
+import {fetchStarshipsPagination} from '../../redux/slices/paginationStarshipsSlice';
+import {fetchVehiclesPagination} from '../../redux/slices/paginationVehiclesSlice';
 
-type paginationResponse = Pick<CommonTypes, 'next' | 'previous'>;
+type paginationResponse = {
+  previous: string | null;
+  next: string | null;
+};
 
 interface DirectionProps {
   currentPage: number;
   setCurrentPage: (currentPage: number) => void;
 }
 
-const initialState = {
-  next: '',
-  previous: '',
-};
-
 export default function PaginationControl({
   currentPage,
   setCurrentPage,
 }: DirectionProps): JSX.Element {
-  const [pagination, setPagination] =
-    useState<paginationResponse>(initialState);
   const dispatch = useAppDispatch();
   const route = useRoute();
   const title = route.name;
+  const paginationCharastersData = useAppSelector(
+    state => state.paginationCharasters,
+  );
+  const paginationStarshipsData = useAppSelector(
+    state => state.paginationStarships,
+  );
+  const paginationVehiclesData = useAppSelector(
+    state => state.paginationVehicles,
+  );
 
   useEffect(() => {
     if (title === 'ScreenStarShips') {
-      FetchStarShips(currentPage).then(({next, previous}: paginationResponse) =>
-        setPagination({next, previous}),
-      );
+      dispatch(fetchStarshipsPagination({numberOfPage: currentPage}));
     }
     if (title === 'ScreenVehicles') {
-      FetchVehicles(currentPage).then(({next, previous}: paginationResponse) =>
-        setPagination({next, previous}),
-      );
+      dispatch(fetchVehiclesPagination({numberOfPage: currentPage}));
     }
     if (title === 'Home') {
-      FetchCharacters(currentPage).then(
-        ({next, previous}: paginationResponse) =>
-          setPagination({next, previous}),
-      );
+      dispatch(fetchCharastersPagination({numberOfPage: currentPage}));
     }
   }, [currentPage]);
+
+  const getPaginationData = () => {
+    if (title === 'ScreenStarShips') {
+      return paginationStarshipsData;
+    }
+    if (title === 'ScreenVehicles') {
+      return paginationVehiclesData;
+    }
+    return paginationCharastersData;
+  };
 
   const handlePreviousPage = () => {
     dispatch(setIsAnimating(false));
@@ -63,7 +70,8 @@ export default function PaginationControl({
   }
 
   const previousButton = useMemo(() => {
-    if (pagination.previous) {
+    const paginationPage: paginationResponse = getPaginationData();
+    if (paginationPage.previous) {
       return (
         <PaginationButtonStyle onPress={handlePreviousPage}>
           <PaginationButtonText>Back</PaginationButtonText>
@@ -76,10 +84,15 @@ export default function PaginationControl({
         </PaginationButtonStyle>
       );
     }
-  }, [pagination.previous]);
+  }, [
+    paginationCharastersData,
+    paginationStarshipsData,
+    paginationVehiclesData,
+  ]);
 
   const nextButton = useMemo(() => {
-    if (pagination.next) {
+    const paginationPage: paginationResponse = getPaginationData();
+    if (paginationPage.next) {
       return (
         <PaginationButtonStyle onPress={handleNextPage}>
           <PaginationButtonText>Next</PaginationButtonText>
@@ -88,7 +101,11 @@ export default function PaginationControl({
     } else {
       return null;
     }
-  }, [pagination.next]);
+  }, [
+    paginationCharastersData,
+    paginationStarshipsData,
+    paginationVehiclesData,
+  ]);
 
   return (
     <BlockButton>

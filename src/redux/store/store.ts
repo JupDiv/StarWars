@@ -5,6 +5,9 @@ import filmsCharactersSlice from '../slices/filmsCharactersSlice';
 import vehiclesDataSlice from '../slices/vehiclesCharastersSlice';
 import starshipsDataSlice from '../slices/starshipsCharastersSlice';
 import animationSlice from '../slices/animationSlice';
+import paginationCharasterSlice from '../slices/paginationCharastersSlice';
+import paginationVehiclesSlice from '../slices/paginationVehiclesSlice';
+import paginationStarshipsSlice from '../slices/paginationStarshipsSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +17,9 @@ const store = configureStore({
     vehiclesData: vehiclesDataSlice,
     starshipsData: starshipsDataSlice,
     animation: animationSlice,
+    paginationCharasters: paginationCharasterSlice,
+    paginationVehicles: paginationVehiclesSlice,
+    paginationStarships: paginationStarshipsSlice,
   },
 });
 
