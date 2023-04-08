@@ -112,7 +112,7 @@ function CharacterDetails({
     if (planet) {
       return planet.name;
     }
-    return 'Unknown';
+    return '';
   }, [homeworld, planets]);
 
   return (
