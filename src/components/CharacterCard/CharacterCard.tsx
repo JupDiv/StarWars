@@ -13,7 +13,7 @@ type CharacterCardProps = {
 };
 
 function CharacterCard({charaster, isToggle}: CharacterCardProps): JSX.Element {
-  const [isOpen, setToggle] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const {name} = charaster;
 
   const characterDetails = useMemo(() => {
@@ -25,7 +25,7 @@ function CharacterCard({charaster, isToggle}: CharacterCardProps): JSX.Element {
 
   return (
     <CardContainer>
-      <CardNameButton onPress={() => setToggle(!isOpen)}>
+      <CardNameButton onPress={() => setIsOpen(!isOpen)}>
         <CardButtonText>{name}</CardButtonText>
       </CardNameButton>
       {characterDetails}

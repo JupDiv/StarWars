@@ -1,3 +1,4 @@
+import {useMemo, useCallback} from 'react';
 import {VehiclesTypes} from '../../entites/types/VehiclesTypes';
 import {useDetailInfoForDisplay} from '../../redux/hooks/customHooks';
 import {
@@ -17,18 +18,26 @@ export default function VehiclesDetails({
   isHighlighted,
 }: VehiclesDetailsProp) {
   const arrayVehicles = Object.entries(vehicle);
-
   const filteredArray = useDetailInfoForDisplay(arrayVehicles);
 
-  //after test remove index from key
-  return (
-    <VehiclesDetailsContainer>
-      {filteredArray.map(([key, value]) => (
+  const renderVehiclesDetails = useCallback(
+    (keyValuePair: [string, string | string[]]) => {
+      const [key, value] = keyValuePair;
+      return (
         <VehiclesDetailsView key={key} isHighlighted={isHighlighted}>
           <VehiclesDetailsTitle>{key}</VehiclesDetailsTitle>
           <VehiclesDetailsText>{value}</VehiclesDetailsText>
         </VehiclesDetailsView>
-      ))}
-    </VehiclesDetailsContainer>
+      );
+    },
+    [isHighlighted],
+  );
+
+  const filteredArrayVehicles = useMemo(() => {
+    return filteredArray.map(renderVehiclesDetails);
+  }, [filteredArray, renderVehiclesDetails]);
+
+  return (
+    <VehiclesDetailsContainer>{filteredArrayVehicles}</VehiclesDetailsContainer>
   );
 }

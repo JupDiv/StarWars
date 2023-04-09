@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 
 import {
   FilmDetailBlockInfo,
@@ -20,15 +20,19 @@ type FilmDetailsProps = {
 };
 
 export default function FilmsDetails({content, description}: FilmDetailsProps) {
+  const filmsTitlesData = useMemo(() => {
+    return Object.entries(content).map(([key, value]) => (
+      <FilmDetailBlockInfoGroup key={key}>
+        <FilmDetailBlockInfoTitle>{key}</FilmDetailBlockInfoTitle>
+        <FilmDetailBlockInfoText>{value}</FilmDetailBlockInfoText>
+      </FilmDetailBlockInfoGroup>
+    ));
+  }, [content]);
+
   return (
     <>
       <FilmDetailBlockInfo>
-        {Object.entries(content).map(([key, value]) => (
-          <FilmDetailBlockInfoGroup key={key}>
-            <FilmDetailBlockInfoTitle>{key}</FilmDetailBlockInfoTitle>
-            <FilmDetailBlockInfoText>{value}</FilmDetailBlockInfoText>
-          </FilmDetailBlockInfoGroup>
-        ))}
+        {filmsTitlesData}
         <FilmDetailBlockDescription>
           <FilmDetailBlockDescriptionText>
             {description}

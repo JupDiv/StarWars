@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import <React/RCTAppSetupUtils.h>
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate

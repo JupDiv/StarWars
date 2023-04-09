@@ -1,3 +1,4 @@
+import {useMemo, useCallback} from 'react';
 import {StarshipsProps} from '../StarshipsTitleMenu/StarshipsTitleMenu';
 import {useDetailInfoForDisplay} from '../../redux/hooks/customHooks';
 import {
@@ -20,14 +21,24 @@ export default function StarshipsDetails({
 
   const filteredArray = useDetailInfoForDisplay(arrayStarships);
 
-  return (
-    <StarshipDetailsContainer>
-      {filteredArray.map(([key, value]) => (
+  const renderStarshipsDetails = useCallback(
+    (keyValuePair: [string, string | string[]]) => {
+      const [key, value] = keyValuePair;
+      return (
         <StarshipDetailsView key={key} isHighlighted={isHighlighted}>
           <StarshipDetailsTitle>{key}</StarshipDetailsTitle>
           <StarshipDetailsText>{value}</StarshipDetailsText>
         </StarshipDetailsView>
-      ))}
-    </StarshipDetailsContainer>
+      );
+    },
+    [isHighlighted],
+  );
+
+  const filteredArrayVehicles = useMemo(() => {
+    return filteredArray.map(renderStarshipsDetails);
+  }, [filteredArray, renderStarshipsDetails]);
+
+  return (
+    <StarshipDetailsContainer>{filteredArrayVehicles}</StarshipDetailsContainer>
   );
 }

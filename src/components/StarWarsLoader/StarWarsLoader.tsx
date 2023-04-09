@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState, useCallback} from 'react';
 import {Container, Star, StarsContainer} from './StarWarsLoader.styles';
 import {Animated} from 'react-native';
 import DeathStar from '../DeathStar/DeathStar';
-import {useAppSelector} from '../../redux/hooks/hooks';
 
 const generateStars = (starCount: number) => {
   return Array.from({length: starCount}, (_, i) => (
@@ -16,46 +15,40 @@ const generateStars = (starCount: number) => {
   ));
 };
 
+const animateStar = (animationValues: Animated.Value[], index: number) => {
+  Animated.sequence([
+    Animated.timing(animationValues[index], {
+      toValue: 1,
+      duration: 1000 + Math.random() * 2000,
+      useNativeDriver: true,
+    }),
+    Animated.timing(animationValues[index], {
+      toValue: 0,
+      duration: 1000 + Math.random() * 2000,
+      useNativeDriver: true,
+    }),
+  ]).start(() => animateStar(animationValues, index));
+};
+
 export default function StarWarsLoader() {
-  const [stars, setStars] = useState(() => generateStars(100));
+  const stars = useRef(generateStars(100)).current;
   const rotation = useRef(new Animated.Value(0)).current;
   const animationValues = useRef(
     stars.map(() => new Animated.Value(0)),
   ).current;
-  const isAnimating = useAppSelector(state => state.animation.isAnimating);
-
-  const animateStar = useCallback(
-    (index: number) => {
-      Animated.sequence([
-        Animated.timing(animationValues[index], {
-          toValue: 1,
-          duration: 1000 + Math.random() * 2000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(animationValues[index], {
-          toValue: 0,
-          duration: 1000 + Math.random() * 2000,
-          useNativeDriver: true,
-        }),
-      ]).start(() => animateStar(index));
-    },
-    [animationValues],
-  );
 
   useEffect(() => {
-    if (isAnimating) {
-      Animated.loop(
-        Animated.timing(rotation, {
-          toValue: 360,
-          duration: 5000,
-          useNativeDriver: true,
-        }),
-      ).start();
+    Animated.loop(
+      Animated.timing(rotation, {
+        toValue: 360,
+        duration: 5000,
+        useNativeDriver: true,
+      }),
+    ).start();
 
-      Array.from({length: 10}).forEach((_, index) => {
-        animateStar(index);
-      });
-    }
+    Array.from({length: 10}).forEach((_, index) => {
+      animateStar(animationValues, index);
+    });
 
     return () => {
       animationValues.forEach(animationValue => {
@@ -63,7 +56,7 @@ export default function StarWarsLoader() {
       });
       rotation.stopAnimation();
     };
-  }, [isAnimating, rotation, animationValues, animateStar]);
+  }, [rotation, animationValues]);
 
   const rotationInterpolation = rotation.interpolate({
     inputRange: [0, 360],
