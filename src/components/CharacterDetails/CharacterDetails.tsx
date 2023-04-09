@@ -17,6 +17,7 @@ import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
 import {fetchAllPlanets} from '../../redux/slices/planetsSlice';
 import {fetchAllSpecies} from '../../redux/slices/speciesSlice';
+import {changeStatus} from '../../redux/slices/favoriteCharactersSlice';
 
 type CharacterDetailsProps = {
   isToggle: boolean;
@@ -28,21 +29,12 @@ function CharacterDetails({
   charaster,
 }: CharacterDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
   const [isOpenInfo, setIsOpenInfo] = useState<boolean>(true);
   const {homeworld, name, gender, url} = charaster;
   const planets = useAppSelector(state => state.fetchPlanets.planets);
   const species = useAppSelector(state => state.fetchSpecies.species);
-
-  const isFavouriteMale = useAppSelector(
-    state => state.favouriteCharaster.male,
-  );
-  const isFavouriteFemale = useAppSelector(
-    state => state.favouriteCharaster.female,
-  );
-  const isFavouriteOther = useAppSelector(
-    state => state.favouriteCharaster.other,
-  );
+  const status = useAppSelector(state => state.favouriteCharaster.status);
+  const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
 
   const isFilteredKey = (key: string): boolean => {
     return ![
@@ -68,23 +60,22 @@ function CharacterDetails({
   }, [isToggle, dispatch]);
 
   const isToggleFavourite = () => {
-    if (!isFavToggled) {
+    if (!status) {
       dispatch(addFavouriteCharaster({name, gender}));
-      setIsFavToggled(true);
+      dispatch(changeStatus(true));
     } else {
       dispatch(removeFavouriteCharaster({name, gender}));
-      setIsFavToggled(false);
+      dispatch(changeStatus(false));
     }
   };
 
   const buttonAddDelete = useMemo(() => {
-    console.log(isToggle);
-    if (isFavToggled) {
+    if (status) {
       return `Delete`;
     } else {
       return 'Add';
     }
-  }, [isFavToggled, isToggle]);
+  }, [status]);
 
   const showCloseButton = useMemo(() => {
     if (isOpenInfo) {

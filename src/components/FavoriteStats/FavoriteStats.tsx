@@ -1,5 +1,8 @@
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
-import {resetValueButton} from '../../redux/slices/favoriteCharactersSlice';
+import {
+  resetValueButton,
+  changeStatus,
+} from '../../redux/slices/favoriteCharactersSlice';
 import {
   HeaderContainer,
   HeaderTitle,
@@ -23,6 +26,7 @@ export default function FavoriteStats({
   const female = useAppSelector(state => state.favouriteCharaster.female);
   const male = useAppSelector(state => state.favouriteCharaster.male);
   const other = useAppSelector(state => state.favouriteCharaster.other);
+  const status = useAppSelector(state => state.favouriteCharaster.status);
 
   const genderArray: GenderArrayType = [
     {id: 1, gender: 'male', count: male.length},
@@ -33,6 +37,7 @@ export default function FavoriteStats({
   function resetValue() {
     setIsToggle(!isToggle);
     dispatch(resetValueButton([]));
+    dispatch(changeStatus(!status));
   }
   return (
     <HeaderContainer>
