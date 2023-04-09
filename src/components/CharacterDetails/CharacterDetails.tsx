@@ -70,8 +70,10 @@ function CharacterDetails({
   const isToggleFavourite = () => {
     if (!isFavToggled) {
       dispatch(addFavouriteCharaster({name, gender}));
+      setIsFavToggled(true);
     } else {
       dispatch(removeFavouriteCharaster({name, gender}));
+      setIsFavToggled(false);
     }
   };
 
@@ -133,7 +135,7 @@ function CharacterDetails({
         <CharasterText>{speciesTest}</CharasterText>
       </CharasterBody>
       <CharasterBodyButton>
-        <CharasterButton onPress={() => isToggleFavourite()}>
+        <CharasterButton onPress={isToggleFavourite}>
           <CharasterButtonText>{buttonAddDelete}</CharasterButtonText>
         </CharasterButton>
         <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
