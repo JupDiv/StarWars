@@ -1,10 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Animated} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {ViewStyled, AnimatedScrollViewStyled} from './AdditionalMenu.styles';
 import {useAppDispatch} from '../../redux/hooks/hooks';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {AppRootStackParams} from '../../../App';
 import AdditionalMenuItem from '../AdditionalMenuItem/AdditionalMenuItem';
 
 type FilmsMenuProps = {

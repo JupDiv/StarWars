@@ -77,20 +77,14 @@ function CharacterDetails({
     }
   };
 
-  const characterDetails = useMemo(() => {
-    if (isOpenInfo) {
-      return null;
-    }
-    return <AdditionalMenu name={name} />;
-  }, [isOpenInfo, name]);
-
   const buttonAddDelete = useMemo(() => {
+    console.log(isToggle);
     if (isFavToggled) {
       return `Delete`;
     } else {
       return 'Add';
     }
-  }, [isFavToggled]);
+  }, [isFavToggled, isToggle]);
 
   const showCloseButton = useMemo(() => {
     if (isOpenInfo) {
@@ -142,7 +136,7 @@ function CharacterDetails({
           <CharasterButtonText>{showCloseButton}</CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      {characterDetails}
+      {!isOpenInfo && <AdditionalMenu name={name} />}
     </CharasterContainer>
   );
 }
