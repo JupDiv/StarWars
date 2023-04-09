@@ -1,4 +1,4 @@
-import {useState, useMemo} from 'react';
+import {useState} from 'react';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarshipsDetails from '../StarshipDetails/StarshipDetails';
 import StarshipIsButton from '../StarshipIsButton/StarshipIsButton';
@@ -34,15 +34,10 @@ export default function StarshipsTitleMenu({
   const [isDetails, setIsDetails] = useState(false);
   const {name} = starship;
 
-  const starshipsDetails = useMemo(() => {
-    if (isDetails) {
-      return (
-        <StarshipsDetails isHighlighted={isHighlighted} starship={starship} />
-      );
-    } else {
-      return null;
-    }
-  }, [isDetails]);
+  const renderStarshipsDetails = () =>
+    isDetails && (
+      <StarshipsDetails isHighlighted={isHighlighted} starship={starship} />
+    );
 
   return (
     <StarshipsMenuContainer>
@@ -52,8 +47,7 @@ export default function StarshipsTitleMenu({
         setIsDetails={setIsDetails}
         isHighlighted={isHighlighted}
       />
-
-      {starshipsDetails}
+      {renderStarshipsDetails()}
     </StarshipsMenuContainer>
   );
 }

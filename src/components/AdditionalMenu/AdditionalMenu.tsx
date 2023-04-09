@@ -1,15 +1,11 @@
 import {useEffect, useState} from 'react';
 import {Animated} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {
-  TextStyled,
-  ViewStyled,
-  TouchableOpacityStyled,
-  AnimatedScrollViewStyled,
-} from './AdditionalMenu.styles';
+import {ViewStyled, AnimatedScrollViewStyled} from './AdditionalMenu.styles';
 import {useAppDispatch} from '../../redux/hooks/hooks';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {AppRootStackParams} from '../../../App';
+import AdditionalMenuItem from '../AdditionalMenuItem/AdditionalMenuItem';
 
 type FilmsMenuProps = {
   name: string;
@@ -19,8 +15,6 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const [isOpen, setIsOpen] = useState(true);
   const [animationValue] = useState(new Animated.Value(0));
-  const navigation =
-    useNavigation<NativeStackNavigationProp<AppRootStackParams>>();
 
   useEffect(() => {
     if (isOpen) {
@@ -65,18 +59,21 @@ const AdditionalMenu = ({name}: FilmsMenuProps): JSX.Element => {
   return (
     <AnimatedScrollViewStyled style={[{height: 130}, animatedStyle]}>
       <ViewStyled>
-        <TouchableOpacityStyled
-          onPress={() => navigation.navigate('ScreenFilms', {name})}>
-          <TextStyled>Films</TextStyled>
-        </TouchableOpacityStyled>
-        <TouchableOpacityStyled
-          onPress={() => navigation.navigate('ScreenStarShips', {name})}>
-          <TextStyled>Starships</TextStyled>
-        </TouchableOpacityStyled>
-        <TouchableOpacityStyled
-          onPress={() => navigation.navigate('ScreenVehicles', {name})}>
-          <TextStyled>Vehicles</TextStyled>
-        </TouchableOpacityStyled>
+        <AdditionalMenuItem
+          title="Films"
+          screenName="ScreenFilms"
+          name={name}
+        />
+        <AdditionalMenuItem
+          title="StarShips"
+          screenName="ScreenStarShips"
+          name={name}
+        />
+        <AdditionalMenuItem
+          title="Vehicles"
+          screenName="ScreenVehicles"
+          name={name}
+        />
       </ViewStyled>
     </AnimatedScrollViewStyled>
   );

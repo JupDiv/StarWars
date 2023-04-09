@@ -1,5 +1,4 @@
-import React, {useMemo} from 'react';
-import {useEffect, useState} from 'react';
+import React, {useMemo, useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 import {useAppSelector, useAppDispatch} from '../../redux/hooks/hooks';
 import type {CharasterTypes} from '../../entites/types/CharasterTypes';
@@ -26,20 +25,18 @@ function CharacterList(): JSX.Element {
   }, [currentPage, dispatch]);
 
   const listCharasters = useMemo(() => {
-    if (isLoading) {
-      return <StarWarsLoader />;
-    } else {
-      return (
-        <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <CharacterCard isToggle={isToggle} charaster={item} />
-          )}
-          keyExtractor={(item: CharasterTypes) => item.id}
-        />
-      );
-    }
-  }, [data, isLoading]);
+    return isLoading ? (
+      <StarWarsLoader />
+    ) : (
+      <FlatList
+        data={data}
+        renderItem={({item}) => (
+          <CharacterCard isToggle={isToggle} charaster={item} />
+        )}
+        keyExtractor={(item: CharasterTypes) => item.id}
+      />
+    );
+  }, [data, isLoading, isToggle]);
 
   return (
     <CharasterListContainer>

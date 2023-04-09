@@ -1,17 +1,36 @@
-import {useEffect, useState, useMemo} from 'react';
+import {useEffect, useCallback} from 'react';
+import {AsyncThunk, AsyncThunkConfig} from '@reduxjs/toolkit';
 import {
   BlockButton,
   PaginationButtonStyle,
   PaginationButtonText,
 } from './PaginationControl.styles';
 import {useAppDispatch, useAppSelector} from '../../redux/hooks/hooks';
-import {setIsAnimating} from '../../redux/slices/animationSlice';
 import {useRoute} from '@react-navigation/native';
 import {fetchCharastersPagination} from '../../redux/slices/paginationCharastersSlice';
 import {fetchStarshipsPagination} from '../../redux/slices/paginationStarshipsSlice';
 import {fetchVehiclesPagination} from '../../redux/slices/paginationVehiclesSlice';
 
-type paginationResponse = {
+interface FetchActions {
+  Home: AsyncThunk<
+    {previous: string; next: string},
+    {numberOfPage: number},
+    AsyncThunkConfig
+  >;
+  ScreenStarShips: AsyncThunk<
+    {previous: string; next: string},
+    {numberOfPage: number},
+    AsyncThunkConfig
+  >;
+  ScreenVehicles: AsyncThunk<
+    {previous: string; next: string},
+    {numberOfPage: number},
+    AsyncThunkConfig
+  >;
+  [key: string]: AsyncThunk<any, any, any>;
+}
+
+type PaginationResponse = {
   previous: string | null;
   next: string | null;
 };
@@ -39,78 +58,67 @@ export default function PaginationControl({
   );
 
   useEffect(() => {
-    if (title === 'ScreenStarShips') {
-      dispatch(fetchStarshipsPagination({numberOfPage: currentPage}));
+    const fetchPaginationData: FetchActions = {
+      Home: fetchCharastersPagination,
+      ScreenStarShips: fetchStarshipsPagination,
+      ScreenVehicles: fetchVehiclesPagination,
+    };
+    if (fetchPaginationData[title]) {
+      dispatch(fetchPaginationData[title]({numberOfPage: currentPage}));
     }
-    if (title === 'ScreenVehicles') {
-      dispatch(fetchVehiclesPagination({numberOfPage: currentPage}));
-    }
-    if (title === 'Home') {
-      dispatch(fetchCharastersPagination({numberOfPage: currentPage}));
-    }
-  }, [currentPage]);
+  }, [currentPage, title, dispatch]);
 
-  const getPaginationData = () => {
-    if (title === 'ScreenStarShips') {
-      return paginationStarshipsData;
-    }
-    if (title === 'ScreenVehicles') {
-      return paginationVehiclesData;
-    }
-    return paginationCharastersData;
+  const getPaginationData = (): PaginationResponse => {
+    const paginationData: {
+      [key in
+        | 'Home'
+        | 'ScreenStarShips'
+        | 'ScreenVehicles']: PaginationResponse;
+    } = {
+      Home: paginationCharastersData,
+      ScreenStarShips: paginationStarshipsData,
+      ScreenVehicles: paginationVehiclesData,
+    };
+
+    return paginationData[
+      title as 'Home' | 'ScreenStarShips' | 'ScreenVehicles'
+    ];
   };
 
   const handlePreviousPage = () => {
-    dispatch(setIsAnimating(true));
     setCurrentPage(currentPage - 1);
   };
   function handleNextPage() {
-    dispatch(setIsAnimating(true));
     setCurrentPage(currentPage + 1);
   }
 
-  const previousButton = useMemo(() => {
-    const paginationPage: paginationResponse = getPaginationData();
-    if (paginationPage.previous) {
-      return (
-        <PaginationButtonStyle onPress={handlePreviousPage}>
-          <PaginationButtonText>Back</PaginationButtonText>
-        </PaginationButtonStyle>
-      );
-    } else {
-      return (
-        <PaginationButtonStyle disabled style={{opacity: 0}}>
-          <PaginationButtonText>Back</PaginationButtonText>
-        </PaginationButtonStyle>
-      );
-    }
-  }, [
-    paginationCharastersData,
-    paginationStarshipsData,
-    paginationVehiclesData,
-  ]);
+  const renderButton = useCallback(
+    (direction: 'previous' | 'next') => {
+      const paginationPage: PaginationResponse = getPaginationData();
+      const isDisabled =
+        direction === 'previous'
+          ? !paginationPage.previous
+          : !paginationPage.next;
+      const buttonText = direction === 'previous' ? 'Back' : 'Next';
+      const onPressHandler =
+        direction === 'previous' ? handlePreviousPage : handleNextPage;
 
-  const nextButton = useMemo(() => {
-    const paginationPage: paginationResponse = getPaginationData();
-    if (paginationPage.next) {
       return (
-        <PaginationButtonStyle onPress={handleNextPage}>
-          <PaginationButtonText>Next</PaginationButtonText>
+        <PaginationButtonStyle
+          disabled={isDisabled}
+          onPress={onPressHandler}
+          style={isDisabled ? {opacity: 0} : {}}>
+          <PaginationButtonText>{buttonText}</PaginationButtonText>
         </PaginationButtonStyle>
       );
-    } else {
-      return null;
-    }
-  }, [
-    paginationCharastersData,
-    paginationStarshipsData,
-    paginationVehiclesData,
-  ]);
+    },
+    [handlePreviousPage, handleNextPage, getPaginationData],
+  );
 
   return (
     <BlockButton>
-      {previousButton}
-      {nextButton}
+      {renderButton('previous')}
+      {renderButton('next')}
     </BlockButton>
   );
 }

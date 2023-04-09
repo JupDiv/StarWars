@@ -44,39 +44,36 @@ function CharacterDetails({
     state => state.favouriteCharaster.other,
   );
 
-  const charasterFilteredArray = Object.entries(charaster).filter(([key]) => {
-    if (
-      key === 'homeworld' ||
-      key === 'species' ||
-      key === 'films' ||
-      key === 'vehicles' ||
-      key === 'starships' ||
-      key === 'created' ||
-      key === 'edited' ||
-      key === 'url' ||
-      key === 'id'
-    ) {
-      return false;
-    }
-    return true;
-  });
+  const isFilteredKey = (key: string): boolean => {
+    return ![
+      'homeworld',
+      'species',
+      'films',
+      'vehicles',
+      'starships',
+      'created',
+      'edited',
+      'url',
+      'id',
+    ].includes(key);
+  };
+
+  const charasterFilteredArray = Object.entries(charaster).filter(([key]) =>
+    isFilteredKey(key),
+  );
 
   useEffect(() => {
     dispatch(fetchAllPlanets());
     dispatch(fetchAllSpecies());
+  }, [isToggle, dispatch]);
 
-    setIsFavToggled(false);
-  }, [isToggle]);
-
-  function isToggleFavourite() {
+  const isToggleFavourite = () => {
     if (!isFavToggled) {
       dispatch(addFavouriteCharaster({name, gender}));
-      setIsFavToggled(true);
     } else {
       dispatch(removeFavouriteCharaster({name, gender}));
-      setIsFavToggled(false);
     }
-  }
+  };
 
   const characterDetails = useMemo(() => {
     if (isOpenInfo) {

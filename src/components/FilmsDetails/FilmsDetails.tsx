@@ -37,20 +37,13 @@ function FilmsDetails({
   };
 
   const toggleAnimation = () => {
-    if (isOpen) {
-      Animated.timing(translateYAnimation, {
-        toValue: -40,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start(() => setIsOpen(false));
-    } else {
-      setIsOpen(true);
-      Animated.timing(translateYAnimation, {
-        toValue: 5,
-        duration: 1500,
-        useNativeDriver: true,
-      }).start();
-    }
+    Animated.timing(translateYAnimation, {
+      toValue: isOpen ? -40 : 5,
+      duration: isOpen ? 1000 : 1500,
+      useNativeDriver: true,
+    }).start();
+
+    setIsOpen(!isOpen);
   };
 
   const animatedContainerStyle = {
@@ -67,12 +60,12 @@ function FilmsDetails({
       />
       <Animated.View style={animatedContainerStyle}>
         <FilmDetailsContainer>
-          {isOpen ? (
+          {isOpen && (
             <FilmsDetailContent
               description={opening_crawl}
               content={groupDataFilm}
             />
-          ) : null}
+          )}
         </FilmDetailsContainer>
       </Animated.View>
     </>

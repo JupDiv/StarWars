@@ -9,7 +9,7 @@ import {
   HeaderButtonText,
 } from './FavoriteStats.styles';
 
-type genderArrayType = {id: number; gender: string; count: number}[];
+type GenderArrayType = {id: number; gender: string; count: number}[];
 type FavouriteWindowsProps = {
   setIsToggle: (value: boolean) => void;
   isToggle: boolean;
@@ -24,7 +24,7 @@ export default function FavoriteStats({
   const male = useAppSelector(state => state.favouriteCharaster.male);
   const other = useAppSelector(state => state.favouriteCharaster.other);
 
-  const genderArray: genderArrayType = [
+  const genderArray: GenderArrayType = [
     {id: 1, gender: 'male', count: male.length},
     {id: 2, gender: 'female', count: female.length},
     {id: 3, gender: 'other', count: other.length},
@@ -44,7 +44,7 @@ export default function FavoriteStats({
           </HeaderCountBlock>
         ))}
       </HeaderCountTab>
-      <HeaderResetButton onPress={() => resetValue()}>
+      <HeaderResetButton onPress={resetValue}>
         <HeaderButtonText>Reset</HeaderButtonText>
       </HeaderResetButton>
     </HeaderContainer>
