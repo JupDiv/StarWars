@@ -34,9 +34,9 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
 
   const isCharacterFavourite = useMemo(() => {
     return (
-      female.some(favChar => favChar === name) ||
-      male.some(favChar => favChar === name) ||
-      other.some(favChar => favChar === name)
+      female.some(favCharName => favCharName === name) ||
+      male.some(favCharName => favCharName === name) ||
+      other.some(favCharName => favCharName === name)
     );
   }, [female, male, other, name]);
 
