@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {colors, typography} from '../../styles/theme';
 
-export const CardContainer = styled.View`
+export const CardContainer = styled.ScrollView`
   background-color: ${colors.secondary};
   border-radius: 8px;
   margin: 10px;
