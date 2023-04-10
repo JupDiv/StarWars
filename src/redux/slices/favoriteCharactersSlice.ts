@@ -6,7 +6,6 @@ type initialStataType = {
   male: string[];
   female: string[];
   other: string[];
-  status: boolean;
 };
 
 type favouritePersonTypeProp = {
@@ -18,7 +17,6 @@ const initialState: initialStataType = {
   male: [],
   female: [],
   other: [],
-  status: false,
 };
 
 const favoriteCharactersSlice = createSlice({
@@ -64,9 +62,6 @@ const favoriteCharactersSlice = createSlice({
         state.other = state.other.filter(item => item !== action.payload.name);
       }
     },
-    changeStatus: (state, action: PayloadAction<boolean>) => {
-      state.status = action.payload;
-    },
     resetValueButton: (state, action: PayloadAction<[]>) => {
       state.male = action.payload;
       state.female = action.payload;
@@ -79,7 +74,6 @@ export const {
   addFavouriteCharaster,
   removeFavouriteCharaster,
   resetValueButton,
-  changeStatus,
 } = favoriteCharactersSlice.actions;
 
 export const selectData = (state: RootState) => state.favouriteCharaster;

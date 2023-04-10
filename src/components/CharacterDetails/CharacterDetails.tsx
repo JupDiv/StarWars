@@ -17,24 +17,31 @@ import type {CharasterTypes} from '../../entites/types/CharasterTypes';
 import AdditionalMenu from '../AdditionalMenu/AdditionalMenu';
 import {fetchAllPlanets} from '../../redux/slices/planetsSlice';
 import {fetchAllSpecies} from '../../redux/slices/speciesSlice';
-import {changeStatus} from '../../redux/slices/favoriteCharactersSlice';
 
 type CharacterDetailsProps = {
-  isToggle: boolean;
   charaster: CharasterTypes;
 };
 
-function CharacterDetails({
-  isToggle,
-  charaster,
-}: CharacterDetailsProps): JSX.Element {
+function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [isOpenInfo, setIsOpenInfo] = useState<boolean>(true);
   const {homeworld, name, gender, url} = charaster;
-  const planets = useAppSelector(state => state.fetchPlanets.planets);
-  const species = useAppSelector(state => state.fetchSpecies.species);
-  const status = useAppSelector(state => state.favouriteCharaster.status);
-  const [isFavToggled, setIsFavToggled] = useState<boolean>(false);
+  const planetsData = useAppSelector(state => state.fetchPlanets.planets);
+  const speciesData = useAppSelector(state => state.fetchSpecies.species);
+  const female = useAppSelector(state => state.favouriteCharaster.female);
+  const male = useAppSelector(state => state.favouriteCharaster.male);
+  const other = useAppSelector(state => state.favouriteCharaster.other);
+
+  const isCharacterFavourite = useMemo(() => {
+    return (
+      female.some(favChar => favChar === name) ||
+      male.some(favChar => favChar === name) ||
+      other.some(favChar => favChar === name)
+    );
+  }, [female, male, other, name]);
+
+  const [isFavToggled, setIsFavToggled] =
+    useState<boolean>(isCharacterFavourite);
 
   const isFilteredKey = (key: string): boolean => {
     return ![
@@ -57,25 +64,27 @@ function CharacterDetails({
   useEffect(() => {
     dispatch(fetchAllPlanets());
     dispatch(fetchAllSpecies());
-  }, [isToggle, dispatch]);
+  }, []);
+
+  useEffect(() => {
+    setIsFavToggled(isCharacterFavourite);
+  }, [isCharacterFavourite]);
 
   const isToggleFavourite = () => {
-    if (!status) {
+    if (!isFavToggled) {
       dispatch(addFavouriteCharaster({name, gender}));
-      dispatch(changeStatus(true));
     } else {
       dispatch(removeFavouriteCharaster({name, gender}));
-      dispatch(changeStatus(false));
     }
   };
 
   const buttonAddDelete = useMemo(() => {
-    if (status) {
+    if (isFavToggled) {
       return `Delete`;
     } else {
       return 'Add';
     }
-  }, [status]);
+  }, [isFavToggled]);
 
   const showCloseButton = useMemo(() => {
     if (isOpenInfo) {
@@ -86,22 +95,22 @@ function CharacterDetails({
   }, [isOpenInfo]);
 
   const homeWorld = useMemo(() => {
-    const planet = planets.find(planet => planet.url === homeworld);
+    const planet = planetsData.find(planet => planet.url === homeworld);
 
     if (planet) {
       return planet.name;
     }
     return '';
-  }, [homeworld, planets]);
+  }, [homeworld, planetsData]);
 
-  const speciesTest = useMemo(() => {
-    const spec = species.find(spec => spec.people.includes(url));
+  const species = useMemo(() => {
+    const spec = speciesData.find(spec => spec.people.includes(url));
 
     if (spec) {
       return spec.name;
     }
     return '';
-  }, [species, url]);
+  }, [speciesData, url]);
 
   return (
     <CharasterContainer>
@@ -117,7 +126,7 @@ function CharacterDetails({
       </CharasterBody>
       <CharasterBody>
         <CharasterTextTitle>Species</CharasterTextTitle>
-        <CharasterText>{speciesTest}</CharasterText>
+        <CharasterText>{species}</CharasterText>
       </CharasterBody>
       <CharasterBodyButton>
         <CharasterButton onPress={isToggleFavourite}>
