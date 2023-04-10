@@ -13,7 +13,6 @@ function CharacterList(): JSX.Element {
   const dispatch = useAppDispatch();
   const data = useAppSelector(state => state.fetchData.charaster);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isToggle, setIsToggle] = useState<boolean>(false);
   const isLoading = useAppSelector(state => state.fetchData.loading);
   const status = useAppSelector(state => state.fetchData.status);
 
@@ -30,17 +29,15 @@ function CharacterList(): JSX.Element {
     ) : (
       <FlatList
         data={data}
-        renderItem={({item}) => (
-          <CharacterCard isToggle={isToggle} charaster={item} />
-        )}
+        renderItem={({item}) => <CharacterCard charaster={item} />}
         keyExtractor={(item: CharasterTypes) => item.id}
       />
     );
-  }, [data, isLoading, isToggle]);
+  }, [data, isLoading]);
 
   return (
     <CharasterListContainer>
-      <FavoriteStats isToggle={isToggle} setIsToggle={setIsToggle} />
+      <FavoriteStats />
       {listCharasters}
       <PaginationControl
         currentPage={currentPage}
