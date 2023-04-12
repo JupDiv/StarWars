@@ -43,22 +43,23 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
   const [isFavToggled, setIsFavToggled] =
     useState<boolean>(isCharacterFavourite);
 
-  const isFilteredKey = (key: string): boolean => {
-    return ![
-      'homeworld',
-      'species',
-      'films',
-      'vehicles',
-      'starships',
-      'created',
-      'edited',
-      'url',
-      'id',
-    ].includes(key);
-  };
-
-  const charasterFilteredArray = Object.entries(charaster).filter(([key]) =>
-    isFilteredKey(key),
+  const filteredCharasterData = useMemo(
+    () =>
+      Object.entries(charaster).filter(
+        ([key]) =>
+          ![
+            'homeworld',
+            'species',
+            'films',
+            'vehicles',
+            'starships',
+            'created',
+            'edited',
+            'url',
+            'id',
+          ].includes(key),
+      ),
+    [charaster],
   );
 
   useEffect(() => {
@@ -100,13 +101,13 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
   }, [speciesData, url]);
 
   const charasterFilter = useMemo(() => {
-    return charasterFilteredArray.map(([title, value]) => (
+    return filteredCharasterData.map(([title, value]) => (
       <CharasterBody key={title}>
         <CharasterTextTitle>{title}</CharasterTextTitle>
         <CharasterText>{value}</CharasterText>
       </CharasterBody>
     ));
-  }, [charasterFilteredArray]);
+  }, [filteredCharasterData]);
 
   return (
     <CharasterContainer>
