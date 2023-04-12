@@ -78,21 +78,8 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
     }
   };
 
-  const buttonAddDelete = useMemo(() => {
-    if (isFavToggled) {
-      return `Delete`;
-    } else {
-      return 'Add';
-    }
-  }, [isFavToggled]);
-
-  const showCloseButton = useMemo(() => {
-    if (isOpenInfo) {
-      return 'Show';
-    } else {
-      return 'Close';
-    }
-  }, [isOpenInfo]);
+  const buttonAddDelete = isFavToggled ? 'Delete' : 'Add';
+  const showCloseButton = isOpenInfo ? 'Show' : 'Close';
 
   const homeWorld = useMemo(() => {
     const planet = planetsData.find(planet => planet.url === homeworld);

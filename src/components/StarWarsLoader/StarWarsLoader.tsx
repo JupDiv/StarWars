@@ -63,22 +63,23 @@ export default function StarWarsLoader() {
     outputRange: ['0deg', '360deg'],
   });
 
+  const starsWithAnimation = useCallback(() => {
+    return stars.map((star, index) => (
+      <Animated.View
+        key={index}
+        style={[
+          star.props.style,
+          {
+            opacity: animationValues[index],
+          },
+        ]}>
+        {star}
+      </Animated.View>
+    ));
+  }, [stars, animationValues]);
   return (
     <Container>
-      <StarsContainer>
-        {stars.map((star, index) => (
-          <Animated.View
-            key={index}
-            style={[
-              star.props.style,
-              {
-                opacity: animationValues[index],
-              },
-            ]}>
-            {star}
-          </Animated.View>
-        ))}
-      </StarsContainer>
+      <StarsContainer>{starsWithAnimation()}</StarsContainer>
       <DeathStar
         source={require('../../../assets/images/deathStar.jpg')}
         style={{
