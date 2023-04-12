@@ -33,10 +33,8 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
   const other = useAppSelector(state => state.favouriteCharaster.other);
 
   const isCharacterFavourite = useMemo(() => {
-    return (
-      female.some(favCharName => favCharName === name) ||
-      male.some(favCharName => favCharName === name) ||
-      other.some(favCharName => favCharName === name)
+    return [female, male, other].some(favCharName =>
+      favCharName.includes(name),
     );
   }, [female, male, other, name]);
 
