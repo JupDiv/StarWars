@@ -70,7 +70,7 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
     setIsFavToggled(isCharacterFavourite);
   }, [isCharacterFavourite]);
 
-  const isToggleFavourite = () => {
+  const toggleFavourite = () => {
     if (!isFavToggled) {
       dispatch(addFavouriteCharaster({name, gender}));
     } else {
@@ -120,7 +120,7 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
         <CharasterText>{species}</CharasterText>
       </CharasterBody>
       <CharasterBodyButton>
-        <CharasterButton onPress={isToggleFavourite}>
+        <CharasterButton onPress={toggleFavourite}>
           <CharasterButtonText>{buttonAddDelete}</CharasterButtonText>
         </CharasterButton>
         <CharasterButton onPress={() => setIsOpenInfo(!isOpenInfo)}>
