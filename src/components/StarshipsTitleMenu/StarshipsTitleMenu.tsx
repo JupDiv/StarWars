@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {StarshipsTypes} from '../../entites/types/StarshipsTypes';
 import StarshipsDetails from '../StarshipDetails/StarshipDetails';
 import StarshipIsButton from '../StarshipIsButton/StarshipIsButton';

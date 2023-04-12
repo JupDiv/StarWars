@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useMemo, useRef} from 'react';
 import {FilmsTypes} from '../../entites/types/FilmsTypes';
 import FilmsDetailContent from '../FilmDetailContent/FilmDetailContent';
 import FilmDetailsButton from '../FilmDetailsButton/FilmDetailsButton';
@@ -50,6 +50,17 @@ function FilmsDetails({
     transform: [{translateY: translateYAnimation}],
   };
 
+  const renderFilmDetails = useMemo(() => {
+    if (isOpen) {
+      return (
+        <FilmsDetailContent
+          description={opening_crawl}
+          content={groupDataFilm}
+        />
+      );
+    }
+  }, [isOpen, opening_crawl, groupDataFilm]);
+
   return (
     <>
       <FilmDetailsButton
@@ -59,14 +70,7 @@ function FilmsDetails({
         isOpen={isOpen}
       />
       <Animated.View style={animatedContainerStyle}>
-        <FilmDetailsContainer>
-          {isOpen && (
-            <FilmsDetailContent
-              description={opening_crawl}
-              content={groupDataFilm}
-            />
-          )}
-        </FilmDetailsContainer>
+        <FilmDetailsContainer>{renderFilmDetails}</FilmDetailsContainer>
       </Animated.View>
     </>
   );

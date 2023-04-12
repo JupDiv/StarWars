@@ -30,15 +30,13 @@ export default function FilmsDetails({content, description}: FilmDetailsProps) {
   }, [content]);
 
   return (
-    <>
-      <FilmDetailBlockInfo>
-        {filmsTitlesData}
-        <FilmDetailBlockDescription>
-          <FilmDetailBlockDescriptionText>
-            {description}
-          </FilmDetailBlockDescriptionText>
-        </FilmDetailBlockDescription>
-      </FilmDetailBlockInfo>
-    </>
+    <FilmDetailBlockInfo>
+      {filmsTitlesData}
+      <FilmDetailBlockDescription>
+        <FilmDetailBlockDescriptionText>
+          {description}
+        </FilmDetailBlockDescriptionText>
+      </FilmDetailBlockDescription>
+    </FilmDetailBlockInfo>
   );
 }

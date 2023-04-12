@@ -107,6 +107,12 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
     ));
   }, [filteredCharasterData]);
 
+  const renderAdditionalMenu = useMemo(() => {
+    if (!isOpenInfo) {
+      return <AdditionalMenu name={name} />;
+    }
+  }, [isOpenInfo, name]);
+
   return (
     <CharasterContainer>
       {charasterFilter}
@@ -126,7 +132,7 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
           <CharasterButtonText>{showCloseButton}</CharasterButtonText>
         </CharasterButton>
       </CharasterBodyButton>
-      {!isOpenInfo && <AdditionalMenu name={name} />}
+      {renderAdditionalMenu}
     </CharasterContainer>
   );
 }
