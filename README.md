@@ -6,6 +6,7 @@ A React Native app that displays information about Star Wars characters using th
 
 - Fetch and display a list of Star Wars characters
 - View details about each character, including their home planet and species
+- Veiv films, vehicles, starships each charaster
 - Add and remove characters to/from your favorites list
 - View favorite characters count by gender
 - Reset favorite characters list
