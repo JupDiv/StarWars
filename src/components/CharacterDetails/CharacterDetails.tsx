@@ -112,14 +112,18 @@ function CharacterDetails({charaster}: CharacterDetailsProps): JSX.Element {
     return '';
   }, [speciesData, url]);
 
+  const charasterFilter = useMemo(() => {
+    return charasterFilteredArray.map(([title, value]) => (
+      <CharasterBody key={title}>
+        <CharasterTextTitle>{title}</CharasterTextTitle>
+        <CharasterText>{value}</CharasterText>
+      </CharasterBody>
+    ));
+  }, [charasterFilteredArray]);
+
   return (
     <CharasterContainer>
-      {charasterFilteredArray.map(([title, value]) => (
-        <CharasterBody key={title}>
-          <CharasterTextTitle>{title}</CharasterTextTitle>
-          <CharasterText>{value}</CharasterText>
-        </CharasterBody>
-      ))}
+      {charasterFilter}
       <CharasterBody>
         <CharasterTextTitle>HomeWorld</CharasterTextTitle>
         <CharasterText>{homeWorld}</CharasterText>
